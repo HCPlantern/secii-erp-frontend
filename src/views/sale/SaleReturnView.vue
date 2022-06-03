@@ -138,17 +138,21 @@ export default {
     await getAllSale({ params: { state: 'SUCCESS' } }).then(_res => {
       this.completedSale = _res.result
     })
-    console.log(this.pendingLevel1List);
   },
   methods: {
     getSaleReturn() {
       // 得到所有的销售退货单 并且按照审批状态分类
       getAllSaleReturn({}).then(_res => {
         this.saleReturnList = _res.result
+        console.log(saleReturnList)
         this.pendingLevel1List = this.saleReturnList.filter(item => item.state === '待一级审批')
+        console.log(this.pendingLevel1List)
         this.pendingLevel2List = this.saleReturnList.filter(item => item.state === '待二级审批')
+        console.log(this.pendingLevel2List)
         this.successList = this.saleReturnList.filter(item => item.state === '审批完成')
+        console.log(this.successList)
         this.failureList = this.saleReturnList.filter(item => item.state === '审批失败')
+        console.log(this.failureList)
       })
     },
     handleClose(done) {
@@ -163,7 +167,6 @@ export default {
     // 销售退货的内容
     selectSale(content) {
       this.saleReturnForm.saleReturnsSheetContent = content[0].saleSheetContent
-      console.log(this.saleReturnForm.saleReturnsSheetContent)
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {

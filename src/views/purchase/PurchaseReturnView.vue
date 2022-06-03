@@ -175,7 +175,7 @@ export default {
             item.totalPrice = item.unitPrice * item.quantity
           })
           createPurchaseReturn(this.purchaseReturnForm).then(_res => {
-            if (_res.msg == 'Success') {
+            if (_res.msg === 'Success') {
               this.$message.success('创建成功!')
               this.dialogVisible = false
               this.purchaseReturnForm = {}

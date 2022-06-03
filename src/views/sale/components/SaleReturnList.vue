@@ -47,8 +47,17 @@
           <el-col :span="3">
             <span><strong>操作员: </strong>{{item.operator}}</span>
           </el-col>
-          <el-col :span="6">
-            <span><strong>总额合计: </strong>{{item.totalAmount}}(元)</span>
+          <el-col :span="3">
+            <span><strong>原始总额合计: </strong>{{item.rawTotalAmount}}(元)</span>
+          </el-col>
+          <el-col :span="3">
+            <span><strong>折扣: </strong>{{item.discount}}</span>
+          </el-col>
+          <el-col :span="3">
+            <span><strong>优惠券合计: </strong>{{item.voucherAmount}}(元)</span>
+          </el-col>
+          <el-col :span="3">
+            <span><strong>退款总额合计: </strong>{{item.finalAmount}}(元)</span>
           </el-col>
         </el-row>
         <el-row style="margin-top: 15px">
