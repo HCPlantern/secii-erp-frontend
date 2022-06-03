@@ -137,7 +137,7 @@ export default {
     await getAllPurchase({ params: { state: 'SUCCESS' } }).then(_res => {
       this.completedPurchase = _res.result
     })
-    // console.log(this.completedPurchase);
+    console.log(this.purchaseReturnList);
   },
   methods: {
     getPurchaseReturn() {

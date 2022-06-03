@@ -184,7 +184,7 @@ export default {
           this.saleForm.voucherAmount = Number(this.saleForm.voucherAmount)
           this.saleForm.saleSheetContent.forEach((item) => {
             item.id = null
-            item.purchaseSheetId = null
+            item.saleSheetId = null
             item.quantity = parseInt(item.quantity)
             item.unitPrice = parseInt(item.unitPrice)
             item.totalPrice = item.quantity * item.unitPrice

@@ -48,6 +48,7 @@
             <span><strong>备注: </strong>{{item.remark}}</span>
           </el-col>
         </el-row>
+<!--        如果是展开-->
         <div v-if="showAll[index]" style="margin-top: 15px">
           <div style="margin-bottom: 15px"><strong>详细商品清单:</strong></div>
           <el-table
