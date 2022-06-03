@@ -14,7 +14,3 @@ export const getWarehouseOPQByTime = config => request._get(testAPI.WAREHOUSE_OP
 export const warehouseOutputSheetApprove = config => request._get(testAPI.WAREHOUSE_OUTPUTSHEET_APPROVE, config);
 export const warehouseInputSheetApprove = config => request._get(testAPI.WAREHOUSE_INPUTSHEET_APPROVE, config);
 export const getWarehouseCounting = config => request._get(testAPI.WAREHOUSE_DAILY_COUNT, config);
-
-
-
-
