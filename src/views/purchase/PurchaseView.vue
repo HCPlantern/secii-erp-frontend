@@ -130,7 +130,7 @@ export default {
       commodityList: []
     }
   },
-  mounted() {
+  async mounted() {
     this.getPurchase()
     getAllCommodity({}).then(_res => {
       let res = _res.result

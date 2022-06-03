@@ -70,6 +70,8 @@
             <span slot="title">库存盘点</span>
           </el-menu-item>
         </el-submenu>
+
+
         <el-submenu index="3"
           v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)">
           <template slot="title">
@@ -97,6 +99,15 @@
             <i class="el-icon-sell"></i>
             <span slot="title">销售管理</span>
           </el-menu-item>
+
+          <el-menu-item
+              :index="PATH.SALE_RETURN_VIEW.path"
+              v-if="permit(PATH.SALE_RETURN_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-sell"></i>
+            <span slot="title">销售退货管理</span>
+          </el-menu-item>
+
           <el-menu-item
             :index="PATH.CUSTOMER_VIEW.path"
             v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)"
@@ -105,6 +116,9 @@
             <span slot="title">客户管理</span>
           </el-menu-item>
         </el-submenu>
+
+
+
         <el-submenu index="4"
           v-if="permit(PATH.GM_APPROVAL.requiresAuth)">
           <template slot="title">
