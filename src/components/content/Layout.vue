@@ -115,6 +115,15 @@
             <i class="el-icon-user"></i>
             <span slot="title">客户管理</span>
           </el-menu-item>
+
+          <el-menu-item
+              :index="PATH.MAX_AMOUNT_CUSTOMER_VIEW.path"
+              v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-user"></i>
+            <span slot="title">消费最多客户查看</span>
+          </el-menu-item>
+
         </el-submenu>
 
 
@@ -154,7 +163,7 @@
 </template>
 
 <script>
-import { ROLE, PATH } from "../../common/const";
+import { ROLE, PATH } from "@/common/const";
 
 export default {
   name: "Layout",

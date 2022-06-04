@@ -31,6 +31,8 @@ const WAREHOUSE_OUTPUTSHEET_APPROVE = '/api/warehouse/outputSheet/approve';
 const WAREHOUSE_INPUTSHEET_APPROVE = '/api/warehouse/inputSheet/approve';
 const WAREHOUSE_DAILY_COUNT = '/api/warehouse/warehouse/counting';
 
+// 用户管理
+const FIND_ALL_SALES_MAN = '/api/user/findAllSalesMan'
 
 // 销售管理
 // 进货管理
@@ -65,6 +67,8 @@ const SALE_CUSTOMER_MAX = '/api/sale/maxAmountCustomer';
 module.exports = {
   TEST_GET,
   TEST_POST,
+
+  FIND_USER_NAME_BY_ROLE: FIND_ALL_SALES_MAN,
 
   AUTH,
   LOGIN,
