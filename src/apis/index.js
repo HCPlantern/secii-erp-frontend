@@ -30,6 +30,7 @@ const WAREHOUSE_OPQ_BY_TIME = '/api/warehouse/outputSheet/time/quantity';
 const WAREHOUSE_OUTPUTSHEET_APPROVE = '/api/warehouse/outputSheet/approve';
 const WAREHOUSE_INPUTSHEET_APPROVE = '/api/warehouse/inputSheet/approve';
 const WAREHOUSE_DAILY_COUNT = '/api/warehouse/warehouse/counting';
+const WAREHOUSE_DAILY_COUNT_EXCEL = '/api/warehouse/warehouse/counting/exportexcel'
 
 // 用户管理
 const FIND_ALL_SALES_MAN = '/api/user/findAllSalesMan'
@@ -94,6 +95,7 @@ module.exports = {
   WAREHOUSE_OUTPUTSHEET_APPROVE,
   WAREHOUSE_INPUTSHEET_APPROVE,
   WAREHOUSE_DAILY_COUNT,
+  WAREHOUSE_DAILY_COUNT_EXCEL,
 
   PURCHASE_ALL,
   PURCHASE_CREATE,
