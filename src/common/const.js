@@ -86,6 +86,10 @@ export const PATH = {
     path: '/customerView',
     requiresAuth: [ROLE.SALE_STAFF,ROLE.SALE_MANAGER,ROLE.GM,ROLE.ADMIN]
   },
+    MAX_AMOUNT_CUSTOMER_VIEW: {
+    path: '/maxAmountCustomerView',
+    requiresAuth: [ROLE.SALE_STAFF,ROLE.SALE_MANAGER,ROLE.GM,ROLE.ADMIN]
+  },
 
   // GM
   GM_APPROVAL: {
