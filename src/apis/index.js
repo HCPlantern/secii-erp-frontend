@@ -69,7 +69,7 @@ module.exports = {
   TEST_GET,
   TEST_POST,
 
-  FIND_USER_NAME_BY_ROLE: FIND_ALL_SALES_MAN,
+  FIND_ALL_SALES_MAN,
 
   AUTH,
   LOGIN,
