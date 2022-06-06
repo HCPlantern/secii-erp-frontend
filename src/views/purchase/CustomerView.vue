@@ -96,7 +96,7 @@
 <script>
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
-import { getAllCustomer } from "../../network/purchase";
+import { getAllCustomer, createCustomer, updateCustomer } from "../../network/purchase";
 export default {
   name: 'CustomerView',
   components: {
@@ -105,6 +105,20 @@ export default {
   },
   data() {
     return {
+      customerForm: {
+        id: '',
+        type: '',
+        level: '',
+        name: '',
+        phone: '',
+        address: '',
+        zipcode: '',
+        email: '',
+        lineOfCredit: '',
+        receivable: '',
+        payable: '',
+        operator: ''
+      },
       customerList: []
     }
   },
@@ -122,11 +136,15 @@ export default {
     },
     addCustomer() {
       // TODO: 新增客户
-      alert('TODO: 新增客户')
+      createCustomer(this.customerForm).then(_res => {
+        console.log(_res)
+      })
     },
     editInfo(id) {
       // TODO: 修改客户信息
-      alert(`TODO: 修改${id}客户信息`)
+      updateCustomer(id).then(_res => {
+        console.log(_res)
+      })
     }
   }
 }

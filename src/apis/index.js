@@ -60,6 +60,8 @@ const SALE_RETURN_FIRST_APPROVAL = '/api/sale-returns/first-approval';
 const SALE_RETURN_SECOND_APPROVAL = '/api/sale-returns/second-approval';
 // 客户管理
 const CUSTOMER_QUERY = '/api/customer/findByType';
+const CUSTOMER_CREATE = '/api/customer/createCustomer';
+const CUSTOMER_UPDATE = '/api/customer/updateCustomer';
 const SALE_PURCHASE_ALL = '/api/purchase/sheet-show';
 const SALE_PURCHASE_CREATE = '/api/purchase/sheet-make';
 const SALE_CUSTOMER_QUERY = '/api/customer/findByType';
