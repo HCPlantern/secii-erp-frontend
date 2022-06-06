@@ -44,7 +44,7 @@
         width="40%"
         :before-close="handleClose">
       <div style="width: 90%; margin: 0 auto">
-        <el-form :model="saleReturnForm" label-width="100px" ref="saleReturnForm">
+        <el-form :model="saleReturnForm" label-width="100px" ref="saleReturnForm" :rules="rules">
           <el-form-item label="销售单id: " prop="saleSheetId">
             <el-select v-model="saleReturnForm.saleSheetId"
                        placeholder="请选择关联的销售单id"
@@ -129,7 +129,12 @@ export default {
       saleReturnForm: {
         saleReturnsSheetContent: []
       },
-      completedSale: []
+      completedSale: [],
+      rules:{
+        saleSheetId:[
+          {required: true,message: '请选择一个销售单',trigger: 'change'}
+        ]
+      }
     }
   },
   async mounted() {
@@ -169,6 +174,11 @@ export default {
       this.saleReturnForm.saleReturnsSheetContent = content[0].saleSheetContent
     },
     submitForm(formName) {
+      // if(this.saleReturnForm.saleReturnsSheetContent.length===0){
+      //   this.$message.error("未选择销售单，创建失败！")
+      //   this.dialogVisible=false
+      //   return
+      // }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.saleReturnForm.id = null

@@ -89,6 +89,114 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <el-dialog
+          title="新增客户"
+          :visible.sync="addDialogVisible"
+          width="30%"
+          @close="close()">
+        <el-form :model="customerForm" :label-width="'100px'" size="mini">
+          <el-form-item label="客户分类">
+            <el-select v-model="customerForm.type">
+              <el-option
+                  v-for="item in classificationList"
+                  :key="item.index"
+                  :label="item"
+                  :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="客户级别">
+            <el-input v-model="customerForm.level" placeholder="请输入客户级别" type="number"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名">
+            <el-input v-model="customerForm.name" :rows="2" placeholder="请输入客户姓名"></el-input>
+          </el-form-item>
+          <el-form-item label="客户电话号码">
+            <el-input v-model="customerForm.phone" :rows="2" placeholder="请输入电话号码"></el-input>
+          </el-form-item>
+          <el-form-item label="地址">
+            <el-input v-model="customerForm.address" :rows="2" placeholder="请输入地址"></el-input>
+          </el-form-item>
+          <el-form-item label="邮编">
+            <el-input v-model="customerForm.zipcode" :rows="2" placeholder="请输入邮编"></el-input>
+          </el-form-item>
+          <el-form-item label="电子邮箱">
+            <el-input v-model="customerForm.email" :rows="2" placeholder="请输入电子邮箱"></el-input>
+          </el-form-item>
+          <el-form-item label="应收额度">
+            <el-input v-model="customerForm.lineOfCredit" type="number" :rows="2" placeholder="请输入应收额度"></el-input>
+          </el-form-item>
+<!--          <el-form-item label="应收">-->
+<!--            <el-input v-model="customerForm.receivable" type="number" :rows="2" placeholder="请输入客户编号"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="应付">-->
+<!--            <el-input v-model="customerForm.payable" type="number" :rows="2" placeholder="请输入客户编号"></el-input>-->
+<!--          </el-form-item>-->
+          <el-form-item label="默认业务员">
+            <el-input v-model="customerForm.operator" :rows="2" placeholder="请输入默认业务员"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="handleAdd(false)">取 消</el-button>
+          <el-button type="primary" @click="handleAdd(true)">确 定</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog
+          title="修改客户信息"
+          :visible.sync="editDialogVisible"
+          width="30%"
+          @close="close()">
+        <el-form :model="customerEditForm" :label-width="'100px'" size="mini">
+          <el-form-item label="客户分类">
+            <el-select v-model="customerEditForm.type">
+              <el-option
+                  v-for="item in classificationList"
+                  :key="item.index"
+                  :label="item"
+                  :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="客户级别">
+            <el-input v-model="customerEditForm.level" placeholder="请输入客户级别" type="number"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名">
+            <el-input v-model="customerEditForm.name" :rows="2" placeholder="请输入客户姓名"></el-input>
+          </el-form-item>
+          <el-form-item label="客户电话号码">
+            <el-input v-model="customerEditForm.phone" :rows="2" placeholder="请输入电话号码"></el-input>
+          </el-form-item>
+          <el-form-item label="地址">
+            <el-input v-model="customerEditForm.address" :rows="2" placeholder="请输入地址"></el-input>
+          </el-form-item>
+          <el-form-item label="邮编">
+            <el-input v-model="customerEditForm.zipcode" :rows="2" placeholder="请输入邮编"></el-input>
+          </el-form-item>
+          <el-form-item label="电子邮箱">
+            <el-input v-model="customerEditForm.email" :rows="2" placeholder="请输入电子邮箱"></el-input>
+          </el-form-item>
+          <el-form-item label="应收额度">
+            <el-input v-model="customerEditForm.lineOfCredit" type="number" :rows="2" placeholder="请输入应收额度"></el-input>
+          </el-form-item>
+          <el-form-item label="应收">
+            <el-input v-model="customerEditForm.receivable" type="number" :rows="2" placeholder="请输入客户编号"></el-input>
+          </el-form-item>
+          <el-form-item label="应付">
+            <el-input v-model="customerEditForm.payable" type="number" :rows="2" placeholder="请输入客户编号"></el-input>
+          </el-form-item>
+          <el-form-item label="默认业务员">
+            <el-input v-model="customerEditForm.operator" :rows="2" placeholder="请输入默认业务员"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="handleEdit(false)">取 消</el-button>
+          <el-button type="primary" @click="handleEdit(true)">确 定</el-button>
+        </div>
+      </el-dialog>
+
+
+
     </div>
   </Layout>
 </template>
@@ -97,6 +205,7 @@
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
 import { getAllCustomer, createCustomer, updateCustomer } from "../../network/purchase";
+import {createCommodity, updateCommodity} from "@/network/commodity";
 export default {
   name: 'CustomerView',
   components: {
@@ -105,7 +214,19 @@ export default {
   },
   data() {
     return {
+      classificationList:['销售商','供应商'],
       customerForm: {
+        type: '',
+        level: '',
+        name: '',
+        phone: '',
+        address: '',
+        zipcode: '',
+        email: '',
+        lineOfCredit: '',
+        operator: ''
+      },
+      customerEditForm:{
         id: '',
         type: '',
         level: '',
@@ -119,15 +240,14 @@ export default {
         payable: '',
         operator: ''
       },
-      customerList: []
+      customerList: [],
+      addDialogVisible:false,
+      editDialogVisible: false
     }
   },
   async mounted() {
-    await getAllCustomer({ params : { type: 'SUPPLIER' } }).then(_res => {
-      this.customerList = this.customerList.concat(_res.result)
-    })
-    await getAllCustomer({ params : { type: 'SELLER' } }).then(_res => {
-      this.customerList = this.customerList.concat(_res.result)
+    await getAllCustomer({}).then(_res => {
+      this.customerList = _res.result
     })
   },
   methods: {
@@ -136,16 +256,63 @@ export default {
     },
     addCustomer() {
       // TODO: 新增客户
-      createCustomer(this.customerForm).then(_res => {
-        console.log(_res)
-      })
+      this.addDialogVisible=true
+    },
+    handleAdd(type) {
+      if (type === false) {
+        this.addDialogVisible = false;
+        this.addForm = {};
+      } else if (type === true) {
+        createCustomer(this.customerForm).then(_res => {
+          if (_res.code === "B0001" || _res.code === "B0002") {
+            this.$message({
+              type: 'error',
+              message: _res.msg
+            });
+          } else {
+            this.$message({
+              type: 'success',
+              message: '新增成功!'
+            });
+            this.customerForm = {};
+            this.addDialogVisible = false;
+            getAllCustomer({}).then(_res => {
+              this.customerList = _res.result
+            })
+          }
+        })
+      }
     },
     editInfo(id) {
       // TODO: 修改客户信息
-      updateCustomer(id).then(_res => {
-        console.log(_res)
-      })
-    }
+      this.customerEditForm=this.customerList.filter(x => x.id === id)[0];
+      this.editDialogVisible = true;
+    },
+    handleEdit(type) {
+      if (type === false) {
+        this.editDialogVisible = false;
+        this.customerEditForm = {};
+      } else if (type === true) {
+        updateCustomer(this.customerEditForm).then(_res => {
+          if (_res.code === 'B0003') {
+            this.$message({
+              type: 'error',
+              message: _res.msg
+            })
+          } else {
+            this.$message({
+              type: 'success',
+              message: '修改成功！'
+            })
+            this.editForm = {};
+            this.editDialogVisible = false;
+            getAllCustomer({}).then(_res => {
+              this.customerList = _res.result
+            })
+          }
+        })
+      }
+    },
   }
 }
 </script>
