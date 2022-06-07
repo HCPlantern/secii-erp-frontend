@@ -62,6 +62,7 @@ const SALE_RETURN_SECOND_APPROVAL = '/api/sale-returns/second-approval';
 const CUSTOMER_QUERY = '/api/customer/findByType';
 const CUSTOMER_CREATE = '/api/customer/createCustomer';
 const CUSTOMER_UPDATE = '/api/customer/updateCustomer';
+const CUSTOMER_DELETE='/api/customer/deleteCustomer'
 const SALE_PURCHASE_ALL = '/api/purchase/sheet-show';
 const SALE_PURCHASE_CREATE = '/api/purchase/sheet-make';
 const SALE_CUSTOMER_QUERY = '/api/customer/findByType';
@@ -119,6 +120,7 @@ module.exports = {
   CUSTOMER_QUERY,
   CUSTOMER_CREATE,
   CUSTOMER_UPDATE,
+  CUSTOMER_DELETE,
   SALE_RETURN_ALL,
   SALE_RETURN_CREATE,
   SALE_RETURN_FIRST_APPROVAL,

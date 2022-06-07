@@ -86,10 +86,15 @@
               size="small">
               编辑
             </el-button>
+            <el-button
+                @click="deleteCustomer(scope.row.id)"
+                type="text"
+                size="small">
+              删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
-
       <el-dialog
           title="新增客户"
           :visible.sync="addDialogVisible"
@@ -127,12 +132,6 @@
           <el-form-item label="应收额度">
             <el-input v-model="customerForm.lineOfCredit" type="number" :rows="2" placeholder="请输入应收额度"></el-input>
           </el-form-item>
-<!--          <el-form-item label="应收">-->
-<!--            <el-input v-model="customerForm.receivable" type="number" :rows="2" placeholder="请输入客户编号"></el-input>-->
-<!--          </el-form-item>-->
-<!--          <el-form-item label="应付">-->
-<!--            <el-input v-model="customerForm.payable" type="number" :rows="2" placeholder="请输入客户编号"></el-input>-->
-<!--          </el-form-item>-->
           <el-form-item label="默认业务员">
             <el-input v-model="customerForm.operator" :rows="2" placeholder="请输入默认业务员"></el-input>
           </el-form-item>
@@ -194,9 +193,6 @@
           <el-button type="primary" @click="handleEdit(true)">确 定</el-button>
         </div>
       </el-dialog>
-
-
-
     </div>
   </Layout>
 </template>
@@ -204,8 +200,8 @@
 <script>
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
-import { getAllCustomer, createCustomer, updateCustomer } from "../../network/purchase";
-import {createCommodity, updateCommodity} from "@/network/commodity";
+import {getAllCustomer, createCustomer, updateCustomer, deleteCustomerById} from "../../network/purchase";
+import {createCommodity, deleteCommodity, updateCommodity} from "@/network/commodity";
 export default {
   name: 'CustomerView',
   components: {
@@ -312,6 +308,36 @@ export default {
           }
         })
       }
+    },
+    deleteCustomer(id) {
+      console.log("Id是"+id)
+      let config = {
+        params: {
+          id: id
+        }
+      };
+      this.$confirm('是否要删除该商品？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteCustomerById(config).then(_res => {
+          if (_res.msg === 'Success') {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            getAllCustomer({}).then(_res => {
+              this.customerList = _res.result
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
   }
 }
