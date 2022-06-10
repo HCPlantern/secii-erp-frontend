@@ -100,7 +100,7 @@
           :visible.sync="addDialogVisible"
           width="30%"
           @close="close()">
-        <el-form :model="customerForm" :label-width="'100px'" size="mini">
+        <el-form :model="customerForm" :label-width="'100px'" size="mini" :rules="rules">
           <el-form-item label="客户分类">
             <el-select v-model="customerForm.type">
               <el-option
@@ -211,6 +211,17 @@ export default {
   data() {
     return {
       classificationList:['销售商','供应商'],
+      rules:{
+        type:[
+          {required: true,message: '请选择客户类型',trigger: 'change'}
+        ],
+        level:[
+          {required: true,message: '请填写用户类别',trigger: 'change'}
+        ],
+        name: [
+          {required: true,message: '请填写用户姓名', trigger: 'change'}
+        ]
+      },
       customerForm: {
         type: '',
         level: '',
