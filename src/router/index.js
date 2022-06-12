@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import {ROLE, PATH} from "../common/const";
+import {ROLE, PATH} from "@/common/const";
 
 const Error = () => import("../components/content/Error");
 const Login = () => import("../views/auth/Login");
@@ -27,6 +27,9 @@ const SaleReturnView = () => import("../views/sale/SaleReturnView")
 const CustomerView = () => import ("../views/purchase/CustomerView");
 const MaxAmountCustomerView = () => import("../views/purchase/MaxAmountCustomerView");
 const Approval = () => import("../views/approval/Approval");
+const AccountView=()=>import("../views/admin/AccountView")
+const CollectionView=()=>import("../views/finance/CollectionView")
+const PaymentView=()=>import("../views/finance/PaymentView")
 
 Vue.use(VueRouter);
 
@@ -162,7 +165,24 @@ const routes = [
         component: Approval,
         meta: {requiresAuth: PATH.GM_APPROVAL.requiresAuth}
     },
-
+    // 账户管理
+    {
+        path: PATH.ACCOUNT_VIEW.path,
+        component: AccountView,
+        meta: {requiresAuth: PATH.ACCOUNT_VIEW.requiresAuth}
+    },
+    // 制定收款单
+    {
+        path: PATH.COLLECTION_VIEW.path,
+        component: CollectionView,
+        meta: {requiresAuth: PATH.COLLECTION_VIEW.requiresAuth}
+    },
+    // 制定付款单
+    {
+        path: PATH.PAYMENT_VIEW.path,
+        component: PaymentView,
+        meta: {requiresAuth: PATH.PAYMENT_VIEW.requiresAuth}
+    },
     // -----------------------未找到页面-----------------------------
     {
         path: "*",

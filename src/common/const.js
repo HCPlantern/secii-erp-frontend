@@ -90,10 +90,24 @@ export const PATH = {
     path: '/maxAmountCustomerView',
     requiresAuth: [ROLE.SALE_STAFF,ROLE.SALE_MANAGER,ROLE.GM,ROLE.ADMIN]
   },
-
   // GM
   GM_APPROVAL: {
     path: '/approval',
     requiresAuth: [ROLE.GM,ROLE.ADMIN]
+  },
+  // ADMIN
+  ACCOUNT_VIEW:{
+    path: '/accountView',
+    requiresAuth:[ROLE.ADMIN]
+  },
+  // FINANCIAL_STAFF
+  COLLECTION_VIEW:{
+    path: '/collectionView',
+    requiresAuth:[ROLE.FINANCIAL_STAFF,ROLE.ADMIN]
+  },
+  PAYMENT_VIEW:{
+    path: '/paymentView',
+    requiresAuth:[ROLE.FINANCIAL_STAFF,ROLE.ADMIN]
   }
+
 }

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { ROLE, PATH } from "../common/const";
+import { ROLE, PATH } from "@/common/const";
   export default {
     beforeMount() {
       // 设置不同角色访问的首页
@@ -17,6 +17,10 @@ import { ROLE, PATH } from "../common/const";
         this.$router.push(PATH.GM_APPROVAL);
       } else if (role === ROLE.SALE_STAFF || role === ROLE.SALE_MANAGER) {
         this.$router.push(PATH.PURCHASE_VIEW)
+      } else if(role===ROLE.ADMIN){
+        this.$router.push(PATH.ACCOUNT_VIEW.path)
+      }else if(role===ROLE.FINANCIAL_STAFF){
+        this.$router.push(PATH.COLLECTION_VIEW.path)
       }
       else {
         this.$router.push("/error");

@@ -126,8 +126,6 @@
 
         </el-submenu>
 
-
-
         <el-submenu index="4"
           v-if="permit(PATH.GM_APPROVAL.requiresAuth)">
           <template slot="title">
@@ -140,6 +138,31 @@
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">审批</span>
+          </el-menu-item>
+        </el-submenu>
+
+        <el-submenu index="5" v-if="permit(PATH.ACCOUNT_VIEW.requiresAuth)">
+          <template slot="title">
+            <i class="el-icon-receiving"></i>
+            <span slot="title">账户管理</span>
+          </template>
+          <el-menu-item :index="PATH.ACCOUNT_VIEW.path" v-if="permit(PATH.ACCOUNT_VIEW.requiresAuth)">
+            <i class="el-icon-user"></i>
+            <span slot="title">公司账户管理</span>
+          </el-menu-item>
+        </el-submenu>
+        <el-submenu index="6" v-if="permit(PATH.COLLECTION_VIEW.requiresAuth)">
+          <template slot="title">
+            <i class="el-icon-receiving"></i>
+            <span slot="title">财务单据管理</span>
+          </template>
+          <el-menu-item :index="PATH.COLLECTION_VIEW.path" v-if="permit(PATH.COLLECTION_VIEW.requiresAuth)">
+            <i class="el-icon-receiving"></i>
+            <span slot="title">制定收款单</span>
+          </el-menu-item>
+          <el-menu-item :index="PATH.PAYMENT_VIEW.path" v-if="permit(PATH.PAYMENT_VIEW.requiresAuth)">
+            <i class="el-icon-receiving"></i>
+            <span slot="title">制定付款单</span>
           </el-menu-item>
         </el-submenu>
       </el-menu>

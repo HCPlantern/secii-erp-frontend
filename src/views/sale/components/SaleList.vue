@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { firstApproval, secondApproval} from '../../../network/sale'
+import { firstApproval, secondApproval} from '@/network/sale'
 export default {
   name: 'SaleList',
   props: {
