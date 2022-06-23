@@ -67,6 +67,16 @@ const SALE_PURCHASE_ALL = '/api/purchase/sheet-show';
 const SALE_PURCHASE_CREATE = '/api/purchase/sheet-make';
 const SALE_CUSTOMER_QUERY = '/api/customer/findByType';
 const SALE_CUSTOMER_MAX = '/api/sale/maxAmountCustomer';
+//财务单据管理
+const COLLECTION_SHEET_CREATE = '/api/collection/collection-sheet-make';
+const COLLECTION_SHEET_APPROVAL= '/api/collection/approve-collection-sheet'
+const COLLECTION_SHEET_SHOW='/api/collection/sheet-show'
+const PAYMENT_SHEET_CREATE='/api/payment/payment-sheet-make'
+const PAYMENT_SHEET_APPROVAL='/api/payment/approve-payment-sheet'
+const PAYMENT_SHEET_SHOW='/api/payment/sheet-show'
+//公司银行账户管理
+const COMPANY_ACCOUNT_SHOW='/api/accountManage/findCompanyAccountByName'
+
 
 module.exports = {
   TEST_GET,
@@ -125,4 +135,14 @@ module.exports = {
   SALE_RETURN_CREATE,
   SALE_RETURN_FIRST_APPROVAL,
   SALE_RETURN_SECOND_APPROVAL,
+
+  COLLECTION_SHEET_CREATE,
+  COLLECTION_SHEET_APPROVAL,
+  COLLECTION_SHEET_SHOW,
+
+  PAYMENT_SHEET_CREATE,
+  PAYMENT_SHEET_APPROVAL,
+  PAYMENT_SHEET_SHOW,
+
+  COMPANY_ACCOUNT_SHOW
 };

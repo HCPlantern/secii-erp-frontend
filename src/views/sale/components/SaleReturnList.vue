@@ -33,11 +33,7 @@
                        @click="changeState(index)">
               收起</el-button>
           </el-col>
-
         </el-row>
-
-
-
       </template>
       <div>
         <el-row>
@@ -110,7 +106,7 @@
 </template>
 
 <script>
-import { returnFirstApproval, returnSecondApproval } from '../../../network/sale'
+import { returnFirstApproval, returnSecondApproval } from '@/network/sale'
 export default {
   name: "SaleReturnList",
   props: {
