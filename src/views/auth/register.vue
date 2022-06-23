@@ -44,7 +44,8 @@ export default {
         { id: 3, name: "财务人员", value: "FINANCIAL_STAFF"},
         { id: 4, name: "销售经理", value: "SALE_MANAGER"},
         { id: 5, name: "人力资源人员", value: "HR"},
-        { id: 6, name: "总经理", value: "GM"}
+        { id: 6, name: "总经理", value: "GM"},
+        {id: 7,name:"系统管理员",value: "ADMIN"}
       ]
     }
   },

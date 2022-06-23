@@ -268,7 +268,7 @@ export default {
     handleAdd(type) {
       if (type === false) {
         this.addDialogVisible = false;
-        this.addForm = {};
+        this.customerForm = {};
       } else if (type === true) {
         createCustomer(this.customerForm).then(_res => {
           if (_res.code === "B0001" || _res.code === "B0002") {

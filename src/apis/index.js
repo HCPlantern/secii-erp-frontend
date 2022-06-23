@@ -76,7 +76,9 @@ const PAYMENT_SHEET_APPROVAL='/api/payment/approve-payment-sheet'
 const PAYMENT_SHEET_SHOW='/api/payment/sheet-show'
 //公司银行账户管理
 const COMPANY_ACCOUNT_SHOW='/api/accountManage/findCompanyAccountByName'
-
+const COMPANY_ACCOUNT_CREATE='/api/accountManage/createCompanyAccount'
+const COMPANY_ACCOUNT_UPDATE='/api/accountManage/updateCompanyAccount'
+const COMPANY_ACCOUNT_DELETE='/api/accountManage/deleteCompanyAccountById'
 
 module.exports = {
   TEST_GET,
@@ -127,6 +129,8 @@ module.exports = {
   SALE_CUSTOMER_QUERY,
   SALE_CUSTOMER_MAX,
   SALE_FIND_SHEET_BY_ID,
+  SALE_PURCHASE_ALL,
+  SALE_PURCHASE_CREATE,
   CUSTOMER_QUERY,
   CUSTOMER_CREATE,
   CUSTOMER_UPDATE,
@@ -144,5 +148,9 @@ module.exports = {
   PAYMENT_SHEET_APPROVAL,
   PAYMENT_SHEET_SHOW,
 
-  COMPANY_ACCOUNT_SHOW
+  COMPANY_ACCOUNT_SHOW,
+  COMPANY_ACCOUNT_CREATE,
+  COMPANY_ACCOUNT_UPDATE,
+  COMPANY_ACCOUNT_DELETE
+
 };
