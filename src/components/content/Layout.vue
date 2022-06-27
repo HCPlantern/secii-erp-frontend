@@ -14,8 +14,10 @@
         active-text-color="#7e57c2"
         router
       >
-        <el-submenu index="1"
-          v-if="permit(PATH.COMMODITY_CLASSIFICATION.requiresAuth)">
+        <el-submenu
+          index="1"
+          v-if="permit(PATH.COMMODITY_CLASSIFICATION.requiresAuth)"
+        >
           <template slot="title">
             <i class="el-icon-receiving"></i>
             <span slot="title">商品管理</span>
@@ -36,7 +38,10 @@
           </el-menu-item>
         </el-submenu>
 
-        <el-submenu index="2" v-if="permit(PATH.INVENTORY_OPERATION.requiresAuth)">
+        <el-submenu
+          index="2"
+          v-if="permit(PATH.INVENTORY_OPERATION.requiresAuth)"
+        >
           <template slot="title">
             <i class="el-icon-receiving"></i>
             <span slot="title">库存管理</span>
@@ -48,13 +53,13 @@
             <i class="el-icon-receiving"></i>
             <span slot="title">库存管理</span>
           </el-menu-item>
-<!--          <el-menu-item-->
-<!--            :index="PATH.INVENTORY_OPERATION.path"-->
-<!--            v-if="permit(PATH.INVENTORY_OPERATION.requiresAuth)"-->
-<!--          >-->
-<!--            <i class="el-icon-receiving"></i>-->
-<!--            <span slot="title">库存操作</span>-->
-<!--          </el-menu-item>-->
+          <!--          <el-menu-item-->
+          <!--            :index="PATH.INVENTORY_OPERATION.path"-->
+          <!--            v-if="permit(PATH.INVENTORY_OPERATION.requiresAuth)"-->
+          <!--          >-->
+          <!--            <i class="el-icon-receiving"></i>-->
+          <!--            <span slot="title">库存操作</span>-->
+          <!--          </el-menu-item>-->
           <el-menu-item
             :index="PATH.INVENTORY_VIEW.path"
             v-if="permit(PATH.INVENTORY_VIEW.requiresAuth)"
@@ -71,9 +76,7 @@
           </el-menu-item>
         </el-submenu>
 
-
-        <el-submenu index="3"
-          v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)">
+        <el-submenu index="3" v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)">
           <template slot="title">
             <i class="el-icon-sell"></i>
             <span slot="title">销售管理</span>
@@ -101,8 +104,8 @@
           </el-menu-item>
 
           <el-menu-item
-              :index="PATH.SALE_RETURN_VIEW.path"
-              v-if="permit(PATH.SALE_RETURN_VIEW.requiresAuth)"
+            :index="PATH.SALE_RETURN_VIEW.path"
+            v-if="permit(PATH.SALE_RETURN_VIEW.requiresAuth)"
           >
             <i class="el-icon-sell"></i>
             <span slot="title">销售退货管理</span>
@@ -117,17 +120,15 @@
           </el-menu-item>
 
           <el-menu-item
-              :index="PATH.MAX_AMOUNT_CUSTOMER_VIEW.path"
-              v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)"
+            :index="PATH.MAX_AMOUNT_CUSTOMER_VIEW.path"
+            v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)"
           >
             <i class="el-icon-user"></i>
             <span slot="title">消费最多客户查看</span>
           </el-menu-item>
-
         </el-submenu>
 
-        <el-submenu index="4"
-          v-if="permit(PATH.GM_APPROVAL.requiresAuth)">
+        <el-submenu index="4" v-if="permit(PATH.GM_APPROVAL.requiresAuth)">
           <template slot="title">
             <i class="el-icon-receiving"></i>
             <span slot="title">审核管理</span>
@@ -146,7 +147,10 @@
             <i class="el-icon-receiving"></i>
             <span slot="title">账户管理</span>
           </template>
-          <el-menu-item :index="PATH.ACCOUNT_VIEW.path" v-if="permit(PATH.ACCOUNT_VIEW.requiresAuth)">
+          <el-menu-item
+            :index="PATH.ACCOUNT_VIEW.path"
+            v-if="permit(PATH.ACCOUNT_VIEW.requiresAuth)"
+          >
             <i class="el-icon-user"></i>
             <span slot="title">公司账户管理</span>
           </el-menu-item>
@@ -156,11 +160,17 @@
             <i class="el-icon-receiving"></i>
             <span slot="title">财务单据管理</span>
           </template>
-          <el-menu-item :index="PATH.COLLECTION_VIEW.path" v-if="permit(PATH.COLLECTION_VIEW.requiresAuth)">
+          <el-menu-item
+            :index="PATH.COLLECTION_VIEW.path"
+            v-if="permit(PATH.COLLECTION_VIEW.requiresAuth)"
+          >
             <i class="el-icon-receiving"></i>
             <span slot="title">制定收款单</span>
           </el-menu-item>
-          <el-menu-item :index="PATH.PAYMENT_VIEW.path" v-if="permit(PATH.PAYMENT_VIEW.requiresAuth)">
+          <el-menu-item
+            :index="PATH.PAYMENT_VIEW.path"
+            v-if="permit(PATH.PAYMENT_VIEW.requiresAuth)"
+          >
             <i class="el-icon-receiving"></i>
             <span slot="title">制定付款单</span>
           </el-menu-item>
@@ -175,6 +185,7 @@
         >
           <div class="logout-name">{{ getUsername() }}</div>
         </el-tooltip>
+        <el-button @click="signIn()">打卡</el-button>
         <div class="logout" @click="logout()">退出登录</div>
       </div>
     </el-aside>
@@ -187,16 +198,17 @@
 
 <script>
 import { ROLE, PATH } from "@/common/const";
+import { signIn } from "@/network/user";
 
 export default {
   name: "Layout",
   props: {
-    activePath: String
+    activePath: String,
   },
   data() {
     return {
       ROLE: ROLE,
-      PATH: PATH
+      PATH: PATH,
     };
   },
   mounted() {},
@@ -210,7 +222,7 @@ export default {
     },
     getUserRole() {
       return sessionStorage.getItem("role");
-    }
+    },
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -230,9 +242,22 @@ export default {
       return sessionStorage.getItem("name");
     },
     permit(arr) {
-      return arr.some(role => role === sessionStorage.getItem("role"));
-    }
-  }
+      return arr.some((role) => role === sessionStorage.getItem("role"));
+    },
+    signIn() {
+      let params = {
+        params: {
+          token: sessionStorage.getItem("token"),
+        },
+      };
+      // console.log(params);
+      signIn(params).then((res) => {
+        // console.log("打卡结果", res);
+        if (res.result == 1) alert("打卡成功");
+        else if (res.result == 0) alert("今日已打卡");
+      });
+    },
+  },
 };
 </script>
 
