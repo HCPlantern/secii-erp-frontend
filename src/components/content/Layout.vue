@@ -194,7 +194,7 @@
             <span slot="title">销售明细表</span>
           </el-menu-item>
 
-          <el-menu-item :index="PATH.HISTORY_INVOICES_VIEW.path" v-if="permit(PATH.HISTORY_INVOICES_VIEW.requiresAuth)">
+          <el-menu-item :index="PATH.HISTORY_SHEET_VIEW.path" v-if="permit(PATH.HISTORY_SHEET_VIEW.requiresAuth)">
             <i class="el-icon-setting"></i>
             <span slot="title">经营历程表</span>
           </el-menu-item>

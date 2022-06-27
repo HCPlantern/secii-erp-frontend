@@ -94,8 +94,8 @@ export const PATH = {
         path: '/saleDetailView',
         requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
     },
-    HISTORY_INVOICES_VIEW: {
-        path: '/historyInvoicesView',
+    HISTORY_SHEET_VIEW: {
+        path: '/historySheetView',
         requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
     },
     BUSINESS_SITUATION_VIEW: {
