@@ -157,7 +157,6 @@ export default {
     getAllUsers() {
       findAllUsers().then(res => {
         this.operators = this.operators.concat(res.result);
-        console.log(this.operators)
       })
     },
   }
