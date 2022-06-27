@@ -26,11 +26,16 @@ const SaleView = () => import("../views/sale/SaleView");
 const SaleReturnView = () => import("../views/sale/SaleReturnView")
 const CustomerView = () => import ("../views/purchase/CustomerView");
 const MaxAmountCustomerView = () => import("../views/purchase/MaxAmountCustomerView");
-const SaleDetailView = () => import("../views/sale/SaleDetailView");
 const Approval = () => import("../views/approval/Approval");
 const AccountView = () => import("../views/admin/AccountView")
 const CollectionView = () => import("../views/finance/CollectionView")
 const PaymentView = () => import("../views/finance/PaymentView")
+
+// 报表
+const SaleDetailView = () => import("../views/document/SaleDetailView");
+const HistoryDocumentsView = () => import("../views/document/HistoryDocumentView");
+const BusinessSituationView = () => import("../views/document/BusinessSituationView");
+
 
 Vue.use(VueRouter);
 
@@ -159,12 +164,7 @@ const routes = [
         name: "MaxAmountCustomerView",
         meta: {requiresAuth: PATH.MAX_AMOUNT_CUSTOMER_VIEW.requiresAuth}
     },
-    {
-        path: PATH.SALE_DETAIL_VIEW.path,
-        component: SaleDetailView,
-        name: "SaleDetailView",
-        meta: {requiresAuth: PATH.SALE_DETAIL_VIEW.requiresAuth}
-    },
+
 
     // 审批
     {
@@ -190,6 +190,26 @@ const routes = [
         component: PaymentView,
         meta: {requiresAuth: PATH.PAYMENT_VIEW.requiresAuth}
     },
+    // 报表管理
+    {
+        path: PATH.SALE_DETAIL_VIEW.path,
+        component: SaleDetailView,
+        name: "SaleDetailView",
+        meta: {requiresAuth: PATH.SALE_DETAIL_VIEW.requiresAuth}
+    },
+    {
+        path: PATH.HISTORY_INVOICES_VIEW.path,
+        component: HistoryDocumentsView,
+        name: "HistoryDocumentsView",
+        meta: {requiresAuth: PATH.HISTORY_INVOICES_VIEW.requiresAuth}
+    },
+    {
+        path: PATH.BUSINESS_SITUATION_VIEW.path,
+        component: BusinessSituationView,
+        name: "BusinessSituationView",
+        meta: {requiresAuth: PATH.BUSINESS_SITUATION_VIEW.requiresAuth}
+    },
+
     // -----------------------未找到页面-----------------------------
     {
         path: "*",
