@@ -245,7 +245,7 @@ export default {
         } else {
           this.$message.success('查询成功!')
           this.totalFinalAmount = this.getContent.totalFinalAmount
-          this.customerInfo = this.customerInfo.concat(this.getContent.customerPO)
+          this.customerInfo = this.customerInfo.concat(this.getContent.customerVO)
           console.log(this.customerInfo)
         }
       })
