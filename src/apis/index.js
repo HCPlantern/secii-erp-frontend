@@ -82,6 +82,8 @@ const COMPANY_ACCOUNT_SHOW='/api/accountManage/findCompanyAccountByName'
 const COMPANY_ACCOUNT_CREATE='/api/accountManage/createCompanyAccount'
 const COMPANY_ACCOUNT_UPDATE='/api/accountManage/updateCompanyAccount'
 const COMPANY_ACCOUNT_DELETE='/api/accountManage/deleteCompanyAccountById'
+// 单据
+const FIND_ALL_SHEET='/api/sheet/findAllSheet'
 
 module.exports = {
   TEST_GET,
@@ -157,6 +159,8 @@ module.exports = {
   COMPANY_ACCOUNT_SHOW,
   COMPANY_ACCOUNT_CREATE,
   COMPANY_ACCOUNT_UPDATE,
-  COMPANY_ACCOUNT_DELETE
+  COMPANY_ACCOUNT_DELETE,
+
+  FIND_ALL_SHEET
 
 };

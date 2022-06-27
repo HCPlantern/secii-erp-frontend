@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import {ROLE, PATH} from "@/common/const";
+import HistorySheetView from "@/views/document/HistorySheetView";
 
 const Error = () => import("../components/content/Error");
 const Login = () => import("../views/auth/Login");
@@ -33,7 +34,7 @@ const PaymentView = () => import("../views/finance/PaymentView")
 
 // 报表
 const SaleDetailView = () => import("../views/document/SaleDetailView");
-const HistoryDocumentsView = () => import("../views/document/HistoryDocumentView");
+const HistorySheetView = () => import("../views/document/HistorySheetView");
 const BusinessSituationView = () => import("../views/document/BusinessSituationView");
 
 
@@ -198,10 +199,10 @@ const routes = [
         meta: {requiresAuth: PATH.SALE_DETAIL_VIEW.requiresAuth}
     },
     {
-        path: PATH.HISTORY_INVOICES_VIEW.path,
-        component: HistoryDocumentsView,
-        name: "HistoryDocumentsView",
-        meta: {requiresAuth: PATH.HISTORY_INVOICES_VIEW.requiresAuth}
+        path: PATH.HISTORY_SHEET_VIEW.path,
+        component: HistorySheetView,
+        name: "HistorySheetView",
+        meta: {requiresAuth: PATH.HISTORY_SHEET_VIEW.requiresAuth}
     },
     {
         path: PATH.BUSINESS_SITUATION_VIEW.path,

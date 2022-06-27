@@ -22,7 +22,7 @@
 
     <div class="select-commodity">
       <el-select v-model="commoditySelected" clearable filterable placeholder="请选择商品名" @change="filterData($event)"
-                 @clear="filteredData">
+                >
         <el-option
             v-for="item in commodities"
             :key="item.id"
@@ -35,7 +35,7 @@
 
     <div class="select-client">
       <el-select v-model="clientSelected" clearable filterable placeholder="请选择客户" @change="filterData($event)"
-                 @clear="filterData">
+                 >
         <el-option
             v-for="item in clients"
             :key="item.id"
@@ -49,7 +49,7 @@
 
     <div class="select-commodity">
       <el-select v-model="userSelected" clearable filterable placeholder="请选择业务员" @change="filterData($event)"
-                 @clear="filterData">
+                 >
         <el-option
             v-for="item in user"
             :key="item"
@@ -254,9 +254,6 @@ export default {
           return item.salesman === this.userSelected;
         })
       }
-    },
-    resetData() {
-      this.filteredData = this.data;
     },
     getAllCommodities() {
       getAllCommodity().then(res => {
