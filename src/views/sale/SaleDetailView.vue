@@ -57,6 +57,18 @@
       </el-button>
     </div>
 
+    <template>
+      <download-excel
+          class="export-excel-wrapper"
+          :data="filteredData"
+          :fields="excelFields"
+          :header="excelTitle"
+          name="销售明细表.xls"
+      >
+        <!-- 上面可以自定义自己的样式，还可以引用其他组件button -->
+        <el-button type="success">导出</el-button>
+      </download-excel>
+    </template>
 
     <div class="customer-table">
       <el-table
@@ -178,7 +190,18 @@ export default {
             picker.$emit('pick', [start, end]);
           }
         }]
-      }
+      },
+      excelTitle: '销售明细表',
+      excelFields: {
+        '时间': 'date',
+        '业务员': 'salesman',
+        '客户': 'supplier',
+        '商品名': 'name',
+        '型号': 'type',
+        '数量': 'quantity',
+        '单价': 'unitPrice',
+        '总价': 'totalPrice'
+      },
     }
   },
   async mounted() {
