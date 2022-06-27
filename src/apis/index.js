@@ -53,6 +53,7 @@ const SALE_CREATE = '/api/sale/sheet-make';
 const SALE_FIRST_APPROVAL = '/api/sale/first-approval';
 const SALE_SECOND_APPROVAL = '/api/sale/second-approval';
 const SALE_FIND_SHEET_BY_ID = '/api/sale/find-sheet';
+const SALE_FIND_DETAIL_BY_TIME = 'api/sale/find-all-sale-detail';
 //销售退货管理
 const SALE_RETURN_ALL='/api/sale-returns/sheet-show'
 const SALE_RETURN_CREATE = '/api/sale-returns/sheet-make';
@@ -129,6 +130,7 @@ module.exports = {
   SALE_CUSTOMER_QUERY,
   SALE_CUSTOMER_MAX,
   SALE_FIND_SHEET_BY_ID,
+  SALE_FIND_DETAIL_BY_TIME,
   SALE_PURCHASE_ALL,
   SALE_PURCHASE_CREATE,
   CUSTOMER_QUERY,
