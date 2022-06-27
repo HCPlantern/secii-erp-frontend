@@ -94,6 +94,14 @@ export const PATH = {
         path: '/saleDetailView',
         requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
     },
+    HISTORY_INVOICES_VIEW: {
+        path: '/historyInvoicesView',
+        requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
+    },
+    BUSINESS_SITUATION_VIEW: {
+        path: '/businessSituationView',
+        requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
+    },
     // GM
     GM_APPROVAL: {
         path: '/approval',

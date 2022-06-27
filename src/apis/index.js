@@ -34,6 +34,7 @@ const WAREHOUSE_DAILY_COUNT_EXCEL = '/api/warehouse/warehouse/counting/exportexc
 
 // 用户管理
 const FIND_ALL_SALES_MAN = '/api/user/findAllSalesMan'
+const FIND_ALL_USERS = '/api/user/find-all-users'
 
 // 销售管理
 // 进货管理
@@ -86,6 +87,7 @@ module.exports = {
   TEST_POST,
 
   FIND_ALL_SALES_MAN,
+  FIND_ALL_USERS,
 
   AUTH,
   LOGIN,

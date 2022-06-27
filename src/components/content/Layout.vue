@@ -124,13 +124,6 @@
             <span slot="title">消费最多客户查看</span>
           </el-menu-item>
 
-          <el-menu-item
-              :index="PATH.SALE_DETAIL_VIEW.path"
-              v-if="permit(PATH.SALE_DETAIL_VIEW.requiresAuth)"
-          >
-            <i class="el-icon-sell"></i>
-            <span slot="title">销售明细表</span>
-          </el-menu-item>
 
         </el-submenu>
 
@@ -173,7 +166,36 @@
             <span slot="title">制定付款单</span>
           </el-menu-item>
         </el-submenu>
+
+        <el-submenu index="7" v-if="permit(PATH.SALE_DETAIL_VIEW.requiresAuth)">
+          <template slot="title">
+            <i class="el-icon-setting"></i>
+            <span slot="title">报表管理</span>
+          </template>
+
+
+          <el-menu-item
+              :index="PATH.SALE_DETAIL_VIEW.path"
+              v-if="permit(PATH.SALE_DETAIL_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-sell"></i>
+            <span slot="title">销售明细表</span>
+          </el-menu-item>
+
+          <el-menu-item :index="PATH.HISTORY_INVOICES_VIEW.path" v-if="permit(PATH.HISTORY_INVOICES_VIEW.requiresAuth)">
+            <i class="el-icon-setting"></i>
+            <span slot="title">经营历程表</span>
+          </el-menu-item>
+
+
+          <el-menu-item :index="PATH.BUSINESS_SITUATION_VIEW.path" v-if="permit(PATH.BUSINESS_SITUATION_VIEW.requiresAuth)">
+            <i class="el-icon-setting"></i>
+            <span slot="title">经营情况表</span>
+          </el-menu-item>
+
+        </el-submenu>
       </el-menu>
+
       <div class="logout-fix">
         <el-tooltip
             class="item"
