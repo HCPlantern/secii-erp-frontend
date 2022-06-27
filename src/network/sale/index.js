@@ -2,10 +2,12 @@ import request from "@/network/request"
 const testAPI = require("@/apis")
 
 
+// 需要定义查找和修改的API
 export const getAllCustomer = config => request._get(testAPI.SALE_CUSTOMER_QUERY, config)
 export const getMaxAmountCustomerOfSalesmanByTime = config => request._get(testAPI.SALE_CUSTOMER_MAX, config)
 
 export const getAllSale = config => request._get(testAPI.SALE_ALL, config);
+export const getAllSaleDetailByTime = config => request._get(testAPI.SALE_FIND_DETAIL_BY_TIME, config);
 export const createSale = config => request._post(testAPI.SALE_CREATE, config);
 export const firstApproval = config => request._get(testAPI.SALE_FIRST_APPROVAL, config);
 export const secondApproval = config => request._get(testAPI.SALE_SECOND_APPROVAL, config);
@@ -15,7 +17,6 @@ export const createSaleReturn = config => request._post(testAPI.SALE_RETURN_CREA
 export const returnFirstApproval = config => request._get(testAPI.SALE_RETURN_FIRST_APPROVAL, config)
 export const returnSecondApproval = config => request._get(testAPI.SALE_RETURN_SECOND_APPROVAL, config)
 
-// 需要定义查找和修改的API
 
 
 

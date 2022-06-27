@@ -26,10 +26,11 @@ const SaleView = () => import("../views/sale/SaleView");
 const SaleReturnView = () => import("../views/sale/SaleReturnView")
 const CustomerView = () => import ("../views/purchase/CustomerView");
 const MaxAmountCustomerView = () => import("../views/purchase/MaxAmountCustomerView");
+const SaleDetailView = () => import("../views/sale/SaleDetailView");
 const Approval = () => import("../views/approval/Approval");
-const AccountView=()=>import("../views/admin/AccountView")
-const CollectionView=()=>import("../views/finance/CollectionView")
-const PaymentView=()=>import("../views/finance/PaymentView")
+const AccountView = () => import("../views/admin/AccountView")
+const CollectionView = () => import("../views/finance/CollectionView")
+const PaymentView = () => import("../views/finance/PaymentView")
 
 Vue.use(VueRouter);
 
@@ -157,6 +158,12 @@ const routes = [
         component: MaxAmountCustomerView,
         name: "MaxAmountCustomerView",
         meta: {requiresAuth: PATH.MAX_AMOUNT_CUSTOMER_VIEW.requiresAuth}
+    },
+    {
+        path: PATH.SALE_DETAIL_VIEW.path,
+        component: SaleDetailView,
+        name: "SaleDetailView",
+        meta: {requiresAuth: PATH.SALE_DETAIL_VIEW.requiresAuth}
     },
 
     // 审批
