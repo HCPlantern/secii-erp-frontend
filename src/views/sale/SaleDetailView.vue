@@ -58,16 +58,15 @@
     </div>
 
     <template>
-      <download-excel
-          class="export-excel-wrapper"
-          :data="filteredData"
-          :fields="excelFields"
-          :header="excelTitle"
-          name="销售明细表.xls"
-      >
-        <!-- 上面可以自定义自己的样式，还可以引用其他组件button -->
-        <el-button type="success">导出</el-button>
-      </download-excel>
+      <el-button class="export-excel-wrapper" type="success">
+        <download-excel
+            :data="filteredData"
+            :fields="excelFields"
+            name="销售明细表.xls">
+          导出
+        </download-excel>
+      </el-button>
+
     </template>
 
     <div class="customer-table">
@@ -191,7 +190,6 @@ export default {
           }
         }]
       },
-      excelTitle: '销售明细表',
       excelFields: {
         '时间': 'date',
         '业务员': 'salesman',
@@ -279,7 +277,7 @@ export default {
   margin: 1rem 1rem 1rem 1rem;
 }
 
-.select-commodity, .select-client {
+.select-commodity, .select-client, .export-excel-wrapper{
   margin: 1rem 1rem 1rem 1rem;
 }
 </style>
