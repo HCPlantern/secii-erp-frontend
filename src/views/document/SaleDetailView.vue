@@ -22,7 +22,7 @@
 
     <div class="select-commodity">
       <el-select v-model="commoditySelected" clearable filterable placeholder="请选择商品名" @change="filterData($event)"
-                 @clear="resetData">
+                 @clear="filteredData">
         <el-option
             v-for="item in commodities"
             :key="item.id"
@@ -35,12 +35,26 @@
 
     <div class="select-client">
       <el-select v-model="clientSelected" clearable filterable placeholder="请选择客户" @change="filterData($event)"
-                 @clear="resetData">
+                 @clear="filterData">
         <el-option
             v-for="item in clients"
             :key="item.id"
             :label="item.name"
             :value="item.name"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+
+    <div class="select-commodity">
+      <el-select v-model="userSelected" clearable filterable placeholder="请选择业务员" @change="filterData($event)"
+                 @clear="filterData">
+        <el-option
+            v-for="item in user"
+            :key="item"
+            :label="item"
+            :value="item"
         >
         </el-option>
       </el-select>
@@ -69,10 +83,9 @@
 
     </template>
 
-    <div class="customer-table">
+    <div class="detail-table">
       <el-table
           :data="filteredData"
-          stripe
           style="width: 100%"
           :header-cell-style="{'text-align':'center'}"
           :cell-style="{'text-align':'center'}"
@@ -148,6 +161,10 @@ import {
   getAllSaleDetailByTime
 } from "@/network/sale";
 
+import {
+  findAllUsers
+} from "@/network/user";
+
 export default {
   components: {
     Layout,
@@ -160,6 +177,8 @@ export default {
       commodities: [],
       clientSelected: '',
       clients: [],
+      userSelected: '',
+      user: [],
       data: [],
       filteredData: [],
       // datetimepicker shortcuts
@@ -205,6 +224,7 @@ export default {
   async mounted() {
     this.getAllCommodities();
     this.getAllCustomer();
+    this.findAllUsers();
   },
   computed: {
     beginDate: function () {
@@ -218,6 +238,7 @@ export default {
   methods: {
     filterData() {
       let data = this.data;
+      this.filteredData = data;
       if (this.commoditySelected !== '') {
         this.filteredData = data.filter((item) => {
           return item.name === this.commoditySelected;
@@ -226,6 +247,11 @@ export default {
       if (this.clientSelected !== '') {
         this.filteredData = this.filteredData.filter((item) => {
           return item.supplier === this.clientSelected;
+        })
+      }
+      if (this.userSelected !== '') {
+        this.filteredData = this.filteredData.filter((item) => {
+          return item.salesman === this.userSelected;
         })
       }
     },
@@ -241,6 +267,11 @@ export default {
       getAllCustomer().then(res => {
         this.clients = this.clients.concat(res.result);
       })
+    },
+    findAllUsers() {
+    findAllUsers().then(res => {
+      this.user = this.user.concat(res.result);
+    })
     },
     getData() {
       if (this.beginDate === '' || this.endDate === '') {
@@ -279,5 +310,11 @@ export default {
 
 .select-commodity, .select-client, .export-excel-wrapper{
   margin: 1rem 1rem 1rem 1rem;
+}
+
+.detail-table {
+  margin: 1rem 1rem 1rem 1rem;
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
 }
 </style>
