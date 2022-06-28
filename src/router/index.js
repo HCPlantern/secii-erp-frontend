@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import {ROLE, PATH} from "@/common/const";
-import HistorySheetView from "@/views/document/HistorySheetView";
 
 const Error = () => import("../components/content/Error");
 const Login = () => import("../views/auth/Login");
@@ -33,9 +32,9 @@ const CollectionView = () => import("../views/finance/CollectionView")
 const PaymentView = () => import("../views/finance/PaymentView")
 
 // 报表
-const SaleDetailView = () => import("../views/document/SaleDetailView");
-const HistorySheetView = () => import("../views/document/HistorySheetView");
-const BusinessSituationView = () => import("../views/document/BusinessSituationView");
+const SaleDetailView = () => import("../views/sheet/SaleDetailView");
+const HistorySheetView = () => import("../views/sheet/HistorySheetView");
+const BusinessSituationView = () => import("../views/sheet/BusinessSituationView");
 
 
 Vue.use(VueRouter);
