@@ -5,17 +5,38 @@
         <div class="form-icon-text">
           <i class="el-icon-search"></i>
           <span>筛选搜索</span>
-          <el-button
-              icon="el-icon-search"
-              type="primary"
-              style="float: right"
-              @click="queryData"
-          >
-            查询结果
-          </el-button>
+
+          <div class="button">
+            <download-excel
+                :data="filteredData"
+                :fields="excelFields"
+                name="经营历程表.xls">
+              <el-button
+                  class="export-excel-wrapper"
+                  size="small"
+                  type="success"
+                  icon="el-icon-download"
+              >
+                导出
+              </el-button>
+            </download-excel>
+          </div>
+
+          <div class="button">
+            <el-button
+                icon="el-icon-search"
+                size="small"
+                type="primary"
+                @click="queryData"
+            >
+              查询结果
+            </el-button>
+          </div>
+
         </div>
+
         <div>
-          <el-form ref="form" :model="form" label-width="100px">
+          <el-form class="form" ref="form" :model="form" label-width="100px">
 
             <el-form-item class="form-item" label="时间段">
               <el-date-picker
@@ -244,7 +265,13 @@ export default {
       dialogVisible: false,
       // 单据详情
       sheetDetail: {},
-
+      excelFields: {
+        "单据编号": "id",
+        "单据类型": "type",
+        "时间": "date",
+        "客户": "client",
+        "业务员": "operator",
+      },
     }
   },
   computed: {
@@ -378,11 +405,21 @@ export default {
   margin: 1rem;
 }
 
+.form {
+  margin: 2rem 0 2rem 0;
+}
+
 span {
   margin: 1rem;
 }
 
 .el-table {
   border-radius: 4px;
+}
+
+.button {
+  display: inline-block;
+  float: right;
+  margin: 0 1rem 0 1rem;
 }
 </style>

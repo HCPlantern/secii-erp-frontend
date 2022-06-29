@@ -22,7 +22,7 @@
 
     <div class="select-commodity">
       <el-select v-model="commoditySelected" clearable filterable placeholder="请选择商品名" @change="filterData($event)"
-                >
+      >
         <el-option
             v-for="item in commodities"
             :key="item.id"
@@ -35,7 +35,7 @@
 
     <div class="select-client">
       <el-select v-model="clientSelected" clearable filterable placeholder="请选择客户" @change="filterData($event)"
-                 >
+      >
         <el-option
             v-for="item in clients"
             :key="item.id"
@@ -49,7 +49,7 @@
 
     <div class="select-commodity">
       <el-select v-model="userSelected" clearable filterable placeholder="请选择业务员" @change="filterData($event)"
-                 >
+      >
         <el-option
             v-for="item in user"
             :key="item"
@@ -60,28 +60,33 @@
       </el-select>
     </div>
 
-    <div>
+    <div class="button">
       <el-button
           class="search"
           type="primary"
+          size="small"
           icon="el-icon-search"
           @click="getData()"
       >
-        搜索
+        查询结果
       </el-button>
     </div>
 
-    <template>
-      <el-button class="export-excel-wrapper" type="success">
-        <download-excel
-            :data="filteredData"
-            :fields="excelFields"
-            name="销售明细表.xls">
+    <div class="button">
+      <download-excel
+          :data="filteredData"
+          :fields="excelFields"
+          name="销售明细表.xls">
+        <el-button
+            icon="el-icon-download"
+            class="export-excel-wrapper"
+            type="success"
+            size="small"
+        >
           导出
-        </download-excel>
-      </el-button>
-
-    </template>
+        </el-button>
+      </download-excel>
+    </div>
 
     <div class="detail-table">
       <el-table
@@ -267,9 +272,9 @@ export default {
       })
     },
     findAllUsers() {
-    findAllUsers().then(res => {
-      this.user = this.user.concat(res.result);
-    })
+      findAllUsers().then(res => {
+        this.user = this.user.concat(res.result);
+      })
     },
     getData() {
       if (this.date === '' || this.beginDate === null || this.endDate === null) {
@@ -306,12 +311,16 @@ export default {
   margin: 1rem 1rem 1rem 1rem;
 }
 
-.select-commodity, .select-client, .export-excel-wrapper{
+.select-commodity, .select-client, .export-excel-wrapper {
   margin: 1rem 1rem 1rem 1rem;
 }
 
 .detail-table {
   margin: 1rem 1rem 1rem 1rem;
   border-radius: 4px;
+}
+
+.button {
+  display: inline-block;
 }
 </style>
