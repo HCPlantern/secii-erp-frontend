@@ -6,6 +6,7 @@
           <i class="el-icon-search"></i>
           <span>筛选搜索</span>
           <el-button
+              icon="el-icon-search"
               type="primary"
               style="float: right"
               @click="queryData"
@@ -31,9 +32,9 @@
             </el-form-item>
 
             <el-form-item class="form-item" label="单据类型">
-              <el-select v-model="form.documentType" multiple collapse-tags clearable>
+              <el-select v-model="form.sheetType" multiple collapse-tags clearable filterable @change="filterData">
                 <el-option-group
-                    v-for="group in documentType"
+                    v-for="group in sheetType"
                     :key="group.id"
                     :label="group.label">
                   <el-option
@@ -47,7 +48,7 @@
             </el-form-item>
 
             <el-form-item class="form-item" label="客户">
-              <el-select v-model="form.clients" clearable>
+              <el-select v-model="form.client" clearable filterable @change="filterData">
                 <el-option
                     v-for="item in clients"
                     :key="item.id"
@@ -58,7 +59,7 @@
             </el-form-item>
 
             <el-form-item class="form-item" label="业务员">
-              <el-select v-model="form.operator" clearable style="width:150px">
+              <el-select v-model="form.operator" clearable filterable style="width:150px" @change="filterData">
                 <el-option
                     v-for="item in operators"
                     :key="item"
@@ -80,10 +81,24 @@
 
       </el-card>
 
+      <!--dialog-->
+      <el-dialog
+          title="提示"
+          :visible.sync="dialogVisible"
+          width="30%"
+      >
+
+        <span>{{ this.sheetDetail }}</span>
+
+        <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+      </el-dialog>
 
       <div class="el-table">
         <el-table
-            :data="sheetsData"
+            :data="filteredData"
             :header-cell-style="{'text-align':'center'}"
             :cell-style="{'text-align':'center'}"
             border
@@ -96,11 +111,11 @@
           <el-table-column
               prop="id"
               label="单据编号"
-              width="80%"
+              width="150%"
           >
           </el-table-column>
           <el-table-column
-              prop="documentType"
+              prop="type"
               label="单据类型"
           >
           </el-table-column>
@@ -146,6 +161,16 @@ import Title from "@/components/content/Title";
 import {formatDate} from "@/common/utils";
 import {getAllCustomer} from "@/network/sale";
 import {findAllUsers} from "@/network/user";
+import {findAllSheet} from "@/network/sheet";
+
+import {getSaleBySheetId} from "@/network/sale";
+import {getSaleReturnBySheetId} from "@/network/sale";
+import {getPurchaseBySheetId} from "@/network/purchase";
+import {getPurchaseReturnBySheetId} from "@/network/purchase";
+import {getPaymentSheetById} from "@/network/finance";
+import {getCollectionSheetById} from "@/network/finance";
+import {getWarehouseInputSheetById} from "@/network/warehouse";
+import {getWarehouseOutputSheetById} from "@/network/warehouse";
 
 export default {
   components: {
@@ -153,8 +178,12 @@ export default {
     Title
   },
   async mounted() {
-    this.getAllCustomer();
-    this.getAllUsers();
+    getAllCustomer().then(res => {
+      this.clients = this.clients.concat(res.result);
+    });
+    findAllUsers().then(res => {
+      this.operators = this.operators.concat(res.result);
+    });
   },
   data() {
     return {
@@ -163,13 +192,13 @@ export default {
       // 表单内容
       form: {
         date: "",
-        documentType: [],
+        sheetType: [],
         client: "",
         operator: "",
       },
-      documentType: [{
+      sheetType: [{
         label: "销售类单据",
-        options: [{id: '10', name: '销售出货单'}, {id: '11', name: '销售退货单'}],
+        options: [{id: '10', name: '销售单'}, {id: '11', name: '销售退货单'}],
       }, {
         label: "进货类单据",
         options: [{id: '20', name: '进货单'}, {id: '21', name: '进货退货单'}],
@@ -207,92 +236,33 @@ export default {
           }
         }]
       },
-      // 单据列表及其详细内容
-      sheetsData: [{
-        id: 1,
-        documentType: "销售出货单",
-        client: "客户1",
-        operator: "业务员1",
-        date: "2018-01-01",
-        amount: 100,
-      }, {
-        id: 2,
-        documentType: "销售退货单",
-        client: "客户2",
-        operator: "业务员2",
-        date: "2018-01-02",
-        amount: 200,
-      }, {
-        id: 3,
-        documentType: "进货单",
-        client: "客户3",
-        operator: "业务员3",
-        date: "2018-01-03",
-        amount: 300,
-      }, {
-        id: 4,
-        documentType: "进货退货单",
-        client: "客户4",
-        operator: "业务员4",
-        date: "2018-01-04",
-        amount: 400,
-      }, {
-        id: 5,
-        documentType: "付款单",
-        client: "客户5",
-        operator: "业务员5",
-        date: "2018-01-05",
-        amount: 500,
-      }, {
-        id: 6,
-        documentType: "收款单",
-        client: "客户6",
-        operator: "业务员6",
-        date: "2018-01-06",
-        amount: 600,
-      }, {
-        id: 7,
-        documentType: "现金费用单",
-        client: "客户7",
-        operator: "业务员7",
-        date: "2018-01-07",
-        amount: 700,
-      }, {
-        id: 8,
-        documentType: "工资单",
-      }],
+      // 单据列表
+      sheetsData: [],
       filteredData: [],
       // 多选框的选中值
       multipleSelection: [],
+      dialogVisible: false,
+      // 单据详情
+      sheetDetail: {},
 
     }
   },
   computed: {
     beginDate: function () {
-      return this.form.date === '' ? '' : formatDate(this.form.date[0])
+      return this.form.date === null ? null : formatDate(this.form.date[0])
     },
     endDate: function () {
-      return this.form.date === '' ? '' : formatDate(this.form.date[1])
+      return this.form.date === null ? null : formatDate(this.form.date[1])
     },
   },
   methods: {
-    getAllCustomer() {
-      getAllCustomer().then(res => {
-        this.clients = this.clients.concat(res.result);
-      })
-    },
-    getAllUsers() {
-      findAllUsers().then(res => {
-        this.operators = this.operators.concat(res.result);
-      })
-    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     // 查询
     queryData() {
-      if (this.beginDate === '' || this.endDate === '') {
-        this.$message.error('缺少查询条件！')
+      if (this.form.date === '' || this.beginDate === null || this.endDate === null) {
+        this.$message.error('请选择时间段')
         return
       }
       const config = {
@@ -301,26 +271,87 @@ export default {
           endDateStr: this.endDate
         }
       }
-
+      findAllSheet(config).then(res => {
+        if (res.code === '00000') {
+          this.$message.success('查询成功')
+          this.sheetsData = [];
+          this.sheetsData = this.sheetsData.concat(res.result);
+          this.filteredData = this.sheetsData;
+          this.filterData();
+        } else {
+          this.$message.error('该时间段内无数据')
+        }
+      })
     },
     handleView(row) {
-
+      this.sheetDetail = {};
+      this.dialogVisible = true;
+      const config = {
+        params: {
+          id: row.id
+        }
+      }
+      switch (row.type) {
+        case '销售单':
+          getSaleBySheetId(config).then(res => {
+            this.sheetDetail = res.result;
+          })
+          break;
+        case '销售退货单':
+          getSaleReturnBySheetId(config).then(res => {
+            this.sheetDetail = res.result;
+          })
+          break;
+        case '进货单':
+          getPurchaseBySheetId(config).then(res => {
+            this.sheetDetail = res.result;
+          })
+          break;
+        case '进货退货单':
+          getPurchaseReturnBySheetId(config).then(res => {
+            this.sheetDetail = res.result;
+          })
+          break;
+        case '付款单':
+          getPaymentSheetById(config).then(res => {
+            this.sheetDetail = res.result;
+          })
+          break;
+        case '收款单':
+          getCollectionSheetById(config).then(res => {
+            this.sheetDetail = res.result;
+          })
+          break;
+        case '工资单':
+          this.$message.error('不支持该单据类型')
+          break;
+        case '入库单':
+          getWarehouseInputSheetById(config).then(res => {
+            this.sheetDetail = res.result;
+          })
+          break;
+        case '出库单':
+          getWarehouseOutputSheetById(config).then(res => {
+            this.sheetDetail = res.result;
+          })
+          break;
+      }
     },
     filterData() {
       this.filteredData = this.sheetsData;
-      if (this.form.documentType.length > 0) {
-        this.filteredData = this.filteredData.filter(item => {
-          return this.form.documentType.includes(item.documentType)
+      if (this.form.sheetType.length > 0) {
+        this.filteredData = this.filteredData.filter((item) => {
+          return this.form.sheetType.includes(item.type);
         })
       }
-      if (this.form.client.length > 0) {
-        this.filteredData = this.filteredData.filter(item => {
-          return this.form.client.includes(item.client)
+      if (this.form.client !== '') {
+        this.filteredData = this.filteredData.filter((item) => {
+          return this.form.client.includes(item.client);
         })
       }
-      if (this.form.operator.length > 0) {
-        this.filteredData = this.filteredData.filter(item => {
-          return this.form.operator.includes(item.operator)
+      if (this.form.operator !== '') {
+        this.filteredData = this.filteredData.filter((item) => {
+          return this.form.operator.includes(item.operator);
         })
       }
     },

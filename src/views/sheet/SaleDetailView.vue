@@ -89,6 +89,7 @@
           style="width: 100%"
           :header-cell-style="{'text-align':'center'}"
           :cell-style="{'text-align':'center'}"
+          border
       >
         <el-table-column
             prop="date"
@@ -228,10 +229,10 @@ export default {
   },
   computed: {
     beginDate: function () {
-      return this.date === '' ? '' : formatDate(this.date[0])
+      return this.date === null ? null : formatDate(this.date[0])
     },
     endDate: function () {
-      return this.date === '' ? '' : formatDate(this.date[1])
+      return this.date === null ? null : formatDate(this.date[1])
     },
 
   },
@@ -271,8 +272,8 @@ export default {
     })
     },
     getData() {
-      if (this.beginDate === '' || this.endDate === '') {
-        this.$message.error('缺少查询条件！')
+      if (this.date === '' || this.beginDate === null || this.endDate === null) {
+        this.$message.error('请选择时间段');
         return
       }
       const config = {
@@ -283,13 +284,13 @@ export default {
       }
       getAllSaleDetailByTime(config).then(res => {
         if (res.code === '00000') {
-          this.$message.success('查询成功!')
+          this.$message.success('查询成功')
           this.data = [];
           this.data = this.data.concat(res.result);
           this.filteredData = this.data;
           this.filterData();
         } else {
-          this.$message.error('该时间段内无数据！');
+          this.$message.error('该时间段内无数据');
         }
       })
 
@@ -311,7 +312,6 @@ export default {
 
 .detail-table {
   margin: 1rem 1rem 1rem 1rem;
-  border: 1px solid #ebeef5;
   border-radius: 4px;
 }
 </style>

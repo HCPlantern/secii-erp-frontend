@@ -11,6 +11,7 @@ export const returnFirstApproval = config => request._get(testAPI.PURCHASE_RETUR
 export const returnSecondApproval = config => request._get(testAPI.PURCHASE_RETURN_SECOND_APPROVAL, config)
 export const getAllCustomer = config => request._get(testAPI.CUSTOMER_QUERY, config)
 export const getPurchaseBySheetId = config => request._get(testAPI.PURCHASE_FIND_SHEET_BY_ID, config)
+export const getPurchaseReturnBySheetId = config => request._get(testAPI.PURCHASE_RETURN_FIND_SHEET_BY_ID, config)
 export const createCustomer = config => request._post(testAPI.CUSTOMER_CREATE, config)
 export const updateCustomer = config => request._post(testAPI.CUSTOMER_UPDATE, config)
 export const deleteCustomerById=config=>request._get(testAPI.CUSTOMER_DELETE,config)

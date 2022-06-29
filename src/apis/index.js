@@ -24,7 +24,9 @@ const WAREHOUSE_INPUT = '/api/warehouse/input';
 const WAREHOUSE_OUTPUT_PRE = '/api/warehouse/product/count';
 const WAREHOUSE_OUTPUT = '/api/warehouse/output';
 const WAREHOUSE_GET_INPUTSHEET = '/api/warehouse/inputSheet/state';
+const WAREHOUSE_FIND_INPUTSHEET_BY_ID = '/api/warehouse/inputSheet/find-sheet';
 const WAREHOUSE_GET_OUTPUTSHEET = '/api/warehouse/outputSheet/state';
+const WAREHOUSE_FIND_OUTPUTSHEET_BY_ID = '/api/warehouse/outputSheet/find-sheet';
 const WAREHOUSE_IO_DEATIL_BY_TIME = '/api/warehouse/sheetContent/time';
 const WAREHOUSE_IPQ_BY_TIME = '/api/warehouse/inputSheet/time/quantity';
 const WAREHOUSE_OPQ_BY_TIME = '/api/warehouse/outputSheet/time/quantity';
@@ -49,6 +51,7 @@ const PURCHASE_RETURN_ALL = '/api/purchase-returns/sheet-show';
 const PURCHASE_RETURN_CREATE = '/api/purchase-returns/sheet-make';
 const PURCHASE_RETURN_FIRST_APPROVAL = '/api/purchase-returns/first-approval';
 const PURCHASE_RETURN_SECOND_APPROVAL = '/api/purchase-returns/second-approval';
+const PURCHASE_RETURN_FIND_SHEET_BY_ID = '/api/purchase-returns/find-sheet';
 // 销售管理
 const SALE_ALL = '/api/sale/sheet-show';
 const SALE_CREATE = '/api/sale/sheet-make';
@@ -57,6 +60,7 @@ const SALE_SECOND_APPROVAL = '/api/sale/second-approval';
 const SALE_FIND_SHEET_BY_ID = '/api/sale/find-sheet';
 const SALE_FIND_DETAIL_BY_TIME = 'api/sale/find-all-sale-detail';
 //销售退货管理
+const SALE_RETURN_FIND_SHEET_BY_ID = '/api/sale-returns/find-sheet';
 const SALE_RETURN_ALL='/api/sale-returns/sheet-show'
 const SALE_RETURN_CREATE = '/api/sale-returns/sheet-make';
 const SALE_RETURN_FIRST_APPROVAL = '/api/sale-returns/first-approval';
@@ -74,9 +78,12 @@ const SALE_CUSTOMER_MAX = '/api/sale/maxAmountCustomer';
 const COLLECTION_SHEET_CREATE = '/api/collection/collection-sheet-make';
 const COLLECTION_SHEET_APPROVAL= '/api/collection/approve-collection-sheet'
 const COLLECTION_SHEET_SHOW='/api/collection/sheet-show'
+const COLLECTION_FIND_SHEET_BY_ID = '/api/collection/find-sheet'
 const PAYMENT_SHEET_CREATE='/api/payment/payment-sheet-make'
 const PAYMENT_SHEET_APPROVAL='/api/payment/approve-payment-sheet'
 const PAYMENT_SHEET_SHOW='/api/payment/sheet-show'
+const PAYMENT_FIND_SHEET_BY_ID='/api/payment/find-sheet'
+
 //公司银行账户管理
 const COMPANY_ACCOUNT_SHOW='/api/accountManage/findCompanyAccountByName'
 const COMPANY_ACCOUNT_CREATE='/api/accountManage/createCompanyAccount'
@@ -118,6 +125,8 @@ module.exports = {
   WAREHOUSE_INPUTSHEET_APPROVE,
   WAREHOUSE_DAILY_COUNT,
   WAREHOUSE_DAILY_COUNT_EXCEL,
+  WAREHOUSE_FIND_INPUTSHEET_BY_ID,
+  WAREHOUSE_FIND_OUTPUTSHEET_BY_ID,
 
   PURCHASE_ALL,
   PURCHASE_CREATE,
@@ -128,6 +137,7 @@ module.exports = {
   PURCHASE_RETURN_FIRST_APPROVAL,
   PURCHASE_RETURN_SECOND_APPROVAL,
   PURCHASE_FIND_SHEET_BY_ID,
+  PURCHASE_RETURN_FIND_SHEET_BY_ID,
 
   SALE_ALL,
   SALE_CREATE,
@@ -147,11 +157,13 @@ module.exports = {
   SALE_RETURN_CREATE,
   SALE_RETURN_FIRST_APPROVAL,
   SALE_RETURN_SECOND_APPROVAL,
+  SALE_RETURN_FIND_SHEET_BY_ID,
 
   COLLECTION_SHEET_CREATE,
   COLLECTION_SHEET_APPROVAL,
   COLLECTION_SHEET_SHOW,
-
+  COLLECTION_FIND_SHEET_BY_ID,
+  PAYMENT_FIND_SHEET_BY_ID,
   PAYMENT_SHEET_CREATE,
   PAYMENT_SHEET_APPROVAL,
   PAYMENT_SHEET_SHOW,
