@@ -131,17 +131,24 @@
         </el-submenu>
 
         <el-submenu index="4"
-                    v-if="permit(PATH.GM_APPROVAL.requiresAuth)">
+                    v-if="permit(PATH.COLLECTION_SHEET_APPROVAL_VIEW.requiresAuth)">
           <template slot="title">
             <i class="el-icon-receiving"></i>
             <span slot="title">审核管理</span>
           </template>
           <el-menu-item
-              :index="PATH.GM_APPROVAL.path"
-              v-if="permit(PATH.GM_APPROVAL.requiresAuth)"
+              :index="PATH.COLLECTION_SHEET_APPROVAL_VIEW.path"
+              v-if="permit(PATH.COLLECTION_SHEET_APPROVAL_VIEW.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
-            <span slot="title">审批</span>
+            <span slot="title">收款单审批</span>
+          </el-menu-item>
+          <el-menu-item
+              :index="PATH.PAYMENT_SHEET_APPROVAL_VIEW.path"
+              v-if="permit(PATH.PAYMENT_SHEET_APPROVAL_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-receiving"></i>
+            <span slot="title">付款单审批</span>
           </el-menu-item>
         </el-submenu>
 

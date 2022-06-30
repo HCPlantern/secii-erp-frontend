@@ -103,10 +103,17 @@ export const PATH = {
         requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
     },
     // GM
-    GM_APPROVAL: {
-        path: '/approval',
-        requiresAuth: [ROLE.GM, ROLE.ADMIN]
+    // 收款单审批
+    COLLECTION_SHEET_APPROVAL_VIEW:{
+        path: '/collectionSheetApprovalView',
+        requiresAuth:[ROLE.GM,ROLE.ADMIN]
     },
+    // 付款单审批
+    PAYMENT_SHEET_APPROVAL_VIEW:{
+        path: '/paymentSheetApprovalView',
+        requiresAuth:[ROLE.GM,ROLE.ADMIN]
+    },
+
     // ADMIN
     ACCOUNT_VIEW: {
         path: '/accountView',

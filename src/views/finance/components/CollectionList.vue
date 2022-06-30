@@ -11,11 +11,6 @@
                        type="success" icon="el-icon-check" circle size="mini" @click="approval(item.id)"></el-button>
             <el-button v-if="authorization() === 1"
                        type="danger" icon="el-icon-close" circle size="mini" @click="deny(item.id)"></el-button>
-<!--            <el-button v-if="authorization() === 2" style="margin-left: 10px"-->
-<!--                       type="primary" icon="el-icon-check" circle size="mini" @click="approval(item.id)"></el-button>-->
-<!--            <el-button v-if="authorization() === 2"-->
-<!--                       type="danger" icon="el-icon-close" circle size="mini" @click="deny(item.id)"></el-button>-->
-            <!--            是否审核通过-->
             <span style="margin-left: 10px">
               <el-tag v-if="type === 2" effect="dark" type='success'>审核通过</el-tag>
               <el-tag v-if="type === 3" effect="dark" type='danger'>审核未通过</el-tag>

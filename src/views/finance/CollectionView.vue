@@ -3,6 +3,7 @@
 <Layout>
   <Title title="收款单管理"></Title>
   <el-button type="primary" size="medium" @click="dialogVisible=true">制定收款单</el-button>
+<!--  主页面-->
   <div class="body">
     <el-tabs v-model="activeName" :stretch="true">
       <el-tab-pane label="待审批" name="PENDING">
@@ -33,6 +34,8 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+
+<!--  创建收款单时的dialog-->
   <el-dialog
     title="创建收款单"
     :visible.sync="dialogVisible"
@@ -176,7 +179,6 @@ export default {
         this.collectionSheet.collectionContent.splice(index,1)
       }
     }
-
   }
 }
 </script>

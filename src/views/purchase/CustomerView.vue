@@ -6,6 +6,7 @@
       <el-table
         :data="customerList"
         stripe
+        border
         style="width: 100%"
         :header-cell-style="{'text-align':'center'}"
         :cell-style="{'text-align':'center'}">
@@ -17,7 +18,7 @@
         <el-table-column
           prop="name"
           label="姓名"
-          width="70">
+          width="100">
         </el-table-column>
         <el-table-column
           prop="type"
@@ -78,19 +79,21 @@
           width="120">
         </el-table-column>
         <el-table-column
+            fixed="right"
+            width="120"
           label="操作">
           <template slot-scope="scope">
             <el-button
               @click.native.prevent="editInfo(scope.row.id)"
               type="text"
               size="small">
-              编辑
+              <i class="el-icon-edit">编辑</i>
             </el-button>
             <el-button
                 @click="deleteCustomer(scope.row.id)"
                 type="text"
                 size="small">
-              删除
+              <i class="el-icon-delete">删除</i>
             </el-button>
           </template>
         </el-table-column>
@@ -327,7 +330,7 @@ export default {
           id: id
         }
       };
-      this.$confirm('是否要删除该商品？', '提示', {
+      this.$confirm('是否要删除该客户？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

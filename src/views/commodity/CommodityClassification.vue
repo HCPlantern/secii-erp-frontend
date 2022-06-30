@@ -82,7 +82,7 @@
   import { getAllCommodityClassification,
            createCommodityClassification,
            deleteCommodityClassification,
-           updateCommodityClassification } from "../../network/commodity";
+           updateCommodityClassification } from "@/network/commodity";
   export default {
     components: {
       Layout,

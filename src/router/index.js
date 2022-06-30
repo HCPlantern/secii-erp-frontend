@@ -26,7 +26,8 @@ const SaleView = () => import("../views/sale/SaleView");
 const SaleReturnView = () => import("../views/sale/SaleReturnView")
 const CustomerView = () => import ("../views/purchase/CustomerView");
 const MaxAmountCustomerView = () => import("../views/purchase/MaxAmountCustomerView");
-const Approval = () => import("../views/approval/Approval");
+const CollectionSheetApproval=()=>import("../views/approval/CollectionSheetApproval")
+const PaymentSheetApproval=()=>import("../views/approval/PaymentSheetApproval")
 const AccountView = () => import("../views/admin/AccountView")
 const CollectionView = () => import("../views/finance/CollectionView")
 const PaymentView = () => import("../views/finance/PaymentView")
@@ -166,12 +167,19 @@ const routes = [
     },
 
 
-    // 审批
+    // 总经理的审批页面
+    // 将这个分解成 收款单审批 付款单审批 工资单审批
     {
-        path: PATH.GM_APPROVAL.path,
-        component: Approval,
-        meta: {requiresAuth: PATH.GM_APPROVAL.requiresAuth}
+        path: PATH.COLLECTION_SHEET_APPROVAL_VIEW.path,
+        component: CollectionSheetApproval,
+        meta: {requiresAuth: PATH.COLLECTION_SHEET_APPROVAL_VIEW.requiresAuth}
     },
+    {
+        path: PATH.PAYMENT_SHEET_APPROVAL_VIEW.path,
+        component: PaymentSheetApproval,
+        meta: {requiresAuth: PATH.PAYMENT_SHEET_APPROVAL_VIEW.requiresAuth}
+    },
+
     // 账户管理
     {
         path: PATH.ACCOUNT_VIEW.path,
