@@ -36,9 +36,9 @@
         </div>
 
         <div>
-          <el-form class="form" ref="form" :model="form" label-width="100px">
+          <el-form class="form" ref="form" :model="form" :rules="formRule" label-width="100px">
 
-            <el-form-item class="form-item" label="时间段">
+            <el-form-item class="form-item" label="时间段" prop="time">
               <el-date-picker
                   class="select-time-range"
                   v-model="form.date"
@@ -52,7 +52,7 @@
               ></el-date-picker>
             </el-form-item>
 
-            <el-form-item class="form-item" label="单据类型">
+            <el-form-item class="form-item" label="单据类型" prop="type">
               <el-select v-model="form.sheetType" multiple collapse-tags clearable filterable @change="filterData">
                 <el-option-group
                     v-for="group in sheetType"
@@ -68,7 +68,7 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item class="form-item" label="客户">
+            <el-form-item class="form-item" label="客户" prop="client">
               <el-select v-model="form.client" clearable filterable @change="filterData">
                 <el-option
                     v-for="item in clients"
@@ -79,7 +79,7 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item class="form-item" label="业务员">
+            <el-form-item class="form-item" label="业务员" prop="operator">
               <el-select v-model="form.operator" clearable filterable style="width:150px" @change="filterData">
                 <el-option
                     v-for="item in operators"
@@ -108,9 +108,7 @@
           :visible.sync="dialogVisible"
           width="30%"
       >
-
         <span>{{ this.sheetDetail }}</span>
-
         <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -217,6 +215,11 @@ export default {
         client: "",
         operator: "",
       },
+      formRule: {
+        time: [
+          {required: true, message: "请选择日期", trigger: "change"}
+        ],
+      },
       sheetType: [{
         label: "销售类单据",
         options: [{id: '10', name: '销售单'}, {id: '11', name: '销售退货单'}],
@@ -256,7 +259,8 @@ export default {
             picker.$emit('pick', [start, end]);
           }
         }]
-      },
+      }
+      ,
       // 单据列表
       sheetsData: [],
       filteredData: [],
@@ -363,6 +367,7 @@ export default {
           })
           break;
       }
+      console.log(this.sheetDetail)
     },
     filterData() {
       this.filteredData = this.sheetsData;

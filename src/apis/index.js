@@ -91,6 +91,7 @@ const COMPANY_ACCOUNT_UPDATE='/api/accountManage/updateCompanyAccount'
 const COMPANY_ACCOUNT_DELETE='/api/accountManage/deleteCompanyAccountById'
 // 单据
 const FIND_ALL_SHEET='/api/sheet/findAllSheet'
+const GET_FINANCIAL_REPORT='/api/finance/getFinancialReport'
 
 module.exports = {
   TEST_GET,
@@ -173,6 +174,7 @@ module.exports = {
   COMPANY_ACCOUNT_UPDATE,
   COMPANY_ACCOUNT_DELETE,
 
-  FIND_ALL_SHEET
+  FIND_ALL_SHEET,
+  GET_FINANCIAL_REPORT,
 
 };
