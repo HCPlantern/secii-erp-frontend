@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <Title title="经营历程表"></Title>
     <div class="page">
       <el-card class="el-card" shadow="hover">
         <div class="form-icon-text">

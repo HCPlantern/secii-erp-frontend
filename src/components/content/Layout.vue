@@ -294,8 +294,8 @@ export default {
       // console.log(params);
       signIn(params).then((res) => {
         // console.log("打卡结果", res);
-        if (res.result == 1) alert("打卡成功");
-        else if (res.result == 0) alert("今日已打卡");
+        if (res.result === 1) alert("打卡成功");
+        else if (res.result === 0) alert("今日已打卡");
       });
     },
   },

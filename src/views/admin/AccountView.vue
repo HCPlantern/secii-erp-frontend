@@ -2,58 +2,72 @@
   <Layout>
     <Title title="公司账户管理"></Title>
     <el-button type="primary" size="medium" @click="addAccount">新增账户</el-button>
+    <div class="search" style="width: 20%;margin-top: 20px">
+      <el-input
+          prefix-icon="el-icon-search"
+          v-model="search"
+          size="mini"
+          placeholder="请输入关键字搜索账户"/>
+
+    </div>
+
     <div style="margin-top: 10px">
       <el-table
           :data="accountList.filter(data => !search || data.name.includes(search))"
           stripe
+          border
           style="width: 100%"
           :header-cell-style="{'text-align':'center'}"
           :cell-style="{'text-align':'center'}">
         <el-table-column
             prop="id"
             label="账户id"
-            width="160">
+            fit>
         </el-table-column>
         <el-table-column
             prop="name"
             label="账户名称"
-            width="160">
+            fit>
         </el-table-column>
         <el-table-column
             prop="amount"
             label="账户余额(元)"
-            width="160">
+            fit>
         </el-table-column>
         <el-table-column
+            fit
             label="操作">
           <template slot-scope="scope">
             <el-button
                 @click.native.prevent="editInfo(scope.row.id)"
                 type="text"
                 size="small">
-              编辑
+              <i class="el-icon-edit">编辑</i>
             </el-button>
             <el-button
                 @click="deleteAccount(scope.row.id)"
                 type="text"
                 size="small">
-              删除
+              <i class="el-icon-delete">删除</i>
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column>
-          <template slot="header">
-            <div class="top">
-              <div class="left">
-                查询账户
-                <el-input
-                    v-model="search"
-                    size="mini"
-                    placeholder="输入关键字搜索"/>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
+
+<!--        <el-table-column>-->
+<!--          <template slot="header">-->
+<!--            <div class="top">-->
+<!--              <div class="left">-->
+<!--                查询账户-->
+<!--                <el-input-->
+<!--                    v-model="search"-->
+<!--                    size="mini"-->
+<!--                    placeholder="输入关键字搜索"/>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+
+
       </el-table>
 <!--      新增账户的模态框-->
       <el-dialog
