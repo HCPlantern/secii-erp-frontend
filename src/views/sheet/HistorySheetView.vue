@@ -104,29 +104,29 @@
       </el-card>
 
       <!--dialog-->
-<!--      <el-dialog-->
-<!--          title="提示"-->
-<!--          :visible.sync="dialogVisible"-->
-<!--          width="30%"-->
-<!--      >-->
-<!--&lt;!&ndash;        这里可以优化一下&ndash;&gt;-->
-<!--        <span>{{ this.sheetDetail }}</span>-->
-<!--        <span slot="footer" class="dialog-footer">-->
-<!--          <el-button @click="dialogVisible = false">取 消</el-button>-->
-<!--          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
-<!--        </span>-->
-<!--      </el-dialog>-->
+      <!--      <el-dialog-->
+      <!--          title="提示"-->
+      <!--          :visible.sync="dialogVisible"-->
+      <!--          width="30%"-->
+      <!--      >-->
+      <!--&lt;!&ndash;        这里可以优化一下&ndash;&gt;-->
+      <!--        <span>{{ this.sheetDetail }}</span>-->
+      <!--        <span slot="footer" class="dialog-footer">-->
+      <!--          <el-button @click="dialogVisible = false">取 消</el-button>-->
+      <!--          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
+      <!--        </span>-->
+      <!--      </el-dialog>-->
 
       <el-dialog
           title="销售单详细信息"
           :visible.sync="saleSheetDialogVisible" width="80%"
       >
         <el-table :data="sheetDetail"
-                   stripe
-                   border
-                   style="width: 100%"
-                   :header-cell-style="{'text-align':'center'}"
-                   :cell-style="{'text-align':'center'}">
+                  stripe
+                  border
+                  style="width: 100%"
+                  :header-cell-style="{'text-align':'center'}"
+                  :cell-style="{'text-align':'center'}">
           <el-table-column property="id" label="销售单编号" fit></el-table-column>
           <el-table-column property="supplier" label="供应商编号" fit></el-table-column>
           <el-table-column property="salesman" label="业务员" fit></el-table-column>
@@ -383,6 +383,34 @@
       </el-dialog>
 
 
+      <el-dialog
+          title="收款单详细信息"
+          :visible.sync="salarySheetDialogVisible" width="80%"
+      >
+        <el-table :data="sheetDetail"
+                  stripe
+                  border
+                  style="width: 100%"
+                  :header-cell-style="{'text-align':'center'}"
+                  :cell-style="{'text-align':'center'}">
+          <el-table-column property="id" label="收款单编号" fit></el-table-column>
+          <el-table-column property="employeeId" label="员工Id" fit></el-table-column>
+          <el-table-column property="createTime" label="创建时间" fit></el-table-column>
+          <el-table-column property="baseWage" label="基本工资" fit></el-table-column>
+          <el-table-column property="postWage" label="岗位工资" fit></el-table-column>
+          <el-table-column property="totalSalary" label="未税总工资" fit></el-table-column>
+          <el-table-column property="taxedSalary" label="税后总工资" fit></el-table-column>
+          <el-table-column property="state" label="单据状态" fit></el-table-column>
+        </el-table>
+
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="salarySheetDialogVisible = false">取 消</el-button>
+        </span>
+      </el-dialog>
+
+
+
+
 
       <el-dialog
           title="入库单详细信息"
@@ -428,7 +456,6 @@
       </el-dialog>
 
 
-
       <el-dialog
           title="出库单详细信息"
           :visible.sync="warehouseOutputSheetDialogVisible" width="80%"
@@ -470,7 +497,6 @@
           <el-button type="primary" @click="warehouseOutputSheetContentDialogVisible=true">查看出库单内容</el-button>
         </span>
       </el-dialog>
-
 
 
       <div class="el-table">
@@ -536,18 +562,24 @@
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
 import {formatDate} from "@/common/utils";
-import {getAllCustomer} from "@/network/sale";
 import {findAllUsers} from "@/network/user";
 import {findAllSheet} from "@/network/sheet";
 
-import {getSaleBySheetId} from "@/network/sale";
-import {getSaleReturnBySheetId} from "@/network/sale";
-import {getPurchaseBySheetId} from "@/network/purchase";
-import {getPurchaseReturnBySheetId} from "@/network/purchase";
-import {getPaymentSheetById} from "@/network/finance";
-import {getCollectionSheetById} from "@/network/finance";
-import {getWarehouseInputSheetById} from "@/network/warehouse";
-import {getWarehouseOutputSheetById} from "@/network/warehouse";
+import {
+  getAllCustomer, getSaleBySheetId, getSaleReturnBySheetId
+} from "@/network/sale";
+import {
+  getPurchaseBySheetId, getPurchaseReturnBySheetId
+} from "@/network/purchase";
+import {
+  getCollectionSheetById, getPaymentSheetById
+} from "@/network/finance";
+import {
+  getWarehouseOutputSheetById, getWarehouseInputSheetById
+} from "@/network/warehouse";
+import {
+  getSalarySheetById
+} from "@/network/salary";
 
 export default {
   components: {
@@ -622,13 +654,13 @@ export default {
       // 单据列表
       sheetsData: [],
       saleSheetContent: [],
-      saleReturnSheetContent:[],
+      saleReturnSheetContent: [],
       purchaseSheetContent: [],
-      purchaseReturnsSheetContent:[],
-      paymentSheetContent:[],
-      collectionSheetContent:[],
-      warehouseInputSheetContent:[],
-      warehouseOutputSheetContent:[],
+      purchaseReturnsSheetContent: [],
+      paymentSheetContent: [],
+      collectionSheetContent: [],
+      warehouseInputSheetContent: [],
+      warehouseOutputSheetContent: [],
 
       filteredData: [],
       // 多选框的选中值
@@ -652,6 +684,8 @@ export default {
 
       collectionSheetDialogVisible: false,
       collectionSheetContentDialogVisible: false,
+
+      salarySheetDialogVisible: false,
 
       warehouseInputSheetDialogVisible: false,
       warehouseInputSheetContentDialogVisible: false,
@@ -716,62 +750,65 @@ export default {
       }
       switch (row.type) {
         case '销售单':
-          this.saleSheetDialogVisible=true
+          this.saleSheetDialogVisible = true
           getSaleBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.saleSheetContent=this.sheetDetail[0].saleSheetContent;
+            this.saleSheetContent = this.sheetDetail[0].saleSheetContent;
           })
           break;
         case '销售退货单':
-          this.saleReturnsSheetDialogVisible=true
+          this.saleReturnsSheetDialogVisible = true
           getSaleReturnBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.saleReturnSheetContent=this.sheetDetail[0].saleReturnsSheetContent;
+            this.saleReturnSheetContent = this.sheetDetail[0].saleReturnsSheetContent;
           })
           break;
         case '进货单':
-          this.purchaseSheetDialogVisible=true
+          this.purchaseSheetDialogVisible = true
           getPurchaseBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.purchaseSheetContent=this.sheetDetail[0].purchaseSheetContent;
+            this.purchaseSheetContent = this.sheetDetail[0].purchaseSheetContent;
           })
           break;
         case '进货退货单':
-          this.purchaseReturnsSheetDialogVisible=true
+          this.purchaseReturnsSheetDialogVisible = true
           getPurchaseReturnBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.purchaseReturnsSheetContent=this.sheetDetail[0].purchaseReturnsSheetContent;
+            this.purchaseReturnsSheetContent = this.sheetDetail[0].purchaseReturnsSheetContent;
           })
           break;
         case '付款单':
-          this.paymentSheetDialogVisible=true
+          this.paymentSheetDialogVisible = true
           getPaymentSheetById(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.paymentSheetContent=this.sheetDetail[0].paymentSheetContent;
+            this.paymentSheetContent = this.sheetDetail[0].paymentSheetContent;
           })
           break;
         case '收款单':
-          this.collectionSheetDialogVisible=true
+          this.collectionSheetDialogVisible = true
           getCollectionSheetById(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.collectionSheetContent=this.sheetDetail[0].collectionContent;
+            this.collectionSheetContent = this.sheetDetail[0].collectionContent;
           })
           break;
         case '工资单':
-          this.$message.error('不支持该单据类型')
+          this.salarySheetDialogVisible = true
+          getSalarySheetById(config).then(res => {
+            this.sheetDetail.push(res.result);
+          })
           break;
         case '入库单':
-          this.warehouseInputSheetDialogVisible=true;
+          this.warehouseInputSheetDialogVisible = true;
           getWarehouseInputSheetById(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.warehouseInputSheetContent=this.sheetDetail[0].content;
+            this.warehouseInputSheetContent = this.sheetDetail[0].content;
           })
           break;
         case '出库单':
-          this.warehouseOutputSheetDialogVisible=true;
+          this.warehouseOutputSheetDialogVisible = true;
           getWarehouseOutputSheetById(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.warehouseOutputSheetContent=this.sheetDetail[0].content;
+            this.warehouseOutputSheetContent = this.sheetDetail[0].content;
           })
           break;
       }
