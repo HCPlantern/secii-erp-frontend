@@ -2,7 +2,7 @@
   <Layout>
     <Title title="公司账户管理"></Title>
     <el-button type="primary" size="medium" @click="addAccount">新增账户</el-button>
-    <div class="search" style="width: 20%;margin-top: 20px">
+    <div class="search" style="width: 20%;display: inline-block;float: right">
       <el-input
           prefix-icon="el-icon-search"
           v-model="search"
