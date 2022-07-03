@@ -103,307 +103,6 @@
 
       </el-card>
 
-      <el-dialog
-          title="详细信息"
-          :visible.sync="dialogVisible" width="80%"
-      >
-        <SaleList
-            v-if="selectedType==='销售单'"
-            :list="sheetDetail"
-            :type="0"
-        >
-        </SaleList>
-        <SaleReturnList
-            v-else-if="selectedType==='销售退货单'"
-            :list="sheetDetail"
-            :type="0">
-        </SaleReturnList>
-
-      </el-dialog>
-
-
-      <el-dialog
-          title="进货单详细信息"
-          :visible.sync="purchaseSheetDialogVisible" width="80%"
-      >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="进货单编号" fit></el-table-column>
-          <el-table-column property="supplier" label="供应商编号" fit></el-table-column>
-          <el-table-column property="operator" label="操作员" fit></el-table-column>
-          <el-table-column property="remark" label="备注" fit></el-table-column>
-          <el-table-column property="totalAmount" label="折让前总额" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-        </el-table>
-        <el-dialog
-            width="60%"
-            title="进货单内容"
-            :visible.sync="purchaseSheetContentDialogVisible"
-            append-to-body>
-          <el-table :data="purchaseSheetContent"
-                    stripe
-                    border
-                    style="width: 100%"
-                    :header-cell-style="{'text-align':'center'}"
-                    :cell-style="{'text-align':'center'}">
-            <el-table-column property="id" label="编号" fit></el-table-column>
-            <el-table-column property="purchaseSheetId" label="进货单编号" fit></el-table-column>
-            <el-table-column property="pid" label="商品编号" fit></el-table-column>
-            <el-table-column property="quantity" label="数量" fit></el-table-column>
-            <el-table-column property="unitPrice" label="单价" fit></el-table-column>
-            <el-table-column property="totalPrice" label="总额" fit></el-table-column>
-            <el-table-column property="remark" label="备注" fit></el-table-column>
-          </el-table>
-        </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="purchaseSheetDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="purchaseSheetContentDialogVisible=true">查看进货单内容</el-button>
-        </span>
-      </el-dialog>
-
-      <el-dialog
-          title="进货退货单详细信息"
-          :visible.sync="purchaseReturnsSheetDialogVisible" width="80%"
-      >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="进货退货单编号" fit></el-table-column>
-          <el-table-column property="purchaseSheetId" label="关联的进货单编号" fit></el-table-column>
-          <el-table-column property="operator" label="操作员" fit></el-table-column>
-          <el-table-column property="remark" label="备注" fit></el-table-column>
-          <el-table-column property="totalAmount" label="折让前总额" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-          <el-table-column property="createTime" label="创建时间" fit></el-table-column>
-        </el-table>
-        <el-dialog
-            width="60%"
-            title="进货退货单内容"
-            :visible.sync="purchaseReturnsSheetContentVisible"
-            append-to-body>
-          <el-table :data="purchaseReturnsSheetContent"
-                    stripe
-                    border
-                    style="width: 100%"
-                    :header-cell-style="{'text-align':'center'}"
-                    :cell-style="{'text-align':'center'}">
-            <el-table-column property="id" label="编号" fit></el-table-column>
-            <el-table-column property="purchaseReturnsSheetId" label="进货退货单编号" fit></el-table-column>
-            <el-table-column property="pid" label="商品编号" fit></el-table-column>
-            <el-table-column property="quantity" label="数量" fit></el-table-column>
-            <el-table-column property="unitPrice" label="单价" fit></el-table-column>
-            <el-table-column property="totalPrice" label="总额" fit></el-table-column>
-            <el-table-column property="remark" label="备注" fit></el-table-column>
-          </el-table>
-        </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="purchaseReturnsSheetDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="purchaseReturnsSheetContentVisible=true">查看进货退货单内容</el-button>
-        </span>
-      </el-dialog>
-
-      <el-dialog
-          title="付款单详细信息"
-          :visible.sync="paymentSheetDialogVisible" width="80%"
-      >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="付款单编号" fit></el-table-column>
-          <el-table-column property="customer" label="关联的客户编号" fit></el-table-column>
-          <el-table-column property="operator" label="操作员" fit></el-table-column>
-          <el-table-column property="totalAmount" label="付款总额" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-          <el-table-column property="createTime" label="创建时间" fit></el-table-column>
-        </el-table>
-        <el-dialog
-            width="60%"
-            title="付款单内容"
-            :visible.sync="paymentSheetContentDialogVisible"
-            append-to-body>
-          <el-table :data="paymentSheetContent"
-                    stripe
-                    border
-                    style="width: 100%"
-                    :header-cell-style="{'text-align':'center'}"
-                    :cell-style="{'text-align':'center'}">
-            <el-table-column property="id" label="编号" fit></el-table-column>
-            <el-table-column property="companyAccountId" label="银行账户编号" fit></el-table-column>
-            <el-table-column property="transferAmount" label="转账金额" fit></el-table-column>
-            <el-table-column property="paymentSheetId" label="关联的付款单编号" fit></el-table-column>
-            <el-table-column property="remark" label="备注" fit></el-table-column>
-          </el-table>
-        </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="paymentSheetDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="paymentSheetContentDialogVisible=true">查看付款单内容</el-button>
-        </span>
-      </el-dialog>
-
-      <el-dialog
-          title="收款单详细信息"
-          :visible.sync="collectionSheetDialogVisible" width="80%"
-      >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="收款单编号" fit></el-table-column>
-          <el-table-column property="customer" label="关联的客户编号" fit></el-table-column>
-          <el-table-column property="operator" label="操作员" fit></el-table-column>
-          <el-table-column property="totalAmount" label="收款总额" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-          <el-table-column property="createTime" label="创建时间" fit></el-table-column>
-        </el-table>
-        <el-dialog
-            width="60%"
-            title="进货单内容"
-            :visible.sync="collectionSheetContentDialogVisible"
-            append-to-body>
-          <el-table :data="collectionSheetContent"
-                    stripe
-                    border
-                    style="width: 100%"
-                    :header-cell-style="{'text-align':'center'}"
-                    :cell-style="{'text-align':'center'}">
-            <el-table-column property="id" label="编号" fit></el-table-column>
-            <el-table-column property="companyAccountId" label="银行账户编号" fit></el-table-column>
-            <el-table-column property="transferAmount" label="转账金额" fit></el-table-column>
-            <el-table-column property="collectionSheetId" label="关联的收款单编号" fit></el-table-column>
-            <el-table-column property="remark" label="备注" fit></el-table-column>
-          </el-table>
-        </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="collectionSheetDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="collectionSheetContentDialogVisible=true">查看收款单内容</el-button>
-        </span>
-      </el-dialog>
-
-
-      <el-dialog
-          title="收款单详细信息"
-          :visible.sync="salarySheetDialogVisible" width="80%"
-      >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="收款单编号" fit></el-table-column>
-          <el-table-column property="employeeId" label="员工Id" fit></el-table-column>
-          <el-table-column property="createTime" label="创建时间" fit></el-table-column>
-          <el-table-column property="baseWage" label="基本工资" fit></el-table-column>
-          <el-table-column property="postWage" label="岗位工资" fit></el-table-column>
-          <el-table-column property="totalSalary" label="未税总工资" fit></el-table-column>
-          <el-table-column property="taxedSalary" label="税后总工资" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-        </el-table>
-
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="salarySheetDialogVisible = false">取 消</el-button>
-        </span>
-      </el-dialog>
-
-      <el-dialog
-          title="入库单详细信息"
-          :visible.sync="warehouseInputSheetDialogVisible" width="80%"
-      >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="入库单编号" fit></el-table-column>
-          <el-table-column property="batchId" label="批次" fit></el-table-column>
-          <el-table-column property="purchaseSheetId" label="关联的进货单编号" fit></el-table-column>
-          <el-table-column property="operator" label="操作员" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-          <el-table-column property="createTime" label="创建时间" fit></el-table-column>
-        </el-table>
-        <el-dialog
-            width="60%"
-            title="入库单内容"
-            :visible.sync="warehouseInputSheetContentDialogVisible"
-            append-to-body>
-          <el-table :data="warehouseInputSheetContent"
-                    stripe
-                    border
-                    style="width: 100%"
-                    :header-cell-style="{'text-align':'center'}"
-                    :cell-style="{'text-align':'center'}">
-            <el-table-column property="id" label="编号" fit></el-table-column>
-            <el-table-column property="warehouseInputSheetId" label="入库单编号" fit></el-table-column>
-            <el-table-column property="pid" label="商品编号" fit></el-table-column>
-            <el-table-column property="quantity" label="商品数量" fit></el-table-column>
-            <el-table-column property="purchasePrice" label="关联的收款单编号" fit></el-table-column>
-            <el-table-column property="productionDate" label="出厂日期" fit></el-table-column>
-            <el-table-column property="remark" label="备注" fit></el-table-column>
-          </el-table>
-        </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="warehouseInputSheetDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="warehouseInputSheetContentDialogVisible=true">查看入库单内容</el-button>
-        </span>
-      </el-dialog>
-
-
-      <el-dialog
-          title="出库单详细信息"
-          :visible.sync="warehouseOutputSheetDialogVisible" width="80%"
-      >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="出库单编号" fit></el-table-column>
-          <el-table-column property="saleSheetId" label="关联的进货单编号" fit></el-table-column>
-          <el-table-column property="operator" label="操作员" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-          <el-table-column property="createTime" label="创建时间" fit></el-table-column>
-        </el-table>
-        <el-dialog
-            width="60%"
-            title="出库单内容"
-            :visible.sync="warehouseOutputSheetContentDialogVisible"
-            append-to-body>
-          <el-table :data="warehouseOutputSheetContent"
-                    stripe
-                    border
-                    style="width: 100%"
-                    :header-cell-style="{'text-align':'center'}"
-                    :cell-style="{'text-align':'center'}">
-            <el-table-column property="id" label="编号" fit></el-table-column>
-            <el-table-column property="warehouseOutputSheetId" label="出库单编号" fit></el-table-column>
-            <el-table-column property="batchId" label="批次" fit></el-table-column>
-            <el-table-column property="pid" label="商品编号" fit></el-table-column>
-            <el-table-column property="quantity" label="商品数量" fit></el-table-column>
-            <el-table-column property="salePrice" label="关联的销售单编号" fit></el-table-column>
-            <el-table-column property="remark" label="备注" fit></el-table-column>
-          </el-table>
-        </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="warehouseOutputSheetDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="warehouseOutputSheetContentDialogVisible=true">查看出库单内容</el-button>
-        </span>
-      </el-dialog>
-
-
       <div class="el-table">
         <el-table
             :data="filteredData"
@@ -453,6 +152,39 @@
 
         </el-table>
       </div>
+
+      <div class="dialog">
+        <el-dialog
+            title="详细信息"
+            :visible.sync="dialogVisible" width="80%"
+        >
+          <SaleList
+              v-if="selectedType==='销售单'"
+              :list="sheetDetail"
+              :type="0"
+          ></SaleList>
+          <SaleReturnList
+              v-else-if="selectedType==='销售退货单'"
+              :list="sheetDetail"
+              :type="0"></SaleReturnList>
+          <PurchaseList
+              v-else-if="selectedType==='进货单'"
+              :list="sheetDetail"
+              :type="0"></PurchaseList>
+          <PurchaseReturnList
+              v-else-if="selectedType==='进货退货单'"
+              :list="sheetDetail"
+              :type="0"></PurchaseReturnList>
+          <PaymentList
+              v-else-if="selectedType==='付款单'"
+              :list="sheetDetail"
+              :type="0"></PaymentList>
+          <CollectionList
+              v-else-if="selectedType==='收款单'"
+              :list="sheetDetail"
+              :type="0"></CollectionList>
+        </el-dialog>
+      </div>
     </div>
 
   </Layout>
@@ -482,9 +214,19 @@ import {
 } from "@/network/salary";
 import SaleList from "@/views/sale/components/SaleList";
 import SaleReturnList from "@/views/sale/components/SaleReturnList";
+import PurchaseList from "@/views/purchase/components/PurchaseList";
+import PurchaseReturnList from "@/views/purchase/components/PurchaseReturnList";
+import Sheet from "@/views/common/Sheet";
+import PaymentList from "@/views/finance/components/PaymentList";
+import CollectionList from "@/views/finance/components/CollectionList";
 
 export default {
   components: {
+    CollectionList,
+    PaymentList,
+    Sheet,
+    PurchaseReturnList,
+    PurchaseList,
     SaleReturnList,
     SaleList,
     Layout,
@@ -500,6 +242,7 @@ export default {
   },
   data() {
     return {
+      // test: ["ADMIN"],
       clients: [],
       operators: [],
       // 表单内容
@@ -557,40 +300,10 @@ export default {
       ,
       // 单据列表
       sheetsData: [],
-      saleSheetContent: [],
-      saleReturnSheetContent: [],
-      purchaseSheetContent: [],
-      purchaseReturnsSheetContent: [],
-      paymentSheetContent: [],
-      collectionSheetContent: [],
-      warehouseInputSheetContent: [],
-      warehouseOutputSheetContent: [],
-
       filteredData: [],
 
       dialogVisible: false,
       selectedType: "",
-
-      purchaseSheetDialogVisible: false,
-      purchaseSheetContentDialogVisible: false,
-
-      purchaseReturnsSheetDialogVisible: false,
-      purchaseReturnsSheetContentVisible: false,
-
-      paymentSheetDialogVisible: false,
-      paymentSheetContentDialogVisible: false,
-
-      collectionSheetDialogVisible: false,
-      collectionSheetContentDialogVisible: false,
-
-      salarySheetDialogVisible: false,
-
-      warehouseInputSheetDialogVisible: false,
-      warehouseInputSheetContentDialogVisible: false,
-
-      warehouseOutputSheetDialogVisible: false,
-      warehouseOutputSheetContentDialogVisible: false,
-
       // 单据详情
       sheetDetail: [],
       excelFields: {
@@ -648,62 +361,54 @@ export default {
           this.selectedType = '销售单'
           getSaleBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.saleSheetContent = this.sheetDetail[0].saleSheetContent;
           })
           break;
         case '销售退货单':
           this.selectedType = '销售退货单'
           getSaleReturnBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.saleReturnSheetContent = this.sheetDetail[0].saleReturnsSheetContent;
           })
           break;
         case '进货单':
-          this.purchaseSheetDialogVisible = true
+          this.selectedType = '进货单'
           getPurchaseBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.purchaseSheetContent = this.sheetDetail[0].purchaseSheetContent;
           })
           break;
         case '进货退货单':
-          this.purchaseReturnsSheetDialogVisible = true
+          this.selectedType = '进货退货单'
           getPurchaseReturnBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.purchaseReturnsSheetContent = this.sheetDetail[0].purchaseReturnsSheetContent;
           })
           break;
         case '付款单':
-          this.paymentSheetDialogVisible = true
+          this.selectedType = '付款单'
           getPaymentSheetById(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.paymentSheetContent = this.sheetDetail[0].paymentSheetContent;
           })
           break;
         case '收款单':
-          this.collectionSheetDialogVisible = true
+          this.selectedType = '收款单'
           getCollectionSheetById(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.collectionSheetContent = this.sheetDetail[0].collectionContent;
           })
           break;
         case '工资单':
-          this.salarySheetDialogVisible = true
+          this.selectedType = '工资单'
           getSalarySheetById(config).then(res => {
             this.sheetDetail.push(res.result);
           })
           break;
         case '入库单':
-          this.warehouseInputSheetDialogVisible = true;
+          this.selectedType = '入库单'
           getWarehouseInputSheetById(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.warehouseInputSheetContent = this.sheetDetail[0].content;
           })
           break;
         case '出库单':
-          this.warehouseOutputSheetDialogVisible = true;
+          this.selectedType = '出库单'
           getWarehouseOutputSheetById(config).then(res => {
             this.sheetDetail.push(res.result);
-            this.warehouseOutputSheetContent = this.sheetDetail[0].content;
           })
           break;
       }

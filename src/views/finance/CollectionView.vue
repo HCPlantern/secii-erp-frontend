@@ -11,7 +11,7 @@
           <el-empty description="暂无数据"></el-empty>
         </div>
         <div v-else>
-          <collection-list :list="pendingList" :type="1" @refresh="getCollection()"/>
+          <collection-list :list="pendingList" :type="2" @refresh="getCollection()"/>
         </div>
       </el-tab-pane>
 
@@ -20,7 +20,7 @@
           <el-empty description="暂无数据"></el-empty>
         </div>
         <div v-else>
-          <collection-list :list="successList" :type="2" @refresh="getCollection()"/>
+          <collection-list :list="successList" :type="3" @refresh="getCollection()"/>
         </div>
       </el-tab-pane>
 
@@ -29,7 +29,7 @@
           <el-empty description="暂无数据"></el-empty>
         </div>
         <div v-else>
-          <collection-list :list="failureList" :type="3" @refresh="getCollection()"/>
+          <collection-list :list="failureList" :type="4" @refresh="getCollection()"/>
         </div>
       </el-tab-pane>
     </el-tabs>

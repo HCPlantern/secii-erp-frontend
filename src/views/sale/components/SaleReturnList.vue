@@ -29,7 +29,7 @@
       <el-divider></el-divider>
       <div>
         <el-descriptions>
-          <el-descriptions-item label="销售单编号">{{ item.id }}</el-descriptions-item>
+          <el-descriptions-item label="销售退货单编号">{{ item.id }}</el-descriptions-item>
           <el-descriptions-item label="供应商编号">{{ item.supplier }}</el-descriptions-item>
           <el-descriptions-item label="业务员">{{ item.salesman }}</el-descriptions-item>
           <el-descriptions-item label="操作员">{{ item.operator }}</el-descriptions-item>

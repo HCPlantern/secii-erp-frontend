@@ -10,7 +10,7 @@
             <el-empty description="暂无数据"></el-empty>
           </div>
           <div v-else>
-            <payment-list :list="pendingList" :type="1" @refresh="getPayment()"/>
+            <payment-list :list="pendingList" :type="2" @refresh="getPayment()"/>
           </div>
         </el-tab-pane>
 
@@ -19,7 +19,7 @@
             <el-empty description="暂无数据"></el-empty>
           </div>
           <div v-else>
-            <payment-list :list="successList" :type="2" @refresh="getPayment()"/>
+            <payment-list :list="successList" :type="3" @refresh="getPayment()"/>
           </div>
         </el-tab-pane>
 
@@ -28,7 +28,7 @@
             <el-empty description="暂无数据"></el-empty>
           </div>
           <div v-else>
-            <payment-list :list="failureList" :type="3" @refresh="getPayment()"/>
+            <payment-list :list="failureList" :type="4" @refresh="getPayment()"/>
           </div>
         </el-tab-pane>
       </el-tabs>
