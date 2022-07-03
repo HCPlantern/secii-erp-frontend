@@ -1,98 +1,77 @@
 <template>
+
   <div class="card">
     <el-card v-for="(item, index) in list" :index="item.index" :key="item.id" shadow="hover">
-      <template #header>
-        <el-row>
-          <el-col :span="18">
-            <span><strong>id: </strong>{{item.id}}</span>
-            <el-button v-if="authorization() === 1" style="margin-left: 10px"
-              type="success" icon="el-icon-check" circle size="mini" @click="approval(item.id)"></el-button>
-            <el-button v-if="authorization() === 1"
-              type="danger" icon="el-icon-close" circle size="mini" @click="deny(item.id)"></el-button>
-            <el-button v-if="authorization() === 2" style="margin-left: 10px"
-              type="primary" icon="el-icon-check" circle size="mini" @click="approval(item.id)"></el-button>
-            <el-button v-if="authorization() === 2" 
-              type="danger" icon="el-icon-close" circle size="mini" @click="deny(item.id)"></el-button>
-            <span style="margin-left: 10px">
+
+      <div class="card-header">
+
+        <span>ID: {{ item.id }}</span>
+        <el-button v-if="(type === 1 || type === 2) && authorization" style="margin-left: 10px"
+                   type="success" icon="el-icon-check" size="small" @click="approval(item.id)">
+          <span>通过</span>
+        </el-button>
+        <el-button v-if="(type === 1 || type === 2) && authorization"
+                   type="danger" icon="el-icon-close" size="small" @click="deny(item.id)">
+          <span>不通过</span>
+        </el-button>
+        <span style="margin-left: 10px">
               <el-tag v-if="type === 3" effect="dark" type='success'>审核通过</el-tag>
               <el-tag v-if="type === 4" effect="dark" type='danger'>审核未通过</el-tag>
             </span>
-          </el-col>
-          <el-col :span="6">
-            <el-button class="button" type="text"
-              v-if="!showAll[index]"
-              @click="changeState(index)">
-              展开
-            </el-button>
-            <el-button class="button" type="text"
-              v-if="showAll[index]"
-              @click="changeState(index)">
-            收起</el-button>
-          </el-col>
-        </el-row>
-      </template>
+
+        <el-button class="button" size="small"
+                   @click="changeState(index)">
+          <span v-if="!showAll[index]">
+                展开</span>
+          <span v-else>收起</span>
+        </el-button>
+      </div>
+      <el-divider></el-divider>
       <div>
-        <el-row>
-          <el-col :span="3">
-            <span><strong>销售商id: </strong>{{item.supplier}}</span>
-          </el-col>
-          <el-col :span="3">
-            <span><strong>操作员: </strong>{{item.operator}}</span>
-          </el-col>
-          <el-col :span="3">
-            <span><strong>业务员: </strong>{{item.salesman}}</span>
-          </el-col>
-          <el-col :span="6">
-            <span><strong>折让前总额: </strong>{{item.rawTotalAmount}}(元)</span>
-          </el-col>
-        </el-row>
-        <el-row style="margin-top: 15px">
-          <el-col :span="3">
-            <span><strong>折扣: </strong>{{item.discount}}</span>
-          </el-col>
-          <el-col :span="6">
-            <span><strong>使用代金券总额: </strong>{{item.voucherAmount}}(元)</span>
-          </el-col>
-          <el-col :span="6">
-            <span><strong>折让后总额: </strong>{{item.finalAmount}}(元)</span>
-          </el-col>
-        </el-row>
-        <el-row style="margin-top: 15px">
-          <el-col :span="24">
-            <span><strong>备注: </strong>{{item.remark}}</span>
-          </el-col>
-        </el-row>
+        <el-descriptions>
+          <el-descriptions-item label="销售单编号">{{ item.id }}</el-descriptions-item>
+          <el-descriptions-item label="供应商编号">{{ item.supplier }}</el-descriptions-item>
+          <el-descriptions-item label="业务员">{{ item.salesman }}</el-descriptions-item>
+          <el-descriptions-item label="操作员">{{ item.operator }}</el-descriptions-item>
+          <el-descriptions-item label="备注">{{ item.remark }}</el-descriptions-item>
+          <el-descriptions-item label="折让前总额">{{ item.rawTotalAmount }}</el-descriptions-item>
+          <el-descriptions-item label="单据状态">{{ item.state }}</el-descriptions-item>
+          <el-descriptions-item label="折让后总额">{{ item.finalAmount }}</el-descriptions-item>
+          <el-descriptions-item label="折扣">{{ item.discount }}</el-descriptions-item>
+          <el-descriptions-item label="优惠券金额">{{ item.voucherAmount }}</el-descriptions-item>
+        </el-descriptions>
+
         <div v-if="showAll[index]" style="margin-top: 15px">
-          <div style="margin-bottom: 15px"><strong>详细商品清单:</strong></div>
+          <div style="margin-bottom: 15px">详细商品清单:</div>
           <el-table
-            :data="item.saleSheetContent"
-            stripe
-            style="width: 100%"
-            :header-cell-style="{'text-align':'center'}"
-            :cell-style="{'text-align':'center'}">
+              :data="item.saleSheetContent"
+              border
+              style="width: 100%"
+              :header-cell-style="{'text-align':'center'}"
+              :cell-style="{'text-align':'center'}">
             <el-table-column
-              prop="pid"
-              label="商品id"
-              width="180">
+                prop="pid"
+                label="商品id"
+                width="180">
             </el-table-column>
             <el-table-column
-              prop="quantity"
-              label="数量"
-              width="200">
+                prop="quantity"
+                label="数量"
+            >
             </el-table-column>
             <el-table-column
-              prop="unitPrice"
-              label="单价(元)"
-              width="200">
+                prop="unitPrice"
+                label="单价(元)"
+            >
             </el-table-column>
             <el-table-column
-              prop="totalPrice"
-              label="金额(元)"
-              width="200">
+                prop="totalPrice"
+                label="金额(元)"
+            >
             </el-table-column>
             <el-table-column
-              prop="remark"
-              label="备注">
+                prop="remark"
+                label="备注">
             </el-table-column>
           </el-table>
         </div>
@@ -102,7 +81,8 @@
 </template>
 
 <script>
-import { firstApproval, secondApproval} from '@/network/sale'
+import {firstApproval, secondApproval} from '@/network/sale'
+
 export default {
   name: 'SaleList',
   props: {
@@ -122,10 +102,9 @@ export default {
       this.$set(this.showAll, index, !this.showAll[index])
     },
     authorization() {
-      if (this.type === 1 && sessionStorage.getItem('role') === 'SALE_MANAGER') {
-        return 1
-      } else if (this.type === 2 && sessionStorage.getItem('role') === 'GM') {
-        return 2
+      const role = sessionStorage.getItem('role');
+      if (role === 'GM' || role === 'SALE_MANAGER' || role === 'ADMIN') {
+        return true;
       }
     },
     approval(id) {
@@ -136,7 +115,7 @@ export default {
         }
       }
       if (this.type === 1) {
-        firstApproval(config).then(res => {
+        firstApproval(config).then(() => {
           this.$emit("refresh")
           this.$message({
             message: '操作成功!',
@@ -144,7 +123,7 @@ export default {
           })
         })
       } else {
-        secondApproval(config).then(res => {
+        secondApproval(config).then(() => {
           this.$emit("refresh")
           this.$message({
             message: '操作成功!',
@@ -161,7 +140,7 @@ export default {
         }
       }
       if (this.type === 1) {
-        firstApproval(config).then(res => {
+        firstApproval(config).then(() => {
           this.$emit("refresh")
           this.$message({
             message: '操作成功!',
@@ -169,7 +148,7 @@ export default {
           })
         })
       } else {
-        secondApproval(config).then(res => {
+        secondApproval(config).then(() => {
           this.$emit("refresh")
           this.$message({
             message: '操作成功!',
@@ -184,15 +163,16 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  width: 80%;
-  margin: 0 auto;
+  margin: auto;
+
   .button {
     float: right;
-    padding: 3px 0
   }
+
 }
+
 .el-card {
   margin-bottom: 20px;
-  background: #EEF7F2;
+  //background: #EEF7F2;
 }
 </style>

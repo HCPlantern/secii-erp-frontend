@@ -58,7 +58,7 @@
                     placement="right"
                     width="800"
                     trigger="hover">
-                  <el-table :data="completedSale[index].saleSheetContent">
+                  <el-table :data="completedSale[index].saleReturnsSheetContent">
                     <el-table-column width="100" property="id" label="id"></el-table-column>
                     <el-table-column width="200" property="pid" label="pid"></el-table-column>
                     <el-table-column width="100" property="unitPrice" label="单价"></el-table-column>
@@ -108,7 +108,7 @@ import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
 import { getAllSaleReturn,
   getAllSale,
-  createSaleReturn } from '../../network/sale'
+  createSaleReturn } from '@/network/sale'
 import saleReturnList from "@/views/sale/components/SaleReturnList";
 export default {
   name: 'SaleReturnView',
@@ -149,7 +149,7 @@ export default {
       // 得到所有的销售退货单 并且按照审批状态分类
       getAllSaleReturn({}).then(_res => {
         this.saleReturnList = _res.result
-        console.log(saleReturnList)
+        console.log(this.saleReturnList)
         this.pendingLevel1List = this.saleReturnList.filter(item => item.state === '待一级审批')
         console.log(this.pendingLevel1List)
         this.pendingLevel2List = this.saleReturnList.filter(item => item.state === '待二级审批')

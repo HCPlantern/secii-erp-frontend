@@ -103,115 +103,24 @@
 
       </el-card>
 
-      <!--dialog-->
-      <!--      <el-dialog-->
-      <!--          title="提示"-->
-      <!--          :visible.sync="dialogVisible"-->
-      <!--          width="30%"-->
-      <!--      >-->
-      <!--&lt;!&ndash;        这里可以优化一下&ndash;&gt;-->
-      <!--        <span>{{ this.sheetDetail }}</span>-->
-      <!--        <span slot="footer" class="dialog-footer">-->
-      <!--          <el-button @click="dialogVisible = false">取 消</el-button>-->
-      <!--          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
-      <!--        </span>-->
-      <!--      </el-dialog>-->
-
       <el-dialog
-          title="销售单详细信息"
-          :visible.sync="saleSheetDialogVisible" width="80%"
+          title="详细信息"
+          :visible.sync="dialogVisible" width="80%"
       >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="销售单编号" fit></el-table-column>
-          <el-table-column property="supplier" label="供应商编号" fit></el-table-column>
-          <el-table-column property="salesman" label="业务员" fit></el-table-column>
-          <el-table-column property="operator" label="操作员" fit></el-table-column>
-          <el-table-column property="remark" label="备注" fit></el-table-column>
-          <el-table-column property="rawTotalAmount" label="折让前总额" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-          <el-table-column property="finalAmount" label="折让后总额" fit></el-table-column>
-          <el-table-column property="discount" label="折扣" fit></el-table-column>
-          <el-table-column property="voucherAmount" label="优惠券金额" fit></el-table-column>
-        </el-table>
-        <el-dialog
-            width="60%"
-            title="销售单内容"
-            :visible.sync="saleSheetContentVisible"
-            append-to-body>
-          <el-table :data="saleSheetContent"
-                    stripe
-                    border
-                    style="width: 100%"
-                    :header-cell-style="{'text-align':'center'}"
-                    :cell-style="{'text-align':'center'}">
-            <el-table-column property="id" label="编号" fit></el-table-column>
-            <el-table-column property="saleSheetId" label="销售单编号" fit></el-table-column>
-            <el-table-column property="pid" label="商品编号" fit></el-table-column>
-            <el-table-column property="quantity" label="数量" fit></el-table-column>
-            <el-table-column property="unitPrice" label="单价" fit></el-table-column>
-            <el-table-column property="totalPrice" label="总额" fit></el-table-column>
-            <el-table-column property="remark" label="备注" fit></el-table-column>
-          </el-table>
-        </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="saleSheetDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saleSheetContentVisible=true">查看销售单内容</el-button>
-        </span>
+        <SaleList
+            v-if="selectedType==='销售单'"
+            :list="sheetDetail"
+            :type="0"
+        >
+        </SaleList>
+        <SaleReturnList
+            v-else-if="selectedType==='销售退货单'"
+            :list="sheetDetail"
+            :type="0">
+        </SaleReturnList>
+
       </el-dialog>
 
-      <el-dialog
-          title="销售退货单详细信息"
-          :visible.sync="saleReturnsSheetDialogVisible" width="80%"
-      >
-        <el-table :data="sheetDetail"
-                  stripe
-                  border
-                  style="width: 100%"
-                  :header-cell-style="{'text-align':'center'}"
-                  :cell-style="{'text-align':'center'}">
-          <el-table-column property="id" label="销售退货单编号" fit></el-table-column>
-          <el-table-column property="saleSheetId" label="关联销售单编号" fit></el-table-column>
-          <el-table-column property="supplier" label="供应商编号" fit></el-table-column>
-          <el-table-column property="salesman" label="业务员" fit></el-table-column>
-          <el-table-column property="operator" label="操作员" fit></el-table-column>
-          <el-table-column property="remark" label="备注" fit></el-table-column>
-          <el-table-column property="rawTotalAmount" label="折让前总额" fit></el-table-column>
-          <el-table-column property="state" label="单据状态" fit></el-table-column>
-          <el-table-column property="finalAmount" label="折让后总额" fit></el-table-column>
-          <el-table-column property="discount" label="折扣" fit></el-table-column>
-          <el-table-column property="voucherAmount" label="优惠券金额" fit></el-table-column>
-          <el-table-column property="createTime" label="创建时间" fit></el-table-column>
-        </el-table>
-        <el-dialog
-            width="60%"
-            title="销售退货单内容"
-            :visible.sync="saleReturnsSheetContentVisible"
-            append-to-body>
-          <el-table :data="saleReturnSheetContent"
-                    stripe
-                    border
-                    style="width: 100%"
-                    :header-cell-style="{'text-align':'center'}"
-                    :cell-style="{'text-align':'center'}">
-            <el-table-column property="id" label="编号" fit></el-table-column>
-            <el-table-column property="saleReturnsSheetId" label="销售退货单编号" fit></el-table-column>
-            <el-table-column property="pid" label="商品编号" fit></el-table-column>
-            <el-table-column property="quantity" label="数量" fit></el-table-column>
-            <el-table-column property="unitPrice" label="单价" fit></el-table-column>
-            <el-table-column property="totalPrice" label="总额" fit></el-table-column>
-            <el-table-column property="remark" label="备注" fit></el-table-column>
-          </el-table>
-        </el-dialog>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="saleReturnsSheetDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saleReturnsSheetContentVisible=true">查看销售退货单内容</el-button>
-        </span>
-      </el-dialog>
 
       <el-dialog
           title="进货单详细信息"
@@ -408,10 +317,6 @@
         </span>
       </el-dialog>
 
-
-
-
-
       <el-dialog
           title="入库单详细信息"
           :visible.sync="warehouseInputSheetDialogVisible" width="80%"
@@ -505,12 +410,7 @@
             :header-cell-style="{'text-align':'center'}"
             :cell-style="{'text-align':'center'}"
             border
-            @selection-change="handleSelectionChange"
         >
-          <el-table-column
-              type="selection"
-              width="55">
-          </el-table-column>
           <el-table-column
               prop="id"
               label="单据编号"
@@ -580,9 +480,13 @@ import {
 import {
   getSalarySheetById
 } from "@/network/salary";
+import SaleList from "@/views/sale/components/SaleList";
+import SaleReturnList from "@/views/sale/components/SaleReturnList";
 
 export default {
   components: {
+    SaleReturnList,
+    SaleList,
     Layout,
     Title
   },
@@ -663,15 +567,9 @@ export default {
       warehouseOutputSheetContent: [],
 
       filteredData: [],
-      // 多选框的选中值
-      multipleSelection: [],
+
       dialogVisible: false,
-
-      saleSheetDialogVisible: false,
-      saleSheetContentVisible: false,
-
-      saleReturnsSheetDialogVisible: false,
-      saleReturnsSheetContentVisible: false,
+      selectedType: "",
 
       purchaseSheetDialogVisible: false,
       purchaseSheetContentDialogVisible: false,
@@ -713,9 +611,6 @@ export default {
     },
   },
   methods: {
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
     // 查询
     queryData() {
       if (this.form.date === '' || this.beginDate === null || this.endDate === null) {
@@ -750,14 +645,14 @@ export default {
       }
       switch (row.type) {
         case '销售单':
-          this.saleSheetDialogVisible = true
+          this.selectedType = '销售单'
           getSaleBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
             this.saleSheetContent = this.sheetDetail[0].saleSheetContent;
           })
           break;
         case '销售退货单':
-          this.saleReturnsSheetDialogVisible = true
+          this.selectedType = '销售退货单'
           getSaleReturnBySheetId(config).then(res => {
             this.sheetDetail.push(res.result);
             this.saleReturnSheetContent = this.sheetDetail[0].saleReturnsSheetContent;
@@ -812,6 +707,7 @@ export default {
           })
           break;
       }
+      this.dialogVisible = true
       console.log(this.sheetDetail)
     },
     filterData() {

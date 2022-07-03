@@ -1,79 +1,54 @@
 <template>
+
   <div class="card">
     <el-card v-for="(item, index) in list" :index="item.index" :key="item.id" shadow="hover">
-      <template #header>
-        <el-row>
-<!--          这个部分使用authorization判断角色，决定是否显示勾叉图标-->
-          <el-col :span="18">
-            <span><strong>id: </strong>{{item.id}}</span>
-            <el-button v-if="authorization() === 1" style="margin-left: 10px"
-                       type="success" icon="el-icon-check" circle size="mini" @click="approval(item.id)"></el-button>
-            <el-button v-if="authorization() === 1"
-                       type="danger" icon="el-icon-close" circle size="mini" @click="deny(item.id)"></el-button>
-            <el-button v-if="authorization() === 2" style="margin-left: 10px"
-                       type="primary" icon="el-icon-check" circle size="mini" @click="approval(item.id)"></el-button>
-            <el-button v-if="authorization() === 2"
-                       type="danger" icon="el-icon-close" circle size="mini" @click="deny(item.id)"></el-button>
-<!--            是否审核通过-->
-            <span style="margin-left: 10px">
+
+      <div class="card-header">
+
+        <span>ID: {{ item.id }}</span>
+        <el-button v-if="(type === 1 || type === 2) && authorization" style="margin-left: 10px"
+                   type="success" icon="el-icon-check" size="small" @click="approval(item.id)">
+          <span>通过</span>
+        </el-button>
+        <el-button v-if="(type === 1 || type === 2) && authorization"
+                   type="danger" icon="el-icon-close" size="small" @click="deny(item.id)">
+          <span>不通过</span>
+        </el-button>
+        <span style="margin-left: 10px">
               <el-tag v-if="type === 3" effect="dark" type='success'>审核通过</el-tag>
               <el-tag v-if="type === 4" effect="dark" type='danger'>审核未通过</el-tag>
             </span>
-          </el-col>
 
-<!--          这一部分使用showAll函数实现展开和收起功能-->
-          <el-col :span="6">
-            <el-button class="button" type="text"
-                       v-if="!showAll[index]"
-                       @click="changeState(index)">
-              展开
-            </el-button>
-            <el-button class="button" type="text"
-                       v-if="showAll[index]"
-                       @click="changeState(index)">
-              收起</el-button>
-          </el-col>
-        </el-row>
-      </template>
+        <el-button class="button" size="small"
+                   @click="changeState(index)">
+          <span v-if="!showAll[index]">
+                展开</span>
+          <span v-else>收起</span>
+        </el-button>
+      </div>
+      <el-divider></el-divider>
       <div>
-        <el-row>
-          <el-col :span="8">
-            <span><strong>关联的销售单id: </strong>{{item.saleSheetId}}</span>
-          </el-col>
-          <el-col :span="3">
-            <span><strong>操作员: </strong>{{item.operator}}</span>
-          </el-col>
-          <el-col :span="3">
-            <span><strong>原始总额合计: </strong>{{item.rawTotalAmount}}(元)</span>
-          </el-col>
-          <el-col :span="3">
-            <span><strong>折扣: </strong>{{item.discount}}</span>
-          </el-col>
-          <el-col :span="3">
-            <span><strong>优惠券合计: </strong>{{item.voucherAmount}}(元)</span>
-          </el-col>
-          <el-col :span="3">
-            <span><strong>退款总额合计: </strong>{{item.finalAmount}}(元)</span>
-          </el-col>
-        </el-row>
-        <el-row style="margin-top: 15px">
-          <el-col :span="24">
-            <span><strong>备注: </strong>{{item.remark}}</span>
-          </el-col>
-        </el-row>
+        <el-descriptions>
+          <el-descriptions-item label="销售单编号">{{ item.id }}</el-descriptions-item>
+          <el-descriptions-item label="供应商编号">{{ item.supplier }}</el-descriptions-item>
+          <el-descriptions-item label="业务员">{{ item.salesman }}</el-descriptions-item>
+          <el-descriptions-item label="操作员">{{ item.operator }}</el-descriptions-item>
+          <el-descriptions-item label="备注">{{ item.remark }}</el-descriptions-item>
+          <el-descriptions-item label="折让前总额">{{ item.rawTotalAmount }}</el-descriptions-item>
+          <el-descriptions-item label="单据状态">{{ item.state }}</el-descriptions-item>
+          <el-descriptions-item label="折让后总额">{{ item.finalAmount }}</el-descriptions-item>
+          <el-descriptions-item label="折扣">{{ item.discount }}</el-descriptions-item>
+          <el-descriptions-item label="优惠券金额">{{ item.voucherAmount }}</el-descriptions-item>
+        </el-descriptions>
+
         <div v-if="showAll[index]" style="margin-top: 15px">
-          <div style="margin-bottom: 15px"><strong>详细商品清单:</strong></div>
+          <div style="margin-bottom: 15px">详细商品清单:</div>
           <el-table
               :data="item.saleReturnsSheetContent"
-              stripe
+              border
               style="width: 100%"
               :header-cell-style="{'text-align':'center'}"
               :cell-style="{'text-align':'center'}">
-            <el-table-column
-                prop="id"
-                label="id"
-                width="100">
-            </el-table-column>
             <el-table-column
                 prop="pid"
                 label="商品id"
@@ -82,17 +57,17 @@
             <el-table-column
                 prop="quantity"
                 label="数量"
-                width="200">
+            >
             </el-table-column>
             <el-table-column
                 prop="unitPrice"
                 label="单价(元)"
-                width="200">
+            >
             </el-table-column>
             <el-table-column
                 prop="totalPrice"
                 label="金额(元)"
-                width="200">
+            >
             </el-table-column>
             <el-table-column
                 prop="remark"
@@ -106,34 +81,30 @@
 </template>
 
 <script>
-import { returnFirstApproval, returnSecondApproval } from '@/network/sale'
+import {returnFirstApproval, returnSecondApproval} from '@/network/sale'
+
 export default {
-  name: "SaleReturnList",
+  name: 'SaleReturnList',
   props: {
     list: Array,
-    type: Number,
+    type: Number
   },
   data() {
     return {
-      // 这个表示是否展开
       showAll: [],
     }
   },
   mounted() {
-    // 所有都是未展开状态
     this.showAll = new Array(this.list.length).fill(false)
   },
   methods: {
-    // 设置一下展开的状态
     changeState(index) {
       this.$set(this.showAll, index, !this.showAll[index])
     },
-    // 验证一下
     authorization() {
-      if (this.type === 1 && sessionStorage.getItem('role') === 'SALE_MANAGER') {
-        return 1
-      } else if (this.type === 2 && sessionStorage.getItem('role') === 'GM') {
-        return 2
+      const role = sessionStorage.getItem('role');
+      if (role === 'GM' || role === 'SALE_MANAGER' || role === 'ADMIN') {
+        return true;
       }
     },
     approval(id) {
@@ -144,7 +115,7 @@ export default {
         }
       }
       if (this.type === 1) {
-        returnFirstApproval(config).then(res => {
+        returnFirstApproval(config).then(() => {
           this.$emit("refresh")
           this.$message({
             message: '操作成功!',
@@ -152,7 +123,7 @@ export default {
           })
         })
       } else {
-        returnSecondApproval(config).then(res => {
+        returnSecondApproval(config).then(() => {
           this.$emit("refresh")
           this.$message({
             message: '操作成功!',
@@ -164,12 +135,12 @@ export default {
     deny(id) {
       let config = {
         params: {
-          saleReturnsSheetId: id,
+          saleSheetId: id,
           state: 'FAILURE'
         }
       }
       if (this.type === 1) {
-        returnFirstApproval(config).then(res => {
+        returnFirstApproval(config).then(() => {
           this.$emit("refresh")
           this.$message({
             message: '操作成功!',
@@ -177,7 +148,7 @@ export default {
           })
         })
       } else {
-        returnSecondApproval(config).then(res => {
+        returnSecondApproval(config).then(() => {
           this.$emit("refresh")
           this.$message({
             message: '操作成功!',
@@ -192,15 +163,16 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  width: 80%;
-  margin: 0 auto;
+  margin: auto;
+
   .button {
     float: right;
-    padding: 3px 0
   }
+
 }
+
 .el-card {
   margin-bottom: 20px;
-  background: #EEF7F2;
+  //background: #EEF7F2;
 }
 </style>
