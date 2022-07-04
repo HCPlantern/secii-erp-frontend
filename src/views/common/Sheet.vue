@@ -43,7 +43,9 @@
 <!--      </el-button>-->
 
     </div>
+
     <el-divider></el-divider>
+
     <div>
       <el-descriptions>
         <el-descriptions-item

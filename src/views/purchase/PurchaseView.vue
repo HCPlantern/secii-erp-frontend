@@ -56,7 +56,7 @@
             </el-select>
           </el-form-item>
           <el-form-item
-            v-for="(item, index) in purchaseForm.purchaseSheetContent"
+            v-for="(item, index) in purchaseForm.content"
             :key="index"
             :label="'商品' + index">
             <div>
@@ -73,7 +73,7 @@
             </div>
             <div style="margin-top: 10px">
               <el-input v-model="item.remark" style="width: 70%; margin-right: 10%" placeholder="请填写备注"></el-input>
-              <el-button type="text" size="small" @click="addProduct" v-if="index === purchaseForm.purchaseSheetContent.length - 1">添加</el-button>
+              <el-button type="text" size="small" @click="addProduct" v-if="index === purchaseForm.content.length - 1">添加</el-button>
               <el-button type="text" size="small" @click.prevent="removeProduct(item)" v-if="index !== 0">删除</el-button>
             </div>
           </el-form-item>
@@ -112,7 +112,7 @@ export default {
       failureList: [],
       dialogVisible: false,
       purchaseForm: {
-        purchaseSheetContent: [
+        content: [
           {
             pid: '',
             quantity: '',
@@ -165,13 +165,14 @@ export default {
           this.purchaseForm.operator = sessionStorage.getItem("name")
           this.purchaseForm.totalAmount = null
           this.purchaseForm.state = null
-          this.purchaseForm.purchaseSheetContent.forEach((item) => {
+          this.purchaseForm.content.forEach((item) => {
             item.id = null
             item.purchaseSheetId = null
             item.quantity = parseInt(item.quantity)
             item.unitPrice = parseInt(item.unitPrice)
             item.totalPrice = item.quantity * item.unitPrice
           })
+          console.log(this.purchaseForm)
           createPurchase(this.purchaseForm).then(_res => {
             console.log(_res)
             if (_res.msg === 'Success') {
@@ -188,7 +189,7 @@ export default {
     },
     resetForm() {
       this.purchaseForm = {
-        purchaseSheetContent: [
+        content: [
           {
             pid: '',
             quantity: '',
@@ -199,12 +200,12 @@ export default {
       }
     },
     addProduct() {
-      this.purchaseForm.purchaseSheetContent.push({});
+      this.purchaseForm.content.push({});
     },
     removeProduct(item) {
-      var index = this.purchaseForm.purchaseSheetContent.indexOf(item)
+      var index = this.purchaseForm.content.indexOf(item)
       if (index !== -1) {
-        this.purchaseForm.purchaseSheetContent.splice(index, 1)
+        this.purchaseForm.content.splice(index, 1)
       }
     }
   }

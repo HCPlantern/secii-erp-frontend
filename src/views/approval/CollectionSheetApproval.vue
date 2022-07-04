@@ -100,7 +100,7 @@
       },
       resetForm(){
         this.collectionSheet={
-          collectionContent: []
+          content: []
         }
       },
     }

@@ -53,7 +53,7 @@
             </el-select>
           </el-form-item>
           <el-form-item
-              v-for="(item,index) in paymentSheet.paymentSheetContentVOS"
+              v-for="(item,index) in paymentSheet.content"
               :key="index"
               :label="'转账列表' + ' '+index"
           >
@@ -69,7 +69,7 @@
             </div>
             <div style="margin-top: 10px">
               <el-input v-model="item.remark" style="width: 70%; margin-right: 10%" placeholder="请填写备注"></el-input>
-              <el-button type="text" size="small" @click="addTransferList" v-if="index === paymentSheet.paymentSheetContentVOS.length - 1">添加</el-button>
+              <el-button type="text" size="small" @click="addTransferList" v-if="index === paymentSheet.content.length - 1">添加</el-button>
               <el-button type="text" size="small" @click.prevent="removeTransferList(item)" v-if="index !== 0">删除</el-button>
             </div>
           </el-form-item>
@@ -102,7 +102,7 @@ export default {
       failureList: [],
       dialogVisible: false,
       paymentSheet:{
-        paymentSheetContentVOS:[
+        content:[
           {
             id: '',
             companyAccountId: '',
@@ -147,7 +147,7 @@ export default {
       this.paymentSheet.operator = sessionStorage.getItem("name")
       this.paymentSheet.totalAmount=null
       this.paymentSheet.state=null
-      this.paymentSheet.paymentSheetContentVOS.forEach((item)=>{
+      this.paymentSheet.content.forEach((item)=>{
         item.id=null
         item.paymentSheetId=null
         item.companyAccountId=parseInt(item.companyAccountId)
@@ -158,7 +158,7 @@ export default {
           this.$message.success('创建成功!')
           this.dialogVisible = false
           this.paymentSheet={}
-          this.paymentSheet.paymentSheetContentVOS=[]
+          this.paymentSheet.content=[]
           this.getPayment()
         }
       })
@@ -169,12 +169,12 @@ export default {
       }
     },
     addTransferList(){
-      this.paymentSheet.paymentSheetContentVOS.push({});
+      this.paymentSheet.content.push({});
     },
     removeTransferList(item){
-      let index=this.paymentSheet.paymentSheetContentVOS.indexOf(item)
+      let index=this.paymentSheet.content.indexOf(item)
       if(index!==-1){
-        this.paymentSheet.paymentSheetContentVOS.splice(index,1)
+        this.paymentSheet.content.splice(index,1)
       }
     }
   }

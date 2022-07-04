@@ -62,7 +62,7 @@
             <el-input v-model="saleForm.voucherAmount"></el-input>
           </el-form-item>
           <el-form-item
-            v-for="(item, index) in saleForm.saleSheetContent"
+            v-for="(item, index) in saleForm.content"
             :key="index"
             :label="'商品' + index">
             <div>
@@ -79,7 +79,7 @@
             </div>
             <div style="margin-top: 10px">
               <el-input v-model="item.remark" style="width: 70%; margin-right: 10%" placeholder="请填写备注"></el-input>
-              <el-button type="text" size="small" @click="addProduct" v-if="index === saleForm.saleSheetContent.length - 1">添加</el-button>
+              <el-button type="text" size="small" @click="addProduct" v-if="index === saleForm.content.length - 1">添加</el-button>
               <el-button type="text" size="small" @click.prevent="removeProduct(item)" v-if="index !== 0">删除</el-button>
             </div>
           </el-form-item>
@@ -119,7 +119,7 @@ export default {
       failureList: [],
       dialogVisible: false,
       saleForm: {
-        saleSheetContent: [
+        content: [
           {
             pid: '',
             quantity: '',
@@ -182,7 +182,7 @@ export default {
           this.saleForm.finalAmount = null
           this.saleForm.discount = Number(this.saleForm.discount)
           this.saleForm.voucherAmount = Number(this.saleForm.voucherAmount)
-          this.saleForm.saleSheetContent.forEach((item) => {
+          this.saleForm.content.forEach((item) => {
             item.id = null
             item.saleSheetId = null
             item.quantity = parseInt(item.quantity)
@@ -202,7 +202,7 @@ export default {
     },
     resetForm() {
       this.saleForm = {
-        saleSheetContent: [
+        content: [
           {
             pid: '',
             quantity: '',
@@ -213,12 +213,12 @@ export default {
       }
     },
     addProduct() {
-      this.saleForm.saleSheetContent.push({});
+      this.saleForm.content.push({});
     },
     removeProduct(item) {
-      var index = this.saleForm.saleSheetContent.indexOf(item)
+      var index = this.saleForm.content.indexOf(item)
       if (index !== -1) {
-        this.saleForm.saleSheetContent.splice(index, 1)
+        this.saleForm.content.splice(index, 1)
       }
     }
   }

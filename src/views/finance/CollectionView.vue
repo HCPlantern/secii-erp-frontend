@@ -55,7 +55,7 @@
           </el-select>
         </el-form-item>
         <el-form-item
-            v-for="(item,index) in collectionSheet.collectionContent"
+            v-for="(item,index) in collectionSheet.content"
             :key="index"
             :label="'转账列表' + ' '+index"
         >
@@ -71,7 +71,7 @@
           </div>
           <div style="margin-top: 10px">
             <el-input v-model="item.remark" style="width: 70%; margin-right: 10%" placeholder="请填写备注"></el-input>
-            <el-button type="text" size="small" @click="addTransferList" v-if="index === collectionSheet.collectionContent.length - 1">添加</el-button>
+            <el-button type="text" size="small" @click="addTransferList" v-if="index === collectionSheet.content.length - 1">添加</el-button>
             <el-button type="text" size="small" @click.prevent="removeTransferList(item)" v-if="index !== 0">删除</el-button>
           </div>
         </el-form-item>
@@ -104,7 +104,7 @@ export default {
       failureList: [],
       dialogVisible: false,
       collectionSheet:{
-        collectionContent:[
+        content:[
             {
               id: '',
               companyAccountId: '',
@@ -149,7 +149,7 @@ export default {
       this.collectionSheet.operator = sessionStorage.getItem("name")
       this.collectionSheet.totalAmount=null
       this.collectionSheet.state=null
-      this.collectionSheet.collectionContent.forEach((item)=>{
+      this.collectionSheet.content.forEach((item)=>{
         item.id=null
         item.collectionSheetId=null
         item.companyAccountId=parseInt(item.companyAccountId)
@@ -160,7 +160,7 @@ export default {
           this.$message.success('创建成功!')
           this.dialogVisible = false
           this.collectionSheet={}
-          this.collectionSheet.collectionContent=[]
+          this.collectionSheet.content=[]
           this.getCollection()
         }
       })
@@ -171,12 +171,12 @@ export default {
       }
     },
     addTransferList(){
-      this.collectionSheet.collectionContent.push({});
+      this.collectionSheet.content.push({});
     },
     removeTransferList(item){
-      let index=this.collectionSheet.collectionContent.indexOf(item)
+      let index=this.collectionSheet.content.indexOf(item)
       if(index!==-1){
-        this.collectionSheet.collectionContent.splice(index,1)
+        this.collectionSheet.content.splice(index,1)
       }
     }
   }
