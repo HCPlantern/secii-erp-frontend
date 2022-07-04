@@ -1,6 +1,6 @@
 <!--单据展示模板-->
 <!--采用 el-descriptions-->
-<!--item 为单个单据对象-->
+<!--item 为单个单据内容-->
 <!--type 为该单据类型，0 为单纯展示，1 2 3 4 对应审批四个类型-->
 <!--role 为能够审批该单据的角色，数组-->
 <!--description 为单据描述的字段，包括单据和单据内容的字段，分别为该数组的第0个和第1个元素-->
@@ -21,8 +21,11 @@
               <el-tag v-if="type === 4" effect="dark" type='danger'>审核未通过</el-tag>
             </span>
 
-      <el-button class="button" size="small"
-                 @click="changeState">
+      <el-button
+          v-if="description.length === 2"
+          class="button"
+          size="small"
+          @click="changeState">
           <span v-if="!showDetail">
                 展开</span>
         <span v-else>收起</span>
@@ -89,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-  .button{
-    float: right;
-  }
+.button {
+  float: right;
+}
 </style>

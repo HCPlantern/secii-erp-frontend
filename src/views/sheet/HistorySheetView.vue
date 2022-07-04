@@ -183,6 +183,18 @@
               v-else-if="selectedType==='收款单'"
               :list="sheetDetail"
               :type="0"></CollectionList>
+          <SalaryList
+              v-else-if="selectedType==='工资单'"
+              :list="sheetDetail"
+              :type="0"></SalaryList>
+          <WarehouseInputList
+              v-else-if="selectedType==='入库单'"
+              :list="sheetDetail"
+              :type="0"></WarehouseInputList>
+          <WarehouseOutputList
+              v-else-if="selectedType==='出库单'"
+              :list="sheetDetail"
+              :type="0"></WarehouseOutputList>
         </el-dialog>
       </div>
     </div>
@@ -219,9 +231,15 @@ import PurchaseReturnList from "@/views/purchase/components/PurchaseReturnList";
 import Sheet from "@/views/common/Sheet";
 import PaymentList from "@/views/finance/components/PaymentList";
 import CollectionList from "@/views/finance/components/CollectionList";
+import WarehouseInputList from "@/views/warehouse/component/WarehouseInputList";
+import WarehouseOutputList from "@/views/warehouse/component/WarehouseOutputList";
+import SalaryList from "@/views/salary/SalaryList";
 
 export default {
   components: {
+    SalaryList,
+    WarehouseOutputList,
+    WarehouseInputList,
     CollectionList,
     PaymentList,
     Sheet,
