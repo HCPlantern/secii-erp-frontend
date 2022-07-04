@@ -71,12 +71,12 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="进货单清单: " v-if="this.purchaseReturnForm.content.length === 0">
+          <el-form-item label="进货单清单: " v-if="this.purchaseReturnForm.saleReturnsSheetContent.length === 0">
             暂无数据!
           </el-form-item>
           <el-form-item label="进货单清单: " v-else>
             <div
-              v-for="(item, index) in purchaseReturnForm.content"
+              v-for="(item, index) in purchaseReturnForm.saleReturnsSheetContent"
               :key="index">
               <el-row>
                 <el-col :span="8">
@@ -127,7 +127,7 @@ export default {
       failureList: [],
       dialogVisible: false,
       purchaseReturnForm: {
-        content: []
+        saleReturnsSheetContent: []
       },
       completedPurchase: []
     }
@@ -153,13 +153,13 @@ export default {
       this.$confirm('确认关闭？')
         .then(_ => {
           this.purchaseReturnForm = {}
-          this.purchaseReturnForm.content = []
+          this.purchaseReturnForm.saleReturnsSheetContent = []
           done();
         })
         .catch(_ => {});
     },
     selectPurchase(content) {
-      this.purchaseReturnForm.content = content[0].content
+      this.purchaseReturnForm.saleReturnsSheetContent = content[0].content
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -169,7 +169,7 @@ export default {
           this.purchaseReturnForm.totalAmount = null
           this.purchaseReturnForm.state = null
           this.purchaseReturnForm.createTime = null
-          this.purchaseReturnForm.content.forEach(item => {
+          this.purchaseReturnForm.saleReturnsSheetContent.forEach(item => {
             item.unitPrice = Number(item.unitPrice)
             item.quantity = Number(item.quantity)
             item.totalPrice = item.unitPrice * item.quantity
@@ -179,7 +179,7 @@ export default {
               this.$message.success('创建成功!')
               this.dialogVisible = false
               this.purchaseReturnForm = {}
-              this.purchaseReturnForm.content = []
+              this.purchaseReturnForm.saleReturnsSheetContent = []
               this.getPurchaseReturn()
             }
           })

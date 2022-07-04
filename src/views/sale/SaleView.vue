@@ -202,7 +202,7 @@ export default {
     },
     resetForm() {
       this.saleForm = {
-        content: [
+        saleReturnsSheetContent: [
           {
             pid: '',
             quantity: '',
