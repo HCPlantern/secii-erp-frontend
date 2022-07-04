@@ -171,7 +171,7 @@ export default {
     },
     // 销售退货的内容
     selectSale(content) {
-      this.saleReturnForm.saleReturnsSheetContent = content[0].saleSheetContent
+      this.saleReturnForm.saleReturnsSheetContent = content[0].content
     },
     submitForm(formName) {
       // if(this.saleReturnForm.saleReturnsSheetContent.length===0){

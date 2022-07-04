@@ -4,16 +4,17 @@
 <!--type 为该单据类型，0 为单纯展示，1 2 3 4 对应审批四个类型-->
 <!--role 为能够审批该单据的角色，数组-->
 <!--description 为单据描述的字段，包括单据和单据内容的字段，分别为该数组的第0个和第1个元素-->
+<!--redFlushField 传入需要取负的字段 包括两部分 和 description 类似-->
 <template>
   <div>
     <div class="header">
       <span>ID: {{ item.id }}</span>
-      <el-button v-if="(type === 1 || type === 2) && authorization" style="margin-left: 10px"
-                 type="success" icon="el-icon-check" size="small" @click="approval(item.id)">
+      <el-button v-if="(type === 1 || type === 2) && authorization"
+                 class="button-left" type="success" icon="el-icon-check" size="small" @click="approval(item.id)">
         <span>通过</span>
       </el-button>
       <el-button v-if="(type === 1 || type === 2) && authorization"
-                 type="danger" icon="el-icon-close" size="small" @click="deny(item.id)">
+                 class="button-left" type="danger" icon="el-icon-close" size="small" @click="deny(item.id)">
         <span>不通过</span>
       </el-button>
       <span style="margin-left: 10px">
@@ -23,15 +24,28 @@
 
       <el-button
           v-if="description.length === 2"
-          class="button"
+          class="button-right"
+          type="primary"
           size="small"
           @click="changeState">
           <span v-if="!showDetail">
                 展开</span>
         <span v-else>收起</span>
       </el-button>
+
+<!--      <el-button-->
+<!--          v-if="redFlushField"-->
+<!--          type="danger"-->
+<!--          class="button-right"-->
+<!--          size="small"-->
+<!--          @click="showRed"-->
+<!--      >红冲-->
+<!--      </el-button>-->
+
     </div>
+
     <el-divider></el-divider>
+
     <div>
       <el-descriptions>
         <el-descriptions-item
@@ -44,7 +58,7 @@
       </el-descriptions>
 
       <div v-if="showDetail" style="margin-top: 15px">
-        <div style="margin-bottom: 15px">详细信息:</div>
+        <div style="margin-bottom: 15px">单据详细内容:</div>
         <el-table
             :data="item[contentFieldName]"
             border
@@ -58,6 +72,13 @@
           </el-table-column>
         </el-table>
       </div>
+
+    </div>
+
+    <div
+        v-if="showRed"
+        class="red-flush-form"
+    >
 
     </div>
   </div>
@@ -74,10 +95,12 @@ export default {
     contentFieldName: String,
     approval: Function,
     deny: Function,
+    redFlushField: Array,
   },
   data() {
     return {
       showDetail: false,
+      showRed: false,
     }
   },
   methods: {
@@ -92,7 +115,16 @@ export default {
 </script>
 
 <style scoped>
-.button {
+.button-left {
+  margin-left: 10px;
+}
+
+.button-right {
+  margin: 0 0.5rem;
   float: right;
+}
+
+.header {
+  align-items: center;
 }
 </style>
