@@ -110,6 +110,14 @@
             <i class="el-icon-sell"></i>
             <span slot="title">销售退货管理</span>
           </el-menu-item>
+          <!--促销管理-->
+          <el-menu-item
+            :index="PATH.PROMOTION_VIEW.path"
+            v-if="permit(PATH.PROMOTION_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-sell"></i>
+            <span slot="title">促销管理</span>
+          </el-menu-item>
 
           <el-menu-item
               :index="PATH.CUSTOMER_VIEW.path"

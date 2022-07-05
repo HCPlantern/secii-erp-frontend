@@ -23,6 +23,7 @@ const InventoryWarning = () => import("../views/inventory/InventoryWarning");
 const PurchaseView = () => import("../views/purchase/PurchaseView");
 const PurchaseReturnView = () => import("../views/purchase/PurchaseReturnView");
 const SaleView = () => import("../views/sale/SaleView");
+const PromotionView = () => import("../views/sale/PromotionView")
 const SaleReturnView = () => import("../views/sale/SaleReturnView")
 const CustomerView = () => import ("../views/purchase/CustomerView");
 const MaxAmountCustomerView = () => import("../views/purchase/MaxAmountCustomerView");
@@ -152,6 +153,12 @@ const routes = [
         component: SaleView,
         name: "SaleView",
         meta: {requiresAuth: PATH.SALE_VIEW.requiresAuth}
+    },
+    {
+      path: PATH.PROMOTION_VIEW.path,
+      component: PromotionView,
+      name: "PromotionView",
+      meta: {requiresAuth: PATH.PROMOTION_VIEW.requiresAuth}
     },
     {
         path: PATH.CUSTOMER_VIEW.path,
