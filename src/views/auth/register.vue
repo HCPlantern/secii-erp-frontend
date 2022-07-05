@@ -1,11 +1,28 @@
 <template>
   <div class="body">
-    <div class="register">
-      <div class="title">NJU ERP系统</div>
+      <vue-particles
+          class="login-background"
+          color="#97D0F2"
+          :particleOpacity="0.7"
+          :particlesNumber="50"
+          shapeType="circle"
+          :particleSize="4"
+          linesColor="#97D0F2"
+          :linesWidth="1"
+          :lineLinked="true"
+          :lineOpacity="0.4"
+          :linesDistance="150"
+          :moveSpeed="3"
+          :hoverEffect="true"
+          hoverMode="grab"
+          :clickEffect="true"
+          clickMode="push">
+      </vue-particles>
       <div class="form">
-        <el-form :model="userInfo" :label-width="'100px'">
+        <el-form :model="userInfo" :label-width="'100px'" class="registerContainer">
+          <h2 class="title">企业ERP系统</h2>
           <el-form-item label="用户名：">
-            <el-input v-model="userInfo.name" placeholder="请输入用户名"></el-input>
+            <el-input v-model="userInfo.name" placeholder="请输入用户名" prefix-icon="el-icon-user-solid" size="normal" type="text"></el-input>
           </el-form-item>
           <el-form-item label="角色：">
             <el-select v-model="userInfo.role">
@@ -18,17 +35,17 @@
             </el-select>
           </el-form-item>
           <el-form-item label="密码：">
-            <el-input v-model="userInfo.password1" placeholder="请输入密码" type="password"></el-input>
+            <el-input v-model="userInfo.password1" placeholder="请输入密码" prefix-icon="el-icon-lock" size="normal" type="password"></el-input>
           </el-form-item>
           <el-form-item label="确认密码：">
-            <el-input v-model="userInfo.password2" placeholder="请输入密码" type="password"></el-input>
+            <el-input v-model="userInfo.password2" placeholder="请输入密码" prefix-icon="el-icon-lock" size="normal" type="password"></el-input>
           </el-form-item>
+          <div class="confirm">
+            <el-button type="primary" size="small" @click="registerThis()">注册</el-button>
+          </div>
         </el-form>
       </div>
-      <div class="confirm">
-        <el-button type="primary" size="small" @click="registerThis()">注册</el-button>
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -87,30 +104,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login-background {
+  background: linear-gradient(-180deg, #dcf2e6 0%, #ffffff 100%);
+  width: 100%;
+  height: 100%; /**宽高100%是为了图片铺满屏幕 */
+  z-index: -1;
+  position: absolute;
+}
+.registerContainer{
+  border-radius: 15px;
+  background-clip: padding-box;
+  width: 350px;
+  padding: 15px 35px 15px 35px;
+  background: #fefefe;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+}
+.form {
+  z-index: 1;
+  margin: 180px 0 0 calc(calc(100vw - 410px) / 2);
+  position: absolute;
+  width: 60%;
+}
+.confirm {
+  text-align: center;
+}
+.title {
+  margin: 15px auto 20px auto;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #a486c7;
+}
 .body {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  .register {
-    width: 550px;
-    height: 500px;
-    background-color: white;
-    border-radius: 10px;
-  }
-  .title {
-    text-align: center;
-    margin: 50px 0 50px;
-    font-size: 30px;
-    font-weight: bold;
-    color: #a486c7;
-  }
-  .form {
-    width: 60%;
-    margin: 0 auto;
-  }
-  .confirm {
-    text-align: center;
-  }
 }
 </style>

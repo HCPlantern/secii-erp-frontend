@@ -96,7 +96,14 @@ const GET_FINANCIAL_REPORT = '/api/finance/getFinancialReport'
 // 工资
 const GET_SALARY_SHEET_BY_TIME = '/api/salary/getSalarySheetByTime'
 const GET_SALARY_SHEET_BY_ID = '/api/salary/getSalarySheetById'
-
+const GET_SALARY_SHEET_BY_STATE = '/api/salary/getSalarySheetByState'
+// 期初建账
+const INIT_COMPANY_ACCOUNT_SHOW = '/api/initAccount/getAllInitCompanyAccount'
+const INIT_PRODUCT_SHOW = '/api/initAccount/getAllInitProduct'
+const INIT_CUSTOMER_SHOW = '/api/initAccount/getAllInitCustomer'
+const INIT_COMPANY_ACCOUNT_CREATE = '/api/initAccount/createCompanyAccount'
+const INIT_PRODUCT_CREATE = '/api/initAccount/createProduct'
+const INIT_CUSTOMER_CREATE = '/api/initAccount/createCustomer'
 module.exports = {
     TEST_GET,
     TEST_POST,
@@ -183,4 +190,12 @@ module.exports = {
 
     GET_SALARY_SHEET_BY_TIME,
     GET_SALARY_SHEET_BY_ID,
+    GET_SALARY_SHEET_BY_STATE,
+
+    INIT_COMPANY_ACCOUNT_SHOW,
+    INIT_PRODUCT_SHOW,
+    INIT_CUSTOMER_SHOW,
+    INIT_COMPANY_ACCOUNT_CREATE,
+    INIT_PRODUCT_CREATE,
+    INIT_CUSTOMER_CREATE
 };
