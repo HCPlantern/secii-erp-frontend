@@ -20,7 +20,6 @@
               <el-tag v-if="type === 3" effect="dark" type='success'>审核通过</el-tag>
               <el-tag v-if="type === 4" effect="dark" type='danger'>审核未通过</el-tag>
             </span>
-
       <el-button
           v-if="description.length === 2"
           class="button-right"

@@ -2,7 +2,6 @@
   <Layout>
     <Title title="收款单审批"></Title>
 <!--    总经理的收款单页面-->
-<!--    直接把收款单审批和付款单审批抄过来-->
     <div class="body">
       <el-tabs v-model="activeName" :stretch="true">
         <el-tab-pane label="待审批" name="PENDING">

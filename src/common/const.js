@@ -78,6 +78,10 @@ export const PATH = {
         path: '/saleView',
         requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
     },
+    PROMOTION_VIEW: {
+        path: '/promotionView',
+        requiresAuth: [ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
+    },
     SALE_RETURN_VIEW: {
         path: '/saleReturnView',
         requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
@@ -113,6 +117,10 @@ export const PATH = {
         path: '/paymentSheetApprovalView',
         requiresAuth:[ROLE.GM,ROLE.ADMIN]
     },
+    SALARY_SHEET_APPROVAL_VIEW:{
+        path: '/salarySheetApprovalView',
+        requiresAuth:[ROLE.GM,ROLE.ADMIN]
+    },
 
     // ADMIN
     ACCOUNT_VIEW: {
@@ -127,6 +135,13 @@ export const PATH = {
     PAYMENT_VIEW: {
         path: '/paymentView',
         requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.ADMIN]
+    },
+    INIT_ACCOUNT_VIEW:{
+        path: '/initAccountView',
+        requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.ADMIN]
     }
+
+
+
 
 }

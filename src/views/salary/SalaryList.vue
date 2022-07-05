@@ -26,7 +26,7 @@ export default {
       description: [
         {
           id: "工资单编号",
-          name: "姓名",
+          employeeId: "职员编号",
           createTime: "单据创建时间",
           baseWage: "基本工资",
           postWage: "岗位工资",

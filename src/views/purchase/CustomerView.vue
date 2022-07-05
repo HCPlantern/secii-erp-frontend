@@ -98,6 +98,7 @@
           </template>
         </el-table-column>
       </el-table>
+
       <el-dialog
           title="新增客户"
           :visible.sync="addDialogVisible"
@@ -144,6 +145,7 @@
           <el-button type="primary" @click="handleAdd(true)">确 定</el-button>
         </div>
       </el-dialog>
+
       <el-dialog
           title="修改客户信息"
           :visible.sync="editDialogVisible"
