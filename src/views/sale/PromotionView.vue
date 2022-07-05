@@ -1,26 +1,37 @@
 <template>
   <Layout>
     <Title title="制定促销策略"></Title>
-    <div class="maxAmountCustomer">
-      <div class="select-sale-man">
-        <span>
-          用户级别：
-        </span>
+    <div class="promotionStrategy">
+
+      <div>
+        <el-button
+          class="search"
+          type="primary"
+          @click="getData()"
+        >
+          方案一：客户促销
+        </el-button>
       </div>
       <div>
-
-        <el-select class="select-sale-man" v-model="salesman" filterable placeholder="请选择">
-          <el-option
-            v-for="item in allSalesMan"
-            :key="item.value"
-            :label="item.label"
-            :value="item.label">
-          </el-option>
-        </el-select>
+        <el-button
+          class="search"
+          type="primary"
+          @click="getData()"
+        >
+          方案二：特价促销
+        </el-button>
       </div>
-
+      <div>
+        <el-button
+          class="search"
+          type="primary"
+          @click="getData()"
+        >
+          方案三：总价促销
+        </el-button>
+      </div>
       <div class="select-time-range">
-        <span>促销时间段 </span>
+        <span>请选择一个时间段： </span>
       </div>
 
       <div>
@@ -41,107 +52,11 @@
         <el-button
           class="search"
           type="primary"
-          icon="el-icon-search"
           @click="getData()"
         >
-          搜索
+          确定
         </el-button>
       </div>
-
-      <div v-if="totalFinalAmount !== ''">
-
-        <div class="customer-table">
-          <el-table
-            :data="customerInfo"
-            stripe
-            style="width: 100%"
-            :header-cell-style="{'text-align':'center'}"
-            :cell-style="{'text-align':'center'}">
-            <el-table-column
-              prop="id"
-              label="id"
-              width="60">
-            </el-table-column>
-            <el-table-column
-              prop="name"
-              label="姓名"
-              width="70">
-            </el-table-column>
-            <el-table-column
-              prop="type"
-              label="类型"
-              width="100"
-              :filters="[{ text: '供应商', value: '供应商' }, { text: '销售商', value: '销售商' }]"
-              :filter-method="filterTag"
-              filter-placement="bottom-end">
-              <template slot-scope="scope">
-                <el-tag
-                  :type="scope.row.type === '供应商' ? 'primary' : 'success'"
-                  disable-transitions>{{ scope.row.type }}
-                </el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="level"
-              label="级别"
-              width="50">
-            </el-table-column>
-            <el-table-column
-              prop="phone"
-              label="电话"
-              width="150">
-            </el-table-column>
-            <el-table-column
-              prop="address"
-              label="地址"
-              width="150">
-            </el-table-column>
-            <el-table-column
-              prop="zipcode"
-              label="邮编"
-              width="100">
-            </el-table-column>
-            <el-table-column
-              prop="email"
-              label="邮箱"
-              width="200">
-            </el-table-column>
-            <el-table-column
-              prop="lineOfCredit"
-              label="应收额度(元)"
-              width="120">
-            </el-table-column>
-            <el-table-column
-              prop="receivable"
-              label="应收(元)"
-              width="120">
-            </el-table-column>
-            <el-table-column
-              prop="payable"
-              label="应付(元)"
-              width="120">
-            </el-table-column>
-            <el-table-column
-              prop="operator"
-              label="操作员"
-              width="120">
-            </el-table-column>
-
-          </el-table>
-        </div>
-
-        <div class="max-amount">
-        <span>
-          该客户在该时间段内的消费总金额为
-          <strong>
-             {{ this.totalFinalAmount }}
-          </strong>
-        </span>
-        </div>
-
-
-      </div>
-
 
     </div>
   </Layout>
