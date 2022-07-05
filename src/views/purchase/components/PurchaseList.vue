@@ -10,7 +10,6 @@
           :content-field-name="'purchaseSheetContent'"
           :approval="approval"
           :deny="deny"
-          :red-flush-field="redFlushField"
       >
       </Sheet>
     </el-card>
@@ -20,10 +19,11 @@
 <script>
 import {firstApproval, secondApproval} from '@/network/purchase'
 import Sheet from "@/views/common/Sheet";
+import PurchaseForm from "@/views/purchase/components/PurchaseForm";
 
 export default {
   name: 'PurchaseList',
-  components: {Sheet},
+  components: {PurchaseForm, Sheet},
   props: {
     list: Array,
     type: Number
@@ -49,9 +49,6 @@ export default {
           remark: "备注"
         }
       ],
-      redFlushField: [
-        {},{}
-      ]
     }
   },
   mounted() {

@@ -7,7 +7,7 @@
           :type="type"
           :role="role"
           :description="description"
-          :content-field-name="'saleReturnSheetContent'"
+          :content-field-name="'saleReturnsSheetContent'"
           :approval="approval"
           :deny="deny"
       ></Sheet>

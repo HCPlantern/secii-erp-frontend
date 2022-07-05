@@ -157,44 +157,79 @@
         <el-dialog
             title="详细信息"
             :visible.sync="dialogVisible" width="80%"
+            :before-close="handleClose"
         >
-          <SaleList
-              v-if="selectedType==='销售单'"
-              :list="sheetDetail"
-              :type="0"
-          ></SaleList>
-          <SaleReturnList
-              v-else-if="selectedType==='销售退货单'"
-              :list="sheetDetail"
-              :type="0"></SaleReturnList>
-          <PurchaseList
+          <div
+              v-if="selectedType==='销售单'">
+            <SaleList
+                :list="sheetDetail"
+                :type="0"
+            ></SaleList>
+          </div>
+          <div
+              v-else-if="selectedType==='销售退货单'">
+            <SaleReturnList
+                :list="sheetDetail"
+                :type="0"></SaleReturnList>
+          </div>
+          <div
               v-else-if="selectedType==='进货单'"
-              :list="sheetDetail"
-              :type="0"></PurchaseList>
-          <PurchaseReturnList
-              v-else-if="selectedType==='进货退货单'"
-              :list="sheetDetail"
-              :type="0"></PurchaseReturnList>
-          <PaymentList
-              v-else-if="selectedType==='付款单'"
-              :list="sheetDetail"
-              :type="0"></PaymentList>
-          <CollectionList
-              v-else-if="selectedType==='收款单'"
-              :list="sheetDetail"
-              :type="0"></CollectionList>
-          <SalaryList
-              v-else-if="selectedType==='工资单'"
-              :list="sheetDetail"
-              :type="0"></SalaryList>
-          <WarehouseInputList
-              v-else-if="selectedType==='入库单'"
-              :list="sheetDetail"
-              :type="0"></WarehouseInputList>
-          <WarehouseOutputList
-              v-else-if="selectedType==='出库单'"
-              :list="sheetDetail"
-              :type="0"></WarehouseOutputList>
+              v-on:submit="this.dialogVisible=false"
+          >
+            <PurchaseList
+                :list="sheetDetail"
+                :type="0">
+            </PurchaseList>
+            <el-card
+                v-if="redFlushVisible">
+              <PurchaseForm
+                  :red-flush-form="sheetDetail[0]"
+              ></PurchaseForm>
+            </el-card>
+          </div>
+
+          <div
+              v-else-if="selectedType==='进货退货单'">
+            <PurchaseReturnList
+                :list="sheetDetail"
+                :type="0"></PurchaseReturnList>
+          </div>
+          <div
+              v-else-if="selectedType==='付款单'">
+            <PaymentList
+                :list="sheetDetail"
+                :type="0"></PaymentList>
+          </div>
+          <div
+              v-else-if="selectedType==='收款单'">
+            <CollectionList
+                :list="sheetDetail"
+                :type="0"></CollectionList>
+          </div>
+          <div
+              v-else-if="selectedType==='工资单'">
+            <SalaryList
+                :list="sheetDetail"
+                :type="0"></SalaryList>
+          </div>
+          <div
+              v-else-if="selectedType==='入库单'">
+            <WarehouseInputList
+                :list="sheetDetail"
+                :type="0"></WarehouseInputList>
+          </div>
+          <div
+              v-else-if="selectedType==='出库单'">
+            <WarehouseOutputList
+                :list="sheetDetail"
+                :type="0"></WarehouseOutputList>
+          </div>
+          <div style="margin: 0 0 0rem 0;">
+            <el-button type="danger" size="small" @click="redFlushVisible=!redFlushVisible">
+              <span v-if="!redFlushVisible">红冲</span>
+              <span v-else>收起</span>
+            </el-button>
+          </div>
         </el-dialog>
       </div>
     </div>
@@ -234,9 +269,11 @@ import CollectionList from "@/views/finance/components/CollectionList";
 import WarehouseInputList from "@/views/warehouse/component/WarehouseInputList";
 import WarehouseOutputList from "@/views/warehouse/component/WarehouseOutputList";
 import SalaryList from "@/views/salary/SalaryList";
+import PurchaseForm from "@/views/purchase/components/PurchaseForm";
 
 export default {
   components: {
+    PurchaseForm,
     SalaryList,
     WarehouseOutputList,
     WarehouseInputList,
@@ -260,7 +297,7 @@ export default {
   },
   data() {
     return {
-      // test: ["ADMIN"],
+      redFlushVisible: false,
       clients: [],
       operators: [],
       // 表单内容
@@ -450,6 +487,14 @@ export default {
           return this.form.operator.includes(item.operator);
         })
       }
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {
+          });
     },
   }
 }

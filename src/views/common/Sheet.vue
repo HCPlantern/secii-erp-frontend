@@ -4,7 +4,6 @@
 <!--type 为该单据类型，0 为单纯展示，1 2 3 4 对应审批四个类型-->
 <!--role 为能够审批该单据的角色，数组-->
 <!--description 为单据描述的字段，包括单据和单据内容的字段，分别为该数组的第0个和第1个元素-->
-<!--redFlushField 传入需要取负的字段 包括两部分 和 description 类似-->
 <template>
   <div>
     <div class="header">
@@ -27,20 +26,11 @@
           class="button-right"
           type="primary"
           size="small"
-          @click="changeState">
+          @click="showDetail = !showDetail">
           <span v-if="!showDetail">
                 展开</span>
         <span v-else>收起</span>
       </el-button>
-
-<!--      <el-button-->
-<!--          v-if="redFlushField"-->
-<!--          type="danger"-->
-<!--          class="button-right"-->
-<!--          size="small"-->
-<!--          @click="showRed"-->
-<!--      >红冲-->
-<!--      </el-button>-->
 
     </div>
 
@@ -75,18 +65,14 @@
 
     </div>
 
-    <div
-        v-if="showRed"
-        class="red-flush-form"
-    >
-
-    </div>
   </div>
 </template>
 
 <script>
+import PurchaseForm from "@/views/purchase/components/PurchaseForm";
 export default {
   name: "Sheet",
+  components: {PurchaseForm},
   props: {
     item: Object,
     type: Number,
@@ -95,18 +81,13 @@ export default {
     contentFieldName: String,
     approval: Function,
     deny: Function,
-    redFlushField: Array,
   },
   data() {
     return {
       showDetail: false,
-      showRed: false,
     }
   },
   methods: {
-    changeState() {
-      this.showDetail = !this.showDetail
-    },
     authorization() {
       return this.role.includes(sessionStorage.getItem('role'));
     },
