@@ -41,64 +41,10 @@
     <el-dialog
         title="创建销售退货单"
         :visible.sync="dialogVisible"
-        width="40%"
+        v-on:submit="submit"
         :before-close="handleClose">
-      <div style="width: 90%; margin: 0 auto">
-        <el-form :model="saleReturnForm" label-width="100px" ref="saleReturnForm" :rules="rules">
-          <el-form-item label="销售单id: " prop="saleSheetId">
-            <el-select v-model="saleReturnForm.saleSheetId"
-                       placeholder="请选择关联的销售单id"
-                       @change="selectSale(completedSale.filter(item => item.id === saleReturnForm.saleSheetId))">
-              <el-option
-                  v-for="(item, index) in completedSale"
-                  :key="item.id"
-                  :label="item.id"
-                  :value="item.id">
-                <el-popover
-                    placement="right"
-                    width="800"
-                    trigger="hover">
-                  <el-table :data="completedSale[index].saleReturnsSheetContent">
-                    <el-table-column width="100" property="id" label="id"></el-table-column>
-                    <el-table-column width="200" property="pid" label="pid"></el-table-column>
-                    <el-table-column width="100" property="unitPrice" label="单价"></el-table-column>
-                    <el-table-column width="100" property="quantity" label="数量"></el-table-column>
-                    <el-table-column width="100" property="totalPrice" label="总价"></el-table-column>
-                    <el-table-column property="remark" label="备注"></el-table-column>
-                  </el-table>
-                  <span slot="reference">{{ item.id }}</span>
-                </el-popover>
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="销售单清单: " v-if="this.saleReturnForm.saleReturnsSheetContent.length === 0">
-            暂无数据!
-          </el-form-item>
-          <el-form-item label="销售单清单: " v-else>
-            <div
-                v-for="(item, index) in saleReturnForm.saleReturnsSheetContent"
-                :key="index">
-              <el-row>
-                <el-col :span="8">
-                  <span>id: {{item.pid}}</span>
-                </el-col>
-                <el-col :span="8">
-                  数量: <el-input v-model="item.quantity" size="mini" style="width: 120px"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  单价: <el-input v-model="item.unitPrice" size="mini" style="width: 120px"></el-input>
-                </el-col>
-              </el-row>
-            </div>
-          </el-form-item>
-          <el-form-item label="备注: ">
-            <el-input type="textarea" v-model="saleReturnForm.remark"></el-input>
-          </el-form-item>
-        </el-form>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm('saleReturnForm')">立即创建</el-button>
-      </span>
+      <SaleReturnForm
+          style="margin: 0 0 1rem 0"></SaleReturnForm>
     </el-dialog>
   </Layout>
 </template>
@@ -106,13 +52,18 @@
 <script>
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
-import { getAllSaleReturn,
+import {
+  getAllSaleReturn,
   getAllSale,
-  createSaleReturn } from '@/network/sale'
+  createSaleReturn
+} from '@/network/sale'
 import saleReturnList from "@/views/sale/components/SaleReturnList";
+import SaleReturnForm from "@/views/sale/components/SaleReturnForm";
+
 export default {
   name: 'SaleReturnView',
   components: {
+    SaleReturnForm,
     Layout,
     Title,
     saleReturnList
@@ -125,90 +76,44 @@ export default {
       pendingLevel2List: [],
       successList: [],
       failureList: [],
-      dialogVisible: false,
-      saleReturnForm: {
-        saleReturnsSheetContent: []
-      },
       completedSale: [],
-      rules:{
-        saleSheetId:[
-          {required: true,message: '请选择一个销售单',trigger: 'change'}
+      dialogVisible: false,
+      rules: {
+        saleSheetId: [
+          {required: true, message: '请选择一个销售单', trigger: 'change'}
         ]
       }
     }
   },
   async mounted() {
     this.getSaleReturn()
-    // 得到所有审批完成的销售单
-    await getAllSale({ params: { state: 'SUCCESS' } }).then(_res => {
-      this.completedSale = _res.result
-    })
+
   },
   methods: {
     getSaleReturn() {
       // 得到所有的销售退货单 并且按照审批状态分类
       getAllSaleReturn({}).then(_res => {
         this.saleReturnList = _res.result
-        console.log(this.saleReturnList)
         this.pendingLevel1List = this.saleReturnList.filter(item => item.state === '待一级审批')
-        console.log(this.pendingLevel1List)
         this.pendingLevel2List = this.saleReturnList.filter(item => item.state === '待二级审批')
-        console.log(this.pendingLevel2List)
         this.successList = this.saleReturnList.filter(item => item.state === '审批完成')
-        console.log(this.successList)
         this.failureList = this.saleReturnList.filter(item => item.state === '审批失败')
-        console.log(this.failureList)
       })
     },
     handleClose(done) {
       this.$confirm('确认关闭？')
           .then(_ => {
-            this.saleReturnForm = {}
-            this.saleReturnForm.saleReturnsSheetContent = []
             done();
           })
-          .catch(_ => {});
+          .catch(_ => {
+          });
     },
-    // 销售退货的内容
-    selectSale(content) {
-      this.saleReturnForm.saleReturnsSheetContent = content[0].content
-    },
-    submitForm(formName) {
-      // if(this.saleReturnForm.saleReturnsSheetContent.length===0){
-      //   this.$message.error("未选择销售单，创建失败！")
-      //   this.dialogVisible=false
-      //   return
-      // }
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.saleReturnForm.id = null
-          this.saleReturnForm.supplier=null
-          this.saleReturnForm.salesman=  sessionStorage.getItem("name")
-          this.saleReturnForm.operator = sessionStorage.getItem("name")
-          this.saleReturnForm.rawTotalAmount = null
-          this.saleReturnForm.state = null
-          this.saleReturnForm.finalAmount=null
-          this.saleReturnForm.voucherAmount = null
-          this.saleReturnForm.createTime=null
-          this.saleReturnForm.saleReturnsSheetContent.forEach(item => {
-            item.unitPrice = Number(item.unitPrice)
-            item.quantity = Number(item.quantity)
-            item.totalPrice = item.unitPrice * item.quantity
-          })
-          createSaleReturn(this.saleReturnForm).then(_res => {
-            if (_res.msg === 'Success') {
-              this.$message.success('创建成功!')
-              this.dialogVisible = false
-              this.saleReturnForm = {}
-              this.saleReturnForm.saleReturnsSheetContent = []
-              this.getSaleReturn()
-            }
-          })
-        }
-      })
+
+
+    submit() {
+      this.dialogVisible = false
+      this.getSaleReturn()
     }
-
-
   }
 }
 </script>

@@ -1,14 +1,11 @@
 <template>
   <Layout>
     <Title title="进货管理"></Title>
-    <el-button
-        type="primary" @click="dialogVisible = true"
-    >制定进货单
-    </el-button>
+    <el-button type="primary" @click="dialogVisible = true">制定进货单</el-button>
     <el-dialog
         title="创建进货单"
         :visible.sync="dialogVisible"
-        v-on:submit="dialogVisible=false; getPurchase"
+        v-on:submit="formSubmit"
         :before-close="handleClose">
       <PurchaseForm
           style="margin: 0 0 1rem 0">
@@ -98,24 +95,15 @@ export default {
     handleClose(done) {
       this.$confirm('确认关闭？')
           .then(_ => {
-            this.resetForm()
             done();
           })
           .catch(_ => {
           });
     },
-    resetForm() {
-      this.purchaseForm = {
-        saleReturnsSheetContent: [
-          {
-            pid: '',
-            quantity: '',
-            unitPrice: '',
-            remark: ''
-          }
-        ]
-      }
-    },
+    formSubmit() {
+      this.dialogVisible = false;
+      this.getPurchase()
+    }
   }
 }
 </script>

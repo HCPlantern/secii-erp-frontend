@@ -1,7 +1,17 @@
 <template>
   <Layout>
     <Title title="进货退货管理"></Title>
-    <el-button type="primary" size="medium" @click="dialogVisible = true">制定进货退货单</el-button>
+    <el-button type="primary" @click="dialogVisible = true">制定进货退货单</el-button>
+    <el-dialog
+        title="创建进货退货单"
+        :visible.sync="dialogVisible"
+        v-on:submit="formSubmit"
+        :before-close="handleClose">
+      <PurchaseReturnForm
+          style="margin: 0 0 1rem 0">
+      </PurchaseReturnForm>
+    </el-dialog>
+
     <div class="body">
       <el-tabs v-model="activeName" :stretch="true">
         <el-tab-pane label="待一级审批" name="PENDING_LEVEL_1">
@@ -38,68 +48,6 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <el-dialog
-      title="创建进货退货单"
-      :visible.sync="dialogVisible"
-      width="40%"
-      :before-close="handleClose">
-      <div style="width: 90%; margin: 0 auto">
-        <el-form :model="purchaseReturnForm" label-width="100px" ref="purchaseReturnForm">
-          <el-form-item label="进货单id: " prop="purchaseSheetId">
-            <el-select v-model="purchaseReturnForm.purchaseSheetId"
-                       placeholder="请选择关联的进货单id"
-                       @change="selectPurchase(completedPurchase.filter(item => item.id === purchaseReturnForm.purchaseSheetId))">
-              <el-option
-                v-for="(item, index) in completedPurchase"
-                :key="item.id"
-                :label="item.id"
-                :value="item.id">
-                <el-popover
-                  placement="right"
-                  width="800"
-                  trigger="hover">
-                  <el-table :data="completedPurchase[index].content">
-                    <el-table-column width="100" property="id" label="id"></el-table-column>
-                    <el-table-column width="200" property="pid" label="pid"></el-table-column>
-                    <el-table-column width="100" property="unitPrice" label="单价"></el-table-column>
-                    <el-table-column width="100" property="quantity" label="数量"></el-table-column>
-                    <el-table-column width="100" property="totalPrice" label="总价"></el-table-column>
-                    <el-table-column property="remark" label="备注"></el-table-column>
-                  </el-table>
-                  <span slot="reference">{{ item.id }}</span>
-                </el-popover>
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="进货单清单: " v-if="this.purchaseReturnForm.saleReturnsSheetContent.length === 0">
-            暂无数据!
-          </el-form-item>
-          <el-form-item label="进货单清单: " v-else>
-            <div
-              v-for="(item, index) in purchaseReturnForm.saleReturnsSheetContent"
-              :key="index">
-              <el-row>
-                <el-col :span="8">
-                  <span>id: {{item.pid}}</span>
-                </el-col>
-                <el-col :span="8">
-                  数量: <el-input v-model="item.quantity" size="mini" style="width: 120px"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  单价: <el-input v-model="item.unitPrice" size="mini" style="width: 120px"></el-input>
-                </el-col>
-              </el-row>
-            </div>
-          </el-form-item>
-          <el-form-item label="备注: ">
-            <el-input type="textarea" v-model="purchaseReturnForm.remark"></el-input>
-          </el-form-item>
-        </el-form>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm('purchaseReturnForm')">立即创建</el-button>
-      </span>
-    </el-dialog>
   </Layout>
 </template>
 
@@ -107,12 +55,16 @@
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
 import purchaseReturnList from "./components/PurchaseReturnList"
-import { getAllPurchaseReturn,
-         getAllPurchase,
-         createPurchaseReturn } from '../../network/purchase'
+import {
+  getAllPurchaseReturn,
+  getAllPurchase,
+} from '@/network/purchase'
+import PurchaseReturnForm from "@/views/purchase/components/PurchaseReturnForm";
+
 export default {
   name: 'PurchaseReturnView',
   components: {
+    PurchaseReturnForm,
     Layout,
     Title,
     purchaseReturnList
@@ -134,10 +86,7 @@ export default {
   },
   async mounted() {
     this.getPurchaseReturn()
-    await getAllPurchase({ params: { state: 'SUCCESS' } }).then(_res => {
-      this.completedPurchase = _res.result
-    })
-    console.log(this.purchaseReturnList);
+
   },
   methods: {
     getPurchaseReturn() {
@@ -151,40 +100,15 @@ export default {
     },
     handleClose(done) {
       this.$confirm('确认关闭？')
-        .then(_ => {
-          this.purchaseReturnForm = {}
-          this.purchaseReturnForm.saleReturnsSheetContent = []
-          done();
-        })
-        .catch(_ => {});
-    },
-    selectPurchase(content) {
-      this.purchaseReturnForm.saleReturnsSheetContent = content[0].content
-    },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.purchaseReturnForm.id = null
-          this.purchaseReturnForm.operator = sessionStorage.getItem("name")
-          this.purchaseReturnForm.totalAmount = null
-          this.purchaseReturnForm.state = null
-          this.purchaseReturnForm.createTime = null
-          this.purchaseReturnForm.saleReturnsSheetContent.forEach(item => {
-            item.unitPrice = Number(item.unitPrice)
-            item.quantity = Number(item.quantity)
-            item.totalPrice = item.unitPrice * item.quantity
+          .then(_ => {
+            done();
           })
-          createPurchaseReturn(this.purchaseReturnForm).then(_res => {
-            if (_res.msg === 'Success') {
-              this.$message.success('创建成功!')
-              this.dialogVisible = false
-              this.purchaseReturnForm = {}
-              this.purchaseReturnForm.saleReturnsSheetContent = []
-              this.getPurchaseReturn()
-            }
-          })
-        }
-      })
+          .catch(_ => {
+          });
+    },
+    formSubmit() {
+      this.dialogVisible = false
+      this.getPurchaseReturn()
     }
   }
 }

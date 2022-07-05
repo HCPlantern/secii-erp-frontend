@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h2 v-if="!redFlushForm">制定进货单</h2>
-    <h2 v-else>制定红冲单</h2>
     <el-form
         :model="purchaseForm"
         label-width="100px"
@@ -50,8 +48,8 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-        <el-button type="success" @click="submitForm('purchaseForm')">创建</el-button>
-      <el-button type="primary" v-if="redFlushForm" @click="resetForm">重置</el-button>
+        <el-button type="primary" size="small" @click="submitForm('purchaseForm')">创建</el-button>
+      <el-button type="primary" size="small" v-if="redFlushForm" @click="resetForm">重置</el-button>
       </span>
   </div>
 
@@ -127,8 +125,9 @@ export default {
           createPurchase(this.purchaseForm).then(_res => {
             if (_res.msg === 'Success') {
               this.$message.success('创建成功!')
-              this.$emit('submit')
+              this.$parent.$emit('submit')
               this.resetForm()
+              this.getPurchase()
             }
           })
         } else {
