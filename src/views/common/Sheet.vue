@@ -8,12 +8,12 @@
   <div>
     <div class="header">
       <span>ID: {{ item.id }}</span>
-      <el-button v-if="(type === 1 || type === 2) && authorization" style="margin-left: 10px"
-                 type="success" icon="el-icon-check" size="small" @click="approval(item.id)">
+      <el-button v-if="(type === 1 || type === 2) && authorization"
+                 class="button-left" type="success" icon="el-icon-check" size="small" @click="approval(item.id)">
         <span>通过</span>
       </el-button>
       <el-button v-if="(type === 1 || type === 2) && authorization"
-                 type="danger" icon="el-icon-close" size="small" @click="deny(item.id)">
+                 class="button-left" type="danger" icon="el-icon-close" size="small" @click="deny(item.id)">
         <span>不通过</span>
       </el-button>
       <span style="margin-left: 10px">
@@ -22,15 +22,19 @@
             </span>
       <el-button
           v-if="description.length === 2"
-          class="button"
+          class="button-right"
+          type="primary"
           size="small"
-          @click="changeState">
+          @click="showDetail = !showDetail">
           <span v-if="!showDetail">
                 展开</span>
         <span v-else>收起</span>
       </el-button>
+
     </div>
+
     <el-divider></el-divider>
+
     <div>
       <el-descriptions>
         <el-descriptions-item
@@ -43,7 +47,7 @@
       </el-descriptions>
 
       <div v-if="showDetail" style="margin-top: 15px">
-        <div style="margin-bottom: 15px">详细信息:</div>
+        <div style="margin-bottom: 15px">单据详细内容:</div>
         <el-table
             :data="item[contentFieldName]"
             border
@@ -59,12 +63,15 @@
       </div>
 
     </div>
+
   </div>
 </template>
 
 <script>
+import PurchaseForm from "@/views/purchase/components/PurchaseForm";
 export default {
   name: "Sheet",
+  components: {PurchaseForm},
   props: {
     item: Object,
     type: Number,
@@ -80,9 +87,6 @@ export default {
     }
   },
   methods: {
-    changeState() {
-      this.showDetail = !this.showDetail
-    },
     authorization() {
       return this.role.includes(sessionStorage.getItem('role'));
     },
@@ -91,7 +95,16 @@ export default {
 </script>
 
 <style scoped>
-.button {
+.button-left {
+  margin-left: 10px;
+}
+
+.button-right {
+  margin: 0 0.5rem;
   float: right;
+}
+
+.header {
+  align-items: center;
 }
 </style>

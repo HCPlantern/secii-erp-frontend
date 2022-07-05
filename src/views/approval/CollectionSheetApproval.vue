@@ -9,7 +9,7 @@
             <el-empty description="暂无数据"></el-empty>
           </div>
           <div v-else>
-            <collection-list :list="pendingList" :type="1" @refresh="getCollection()"/>
+            <collection-list :list="pendingList" :type="2" @refresh="getCollection()"/>
           </div>
         </el-tab-pane>
 
@@ -99,7 +99,7 @@
       },
       resetForm(){
         this.collectionSheet={
-          collectionContent: []
+          content: []
         }
       },
     }

@@ -8,7 +8,7 @@
             <el-empty description="暂无数据"></el-empty>
           </div>
           <div v-else>
-            <payment-list :list="pendingList" :type="1" @refresh="getPayment()"/>
+            <payment-list :list="pendingList" :type="2" @refresh="getPayment()"/>
           </div>
         </el-tab-pane>
 
@@ -60,7 +60,7 @@ export default {
       failureList: [],
       dialogVisible: false,
       paymentSheet:{
-        paymentSheetContentVOS:[
+        content:[
           {
             id: '',
             companyAccountId: '',
@@ -105,7 +105,7 @@ export default {
       this.paymentSheet.operator = sessionStorage.getItem("name")
       this.paymentSheet.totalAmount=null
       this.paymentSheet.state=null
-      this.paymentSheet.paymentSheetContentVOS.forEach((item)=>{
+      this.paymentSheet.content.forEach((item)=>{
         item.id=null
         item.paymentSheetId=null
         item.companyAccountId=parseInt(item.companyAccountId)
@@ -116,7 +116,7 @@ export default {
           this.$message.success('创建成功!')
           this.dialogVisible = false
           this.paymentSheet={}
-          this.paymentSheet.paymentSheetContentVOS=[]
+          this.paymentSheet.content=[]
           this.getPayment()
         }
       })
@@ -127,12 +127,12 @@ export default {
       }
     },
     addTransferList(){
-      this.paymentSheet.paymentSheetContentVOS.push({});
+      this.paymentSheet.content.push({});
     },
     removeTransferList(item){
-      let index=this.paymentSheet.paymentSheetContentVOS.indexOf(item)
+      let index=this.paymentSheet.content.indexOf(item)
       if(index!==-1){
-        this.paymentSheet.paymentSheetContentVOS.splice(index,1)
+        this.paymentSheet.content.splice(index,1)
       }
     }
   }

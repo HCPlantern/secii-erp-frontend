@@ -58,7 +58,7 @@
                   placement="right"
                   width="800"
                   trigger="hover">
-                  <el-table :data="completedPurchase[index].purchaseSheetContent">
+                  <el-table :data="completedPurchase[index].content">
                     <el-table-column width="100" property="id" label="id"></el-table-column>
                     <el-table-column width="200" property="pid" label="pid"></el-table-column>
                     <el-table-column width="100" property="unitPrice" label="单价"></el-table-column>
@@ -71,12 +71,12 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="进货单清单: " v-if="this.purchaseReturnForm.purchaseReturnsSheetContent.length === 0">
+          <el-form-item label="进货单清单: " v-if="this.purchaseReturnForm.saleReturnsSheetContent.length === 0">
             暂无数据!
           </el-form-item>
           <el-form-item label="进货单清单: " v-else>
             <div
-              v-for="(item, index) in purchaseReturnForm.purchaseReturnsSheetContent"
+              v-for="(item, index) in purchaseReturnForm.saleReturnsSheetContent"
               :key="index">
               <el-row>
                 <el-col :span="8">
@@ -127,7 +127,7 @@ export default {
       failureList: [],
       dialogVisible: false,
       purchaseReturnForm: {
-        purchaseReturnsSheetContent: []
+        saleReturnsSheetContent: []
       },
       completedPurchase: []
     }
@@ -153,13 +153,13 @@ export default {
       this.$confirm('确认关闭？')
         .then(_ => {
           this.purchaseReturnForm = {}
-          this.purchaseReturnForm.purchaseReturnsSheetContent = []
+          this.purchaseReturnForm.saleReturnsSheetContent = []
           done();
         })
         .catch(_ => {});
     },
     selectPurchase(content) {
-      this.purchaseReturnForm.purchaseReturnsSheetContent = content[0].purchaseSheetContent
+      this.purchaseReturnForm.saleReturnsSheetContent = content[0].content
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -169,7 +169,7 @@ export default {
           this.purchaseReturnForm.totalAmount = null
           this.purchaseReturnForm.state = null
           this.purchaseReturnForm.createTime = null
-          this.purchaseReturnForm.purchaseReturnsSheetContent.forEach(item => {
+          this.purchaseReturnForm.saleReturnsSheetContent.forEach(item => {
             item.unitPrice = Number(item.unitPrice)
             item.quantity = Number(item.quantity)
             item.totalPrice = item.unitPrice * item.quantity
@@ -179,7 +179,7 @@ export default {
               this.$message.success('创建成功!')
               this.dialogVisible = false
               this.purchaseReturnForm = {}
-              this.purchaseReturnForm.purchaseReturnsSheetContent = []
+              this.purchaseReturnForm.saleReturnsSheetContent = []
               this.getPurchaseReturn()
             }
           })
