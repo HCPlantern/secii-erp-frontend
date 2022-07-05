@@ -165,23 +165,35 @@
                 :list="sheetDetail"
                 :type="0"
             ></SaleList>
+            <el-card
+                v-if="redFlushVisible"
+                shadow="hover"
+                v-on:submit="formSubmit">
+              <SaleForm :red-flush-form="sheetDetail[0]"></SaleForm>
+            </el-card>
           </div>
           <div
               v-else-if="selectedType==='销售退货单'">
             <SaleReturnList
                 :list="sheetDetail"
                 :type="0"></SaleReturnList>
+            <el-card
+                v-if="redFlushVisible"
+                shadow="hover"
+                v-on:submit="formSubmit">
+              <SaleReturnForm :red-flush-form="sheetDetail[0]"></SaleReturnForm>
+            </el-card>
           </div>
           <div
               v-else-if="selectedType==='进货单'"
-              v-on:submit="this.dialogVisible=false"
           >
             <PurchaseList
                 :list="sheetDetail"
-                :type="0">
-            </PurchaseList>
+                :type="0"></PurchaseList>
             <el-card
-                v-if="redFlushVisible">
+                v-if="redFlushVisible"
+                shadow="hover"
+                v-on:submit="formSubmit">
               <PurchaseForm
                   :red-flush-form="sheetDetail[0]"
               ></PurchaseForm>
@@ -193,6 +205,14 @@
             <PurchaseReturnList
                 :list="sheetDetail"
                 :type="0"></PurchaseReturnList>
+            <el-card
+                v-if="redFlushVisible"
+                shadow="hover"
+                v-on:submit="formSubmit">
+              <PurchaseReturnForm
+                  :red-flush-form="sheetDetail[0]"
+              ></PurchaseReturnForm>
+            </el-card>
           </div>
           <div
               v-else-if="selectedType==='付款单'">
@@ -224,7 +244,10 @@
                 :list="sheetDetail"
                 :type="0"></WarehouseOutputList>
           </div>
-          <div style="margin: 0 0 0rem 0;">
+          <div>
+<!--            不完成的不能红冲 -->
+<!--              v-if="sheetDetail.length !== 0 && sheetDetail[0].state.indexOf('完成') !== -1"-->
+
             <el-button type="danger" size="small" @click="redFlushVisible=!redFlushVisible">
               <span v-if="!redFlushVisible">红冲</span>
               <span v-else>收起</span>
@@ -270,9 +293,15 @@ import WarehouseInputList from "@/views/warehouse/component/WarehouseInputList";
 import WarehouseOutputList from "@/views/warehouse/component/WarehouseOutputList";
 import SalaryList from "@/views/salary/SalaryList";
 import PurchaseForm from "@/views/purchase/components/PurchaseForm";
+import PurchaseReturnForm from "@/views/purchase/components/PurchaseReturnForm";
+import SaleForm from "@/views/sale/components/SaleForm";
+import SaleReturnForm from "@/views/sale/components/SaleReturnForm";
 
 export default {
   components: {
+    SaleReturnForm,
+    SaleForm,
+    PurchaseReturnForm,
     PurchaseForm,
     SalaryList,
     WarehouseOutputList,
@@ -379,6 +408,9 @@ export default {
     },
   },
   methods: {
+    test() {
+      console.log(this.sheetDetail)
+    },
     // 查询
     queryData() {
       if (this.form.date === '' || this.beginDate === null || this.endDate === null) {
@@ -491,11 +523,16 @@ export default {
     handleClose(done) {
       this.$confirm('确认关闭？')
           .then(_ => {
+            this.dialogVisible = false;
+            this.redFlushVisible = false;
             done();
           })
           .catch(_ => {
           });
     },
+    formSubmit() {
+      this.dialogVisible = false;
+    }
   }
 }
 </script>
