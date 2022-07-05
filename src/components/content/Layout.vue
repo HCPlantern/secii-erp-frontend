@@ -150,6 +150,14 @@
             <i class="el-icon-receiving"></i>
             <span slot="title">付款单审批</span>
           </el-menu-item>
+          <el-menu-item
+              :index="PATH.SALARY_SHEET_APPROVAL_VIEW.path"
+              v-if="permit(PATH.SALARY_SHEET_APPROVAL_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-receiving"></i>
+            <span slot="title">工资单审批</span>
+          </el-menu-item>
+
         </el-submenu>
 
         <el-submenu index="5" v-if="permit(PATH.ACCOUNT_VIEW.requiresAuth)">
@@ -183,6 +191,12 @@
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">制定付款单</span>
+          </el-menu-item>
+          <el-menu-item :index="PATH.INIT_ACCOUNT_VIEW.path"
+                        v-if="permit(PATH.INIT_ACCOUNT_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-receiving"></i>
+            <span slot="title">期初建账</span>
           </el-menu-item>
         </el-submenu>
 
@@ -224,7 +238,7 @@
         >
           <div class="logout-name">{{ getUsername() }}</div>
         </el-tooltip>
-        <el-button @click="signIn()">打卡</el-button>
+        <el-button  round size="small" type="primary" class="attendance" @click="signIn()">打卡</el-button>
         <div class="logout" @click="logout()">退出登录</div>
       </div>
     </el-aside>
@@ -294,8 +308,18 @@ export default {
       // console.log(params);
       signIn(params).then((res) => {
         // console.log("打卡结果", res);
-        if (res.result === 1) alert("打卡成功");
-        else if (res.result === 0) alert("今日已打卡");
+        if (res.result === 1) {
+          this.$message({
+            message: '打卡成功',
+            type: 'success'
+          });
+        }
+        else if (res.result === 0){
+          this.$message({
+            message: '今日已打卡',
+            type: 'warning'
+          });
+        }
       });
     },
   },
@@ -382,5 +406,9 @@ export default {
 
 .logout-fix .logout:hover {
   color: #000000;
+}
+.attendance{
+  margin-bottom: 10px;
+  text-align: left;
 }
 </style>

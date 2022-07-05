@@ -113,6 +113,10 @@ export const PATH = {
         path: '/paymentSheetApprovalView',
         requiresAuth:[ROLE.GM,ROLE.ADMIN]
     },
+    SALARY_SHEET_APPROVAL_VIEW:{
+        path: '/salarySheetApprovalView',
+        requiresAuth:[ROLE.GM,ROLE.ADMIN]
+    },
 
     // ADMIN
     ACCOUNT_VIEW: {
@@ -127,6 +131,13 @@ export const PATH = {
     PAYMENT_VIEW: {
         path: '/paymentView',
         requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.ADMIN]
+    },
+    INIT_ACCOUNT_VIEW:{
+        path: '/initAccountView',
+        requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.ADMIN]
     }
+
+
+
 
 }

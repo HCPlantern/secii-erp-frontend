@@ -13,6 +13,8 @@ Vue.config.productionTip = false;
 Vue.prototype.$bus = new Vue(); //用于取代Vuex实现组件之间的消息传递
 
 Vue.use(AFTableColumn)
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 
 new Vue({
   router,

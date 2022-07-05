@@ -28,10 +28,11 @@ const CustomerView = () => import ("../views/purchase/CustomerView");
 const MaxAmountCustomerView = () => import("../views/purchase/MaxAmountCustomerView");
 const CollectionSheetApproval=()=>import("../views/approval/CollectionSheetApproval")
 const PaymentSheetApproval=()=>import("../views/approval/PaymentSheetApproval")
+const SalarySheetApproval=()=>import("../views/approval/SalarySheetApproval")
 const AccountView = () => import("../views/admin/AccountView")
 const CollectionView = () => import("../views/finance/CollectionView")
 const PaymentView = () => import("../views/finance/PaymentView")
-
+const InitCompanyAccountView=()=>import("../views/finance/InitAccountView")
 // 报表
 const SaleDetailView = () => import("../views/sheet/SaleDetailView");
 const HistorySheetView = () => import("../views/sheet/HistorySheetView");
@@ -179,7 +180,11 @@ const routes = [
         component: PaymentSheetApproval,
         meta: {requiresAuth: PATH.PAYMENT_SHEET_APPROVAL_VIEW.requiresAuth}
     },
-
+    {
+        path: PATH.SALARY_SHEET_APPROVAL_VIEW.path,
+        component: SalarySheetApproval,
+        meta: {requiresAuth: PATH.SALARY_SHEET_APPROVAL_VIEW.requiresAuth}
+    },
     // 账户管理
     {
         path: PATH.ACCOUNT_VIEW.path,
@@ -216,6 +221,12 @@ const routes = [
         component: BusinessSituationView,
         name: "BusinessSituationView",
         meta: {requiresAuth: PATH.BUSINESS_SITUATION_VIEW.requiresAuth}
+    },
+    {
+        path: PATH.INIT_ACCOUNT_VIEW.path,
+        component: InitCompanyAccountView,
+        name: "InitCompanyAccountView",
+        meta: {requiresAuth: PATH.INIT_ACCOUNT_VIEW.requiresAuth}
     },
 
     // -----------------------未找到页面-----------------------------
