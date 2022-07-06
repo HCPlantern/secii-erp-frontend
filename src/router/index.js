@@ -34,6 +34,8 @@ const AccountView = () => import("../views/admin/AccountView")
 const CollectionView = () => import("../views/finance/CollectionView")
 const PaymentView = () => import("../views/finance/PaymentView")
 const InitCompanyAccountView=()=>import("../views/finance/InitAccountView")
+const DepartmentSalaryRuleView=()=>import("../views/humanresource/DepartmentSalaryRuleView")
+
 // 报表
 const SaleDetailView = () => import("../views/sheet/SaleDetailView");
 const HistorySheetView = () => import("../views/sheet/HistorySheetView");
@@ -235,7 +237,11 @@ const routes = [
         name: "InitCompanyAccountView",
         meta: {requiresAuth: PATH.INIT_ACCOUNT_VIEW.requiresAuth}
     },
-
+    {
+        path: PATH.DEPARTMENT_SALARY_RULE_VIEW.path,
+        component: DepartmentSalaryRuleView,
+        meta: {requiresAuth: PATH.DEPARTMENT_SALARY_RULE_VIEW.requiresAuth}
+    },
     // -----------------------未找到页面-----------------------------
     {
         path: "*",

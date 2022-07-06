@@ -21,6 +21,8 @@ import { ROLE, PATH } from "@/common/const";
         this.$router.push(PATH.ACCOUNT_VIEW.path)
       }else if(role===ROLE.FINANCIAL_STAFF){
         this.$router.push(PATH.COLLECTION_VIEW.path)
+      }else if(role===ROLE.HR){
+        this.$router.push(PATH.DEPARTMENT_SALARY_RULE_VIEW.path)
       }
       else {
         this.$router.push("/error");

@@ -139,6 +139,10 @@ export const PATH = {
     INIT_ACCOUNT_VIEW:{
         path: '/initAccountView',
         requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.ADMIN]
+    },
+    DEPARTMENT_SALARY_RULE_VIEW:{
+        path: '/departmentSalaryRuleView',
+        requiresAuth: [ROLE.HR,ROLE.ADMIN]
     }
 
 

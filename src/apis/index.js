@@ -92,7 +92,10 @@ const COMPANY_ACCOUNT_DELETE = '/api/accountManage/deleteCompanyAccountById'
 // 单据
 const FIND_ALL_SHEET = '/api/sheet/findAllSheet'
 const GET_FINANCIAL_REPORT = '/api/finance/getFinancialReport'
-
+// 薪酬规则制定
+const SALARY_RULE_SHOW='/api/job/queryAllSalaryRules'
+const SALARY_RULE_CREATE='/api/job/createDepartmentSalaryRule'
+const SALARY_RULE_UPDATE='/api/job/updateDepartmentSalaryRule'
 // 工资
 const GET_SALARY_SHEET_BY_TIME = '/api/salary/getSalarySheetByTime'
 const GET_SALARY_SHEET_BY_ID = '/api/salary/getSalarySheetById'
@@ -197,5 +200,8 @@ module.exports = {
     INIT_CUSTOMER_SHOW,
     INIT_COMPANY_ACCOUNT_CREATE,
     INIT_PRODUCT_CREATE,
-    INIT_CUSTOMER_CREATE
+    INIT_CUSTOMER_CREATE,
+    SALARY_RULE_SHOW,
+    SALARY_RULE_CREATE,
+    SALARY_RULE_UPDATE
 };
