@@ -235,6 +235,19 @@
           </el-menu-item>
 
         </el-submenu>
+        <el-submenu index="8" v-if="permit(PATH.DEPARTMENT_SALARY_RULE_VIEW.requiresAuth)">
+          <template slot="title">
+            <i class="el-icon-setting"></i>
+            <span slot="title">部门薪酬制度管理</span>
+          </template>
+          <el-menu-item :index="PATH.DEPARTMENT_SALARY_RULE_VIEW.path" v-if="permit(PATH.DEPARTMENT_SALARY_RULE_VIEW.requiresAuth)">
+            <i class="el-icon-setting"></i>
+            <span slot="title">制定薪酬规则</span>
+          </el-menu-item>
+        </el-submenu>
+
+
+
       </el-menu>
 
       <div class="logout-fix">
