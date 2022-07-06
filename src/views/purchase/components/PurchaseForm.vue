@@ -34,9 +34,15 @@
               :value="item1.id">
           </el-option>
         </el-select>
-        <el-input class="commodityFormItem" v-model="item.quantity" placeholder="请输入商品数量"></el-input>
-        <el-input class="commodityFormItem" v-model="item.unitPrice" placeholder="请输入商品单价"></el-input>
-        <el-input class="commodityFormItem" v-model="item.remark" placeholder="请填写备注"></el-input>
+        <div>
+          <el-input class="commodityFormItem" v-model="item.quantity" placeholder="请输入商品数量"></el-input>
+        </div>
+        <div>
+          <el-input class="commodityFormItem" v-model="item.unitPrice" placeholder="请输入商品单价"></el-input>
+        </div>
+        <div>
+          <el-input class="commodityFormItem" v-model="item.remark" placeholder="请填写备注"></el-input>
+        </div>
         <el-button type="text" size="small" @click="addProduct"
                    v-if="index === purchaseForm.purchaseSheetContent.length - 1">添加
         </el-button>
@@ -150,11 +156,11 @@ export default {
 
 <style scoped>
 .commodityFormRemark {
-  max-width: 523px;
+  width: 60%;
 }
 
 .commodityFormItem {
   margin: 0.5rem 1rem 0.5rem 0;
-  width: 203px;
+  width: 40%;
 }
 </style>

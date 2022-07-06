@@ -113,30 +113,20 @@
           <el-table-column
               prop="id"
               label="单据编号"
-              width="150%"
-          >
-          </el-table-column>
+              width="150%"></el-table-column>
           <el-table-column
               prop="type"
-              label="单据类型"
-          >
-          </el-table-column>
+              label="单据类型"></el-table-column>
           <el-table-column
               prop="date"
-              label="时间"
-          >
-          </el-table-column>
+              label="时间"></el-table-column>
 
           <el-table-column
               prop="client"
-              label="客户"
-          >
-          </el-table-column>
+              label="客户"></el-table-column>
           <el-table-column
               prop="operator"
-              label="业务员"
-          >
-          </el-table-column>
+              label="业务员"></el-table-column>
           <el-table-column
               width="100"
               label="操作">
@@ -149,7 +139,6 @@
               </el-button>
             </template>
           </el-table-column>
-
         </el-table>
       </div>
 
@@ -219,12 +208,27 @@
             <PaymentList
                 :list="sheetDetail"
                 :type="0"></PaymentList>
+            <el-card
+                v-if="redFlushVisible"
+                shadow="hover"
+                v-on:submit="formSubmit">
+              <PaymentForm
+                  :red-flush-form="sheetDetail[0]"></PaymentForm>
+            </el-card>
           </div>
           <div
               v-else-if="selectedType==='收款单'">
             <CollectionList
                 :list="sheetDetail"
                 :type="0"></CollectionList>
+            <el-card
+                v-if="redFlushVisible"
+                shadow="hover"
+                v-on:submit="formSubmit">
+              <CollectionForm
+                  :red-flush-form="sheetDetail[0]"
+              ></CollectionForm>
+            </el-card>
           </div>
           <div
               v-else-if="selectedType==='工资单'">
@@ -245,8 +249,8 @@
                 :type="0"></WarehouseOutputList>
           </div>
           <div>
-<!--            不完成的不能红冲 -->
-<!--              v-if="sheetDetail.length !== 0 && sheetDetail[0].state.indexOf('完成') !== -1"-->
+            <!--            不完成的不能红冲 -->
+            <!--              v-if="sheetDetail.length !== 0 && sheetDetail[0].state.indexOf('完成') !== -1"-->
 
             <el-button type="danger" size="small" @click="redFlushVisible=!redFlushVisible">
               <span v-if="!redFlushVisible">红冲</span>
@@ -296,9 +300,13 @@ import PurchaseForm from "@/views/purchase/components/PurchaseForm";
 import PurchaseReturnForm from "@/views/purchase/components/PurchaseReturnForm";
 import SaleForm from "@/views/sale/components/SaleForm";
 import SaleReturnForm from "@/views/sale/components/SaleReturnForm";
+import CollectionForm from "@/views/finance/components/CollectionForm";
+import PaymentForm from "@/views/finance/components/PaymentForm";
 
 export default {
   components: {
+    PaymentForm,
+    CollectionForm,
     SaleReturnForm,
     SaleForm,
     PurchaseReturnForm,
