@@ -54,7 +54,7 @@
     <span slot=" footer
       " class="dialog-footer">
       <el-button type="primary" size="small" @click="submitForm('saleReturnForm')">创建</el-button>
-      <el-button type="primary" size="small" v-if="redFlushForm" @click="resetForm">重置</el-button>
+      <el-button type="primary" size="small" @click="resetForm">重置</el-button>
       </span>
   </div>
 </template>
@@ -77,14 +77,11 @@ export default {
       await getAllSale({params: {state: 'SUCCESS'}}).then(_res => {
         this.completedSale = _res.result
       })
-      console.log(this.completedSale)
     }
   },
   data() {
     return {
-      saleReturnForm: {
-        saleReturnsSheetContent: []
-      },
+      saleReturnForm: {},
       completedSale: [],
       rules: {
         saleSheetId: [
@@ -114,7 +111,8 @@ export default {
           createSaleReturn(this.saleReturnForm).then(_res => {
             if (_res.msg === 'Success') {
               this.$message.success('创建成功!')
-              this.getSaleReturn()
+              this.resetForm()
+              this.$parent.$emit('submit')
             }
           })
         }
@@ -130,6 +128,10 @@ export default {
         this.saleReturnForm.saleReturnsSheetContent.forEach((item, index) => {
           item.quantity = -item.quantity
         })
+      } else {
+        this.saleReturnForm = {
+          saleReturnsSheetContent: []
+        }
       }
     },
   }

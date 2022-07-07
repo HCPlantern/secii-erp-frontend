@@ -241,21 +241,38 @@
             <WarehouseInputList
                 :list="sheetDetail"
                 :type="0"></WarehouseInputList>
+            <el-card
+                v-if="redFlushVisible"
+                shadow="hover"
+                v-on:submit="formSubmit">
+              <WarehouseInputForm
+                  :red-flush-form="sheetDetail[0]"
+              ></WarehouseInputForm>
+            </el-card>
           </div>
           <div
               v-else-if="selectedType==='出库单'">
             <WarehouseOutputList
                 :list="sheetDetail"
                 :type="0"></WarehouseOutputList>
+            <el-card
+                v-if="redFlushVisible"
+                shadow="hover"
+                v-on:submit="formSubmit">
+              <WarehouseOutputForm
+                  :red-flush-form="sheetDetail[0]"></WarehouseOutputForm>
+            </el-card>
           </div>
           <div>
             <!--            不完成的不能红冲 -->
             <!--              v-if="sheetDetail.length !== 0 && sheetDetail[0].state.indexOf('完成') !== -1"-->
 
-            <el-button type="danger" size="small" @click="redFlushVisible=!redFlushVisible">
-              <span v-if="!redFlushVisible">红冲</span>
-              <span v-else>收起</span>
-            </el-button>
+            <div v-if="selectedType !== '工资单'">
+              <el-button type="danger" size="small" @click="redFlushVisible=!redFlushVisible">
+                <span v-if="!redFlushVisible">红冲</span>
+                <span v-else>收起</span>
+              </el-button>
+            </div>
           </div>
         </el-dialog>
       </div>
@@ -302,9 +319,13 @@ import SaleForm from "@/views/sale/components/SaleForm";
 import SaleReturnForm from "@/views/sale/components/SaleReturnForm";
 import CollectionForm from "@/views/finance/components/CollectionForm";
 import PaymentForm from "@/views/finance/components/PaymentForm";
+import WarehouseInputForm from "@/views/warehouse/component/WarehouseInputForm";
+import WarehouseOutputForm from "@/views/warehouse/component/WarehouseOutputForm";
 
 export default {
   components: {
+    WarehouseOutputForm,
+    WarehouseInputForm,
     PaymentForm,
     CollectionForm,
     SaleReturnForm,
@@ -508,7 +529,6 @@ export default {
           break;
       }
       this.dialogVisible = true
-      console.log(this.sheetDetail)
     },
     filterData() {
       this.filteredData = this.sheetsData;

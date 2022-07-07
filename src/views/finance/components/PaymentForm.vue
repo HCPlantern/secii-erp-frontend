@@ -106,7 +106,6 @@ export default {
           item.transferAmount = -item.transferAmount
         })
       } else {
-        console.log('resetForm')
         this.paymentSheet = {
           content: [
             {

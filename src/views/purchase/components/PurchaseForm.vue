@@ -77,17 +77,7 @@ export default {
     return {
       suppliers: [],
       commodityList: [],
-      purchaseForm: {
-        supplier: "",
-        purchaseSheetContent: [
-          {
-            pid: '',
-            quantity: '',
-            unitPrice: '',
-            remark: ''
-          }
-        ]
-      },
+      purchaseForm: {},
       rules: {
         supplier: [
           {required: true, message: '请选择一个供应商', trigger: 'change'}
@@ -112,6 +102,18 @@ export default {
         this.purchaseForm.purchaseSheetContent.forEach((item, index) => {
           item.quantity = -item.quantity
         })
+      } else {
+        this.purchaseForm = {
+          supplier: "",
+          purchaseSheetContent: [
+            {
+              pid: '',
+              quantity: '',
+              unitPrice: '',
+              remark: ''
+            }
+          ]
+        }
       }
     },
     submitForm(formName) {
