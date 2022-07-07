@@ -1,62 +1,141 @@
 <template>
   <Layout>
     <Title title="制定促销策略"></Title>
-    <div class="promotionStrategy">
+    <el-button type="primary" size="medium" @click="addDepartmentSalaryRule">制定促销策略</el-button>
+    <el-card class="el-card" shadow="hover">
+      <div class="form-icon-text">
+        <i class="el-icon-tickets"></i>
+        <span>促销策略列表</span>
+      </div>
+    </el-card>
+    <div style="margin-top: 10px">
+      <el-table :data="salaryRulesList"
+                stripe
+                border
+                style="width: 100%"
+                :header-cell-style="{'text-align':'center'}"
+                :cell-style="{'text-align':'center'}"
+      >
+        <el-table-column
+          prop="id"
+          label="id"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="部门名称"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="baseWage"
+          label="基本工资"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="salaryCalculationMethod"
+          label="薪资计算方法"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="salaryPaymentMethod"
+          label="薪资发放方法"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="postWage"
+          label="岗位工资"
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="annualBonus"
+          label="年终奖"
+          fit>
+        </el-table-column>
+        <el-table-column
+          fixed="right"
+          width="120"
+          label="操作">
+          <template slot-scope="scope">
+            <el-button
+              @click.native.prevent="editInfo(scope.row.id)"
+              type="text"
+              size="small">
+              <i class="el-icon-edit">编辑</i>
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
-      <div>
-        <el-button
-          class="search"
-          type="primary"
-          @click="getData()"
-        >
-          方案一：客户促销
-        </el-button>
-      </div>
-      <div>
-        <el-button
-          class="search"
-          type="primary"
-          @click="getData()"
-        >
-          方案二：特价促销
-        </el-button>
-      </div>
-      <div>
-        <el-button
-          class="search"
-          type="primary"
-          @click="getData()"
-        >
-          方案三：总价促销
-        </el-button>
-      </div>
-      <div class="select-time-range">
-        <span>请选择一个时间段： </span>
-      </div>
+      <el-dialog
+        title="新增促销策略"
+        :visible.sync="addDialogVisible"
+        width="30%"
+        @close="close()">
+        <el-form :model="promotionStrategyForm" :label-width="'100px'" size="mini">
 
-      <div>
-        <el-date-picker
-          class="select-time-range"
-          v-model="date"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          unlink-panels
-          :picker-options="pickerOptions"
-          :default-time="['00:00:00', '00:00:00']">
-        </el-date-picker>
-      </div>
+          <el-form-item label="促销方案">
+            <el-select v-model="promotionStrategyForm.promotionStrategy">
+              <el-option v-for="item in promotionStrategy"
+                         :key="item.index"
+                         :label="item"
+                         :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
 
-      <div>
-        <el-button
-          class="search"
-          type="primary"
-          @click="getData()"
-        >
-          确定
-        </el-button>
-      </div>
+          <el-form-item label="客户级别">
+            <el-select v-model="promotionStrategyForm.customerLevel">
+              <el-option v-for="item in userLevel"
+                         :key="item.index"
+                         :label="item"
+                         :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="赠品">
+            <el-select v-model="promotionStrategyForm.gift">
+              <el-option v-for="item in gift"
+                         :key="item.index"
+                         :label="item"
+                         :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="折扣">
+            <el-input v-model="promotionStrategyForm.discount" :rows="2" placeholder="请输入折扣" type="number"></el-input>
+          </el-form-item>
+
+          <el-form-item label="代金券">
+            <el-select v-model="promotionStrategyForm.coupon">
+              <el-option v-for="item in coupon"
+                         :key="item.index"
+                         :label="item"
+                         :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label = "起止日期">
+            <el-date-picker
+              class="select-time-range"
+              v-model="date"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              unlink-panels
+              :picker-options="pickerOptions"
+              :default-time="['00:00:00', '00:00:00']">
+            </el-date-picker>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="handleAdd(false)">取 消</el-button>
+          <el-button type="primary" @click="handleAdd(true)">确 定</el-button>
+        </div>
+      </el-dialog>
 
     </div>
   </Layout>
@@ -65,29 +144,18 @@
 <script>
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
-import {formatDate} from "@/common/utils";
-
-import {
-  getMaxAmountCustomerOfSalesmanByTime
-} from "@/network/sale";
-
-import {
-  findAllSalesMan
-} from "@/network/user"
-
+import {createDepartmentSalaryRule, getAllDepartmentSalaryRules, updateDepartmentSalaryRule} from "@/network/finance";
+import {getAllCustomer} from "@/network/purchase";
 export default {
-  components: {
-    Layout,
-    Title
-  },
-  data() {
-    return {
-      date: '',
-      allSalesMan: [],
-      salesman: '',
-      totalFinalAmount: '',
-      customerInfo: [],
-      // datetimepicker shortcuts
+  name: "DepartmentSalaryRule",
+  components: {Title, Layout},
+  data(){
+    return{
+      date:'',
+      userLevel:["ALL","1","2","3","4","5","6"],
+      promotionStrategy:["CUSTOMIZATION", "LOWER_PACKET","ENOUGH_DISCOUNT"],
+      gift:["1","2","3","4"],
+      coupon:["10", "20", "30"],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -114,69 +182,103 @@ export default {
             picker.$emit('pick', [start, end]);
           }
         }]
-      }
-
+      },
+      // 创建促销策略的表单
+      promotionStrategyForm:{
+        promotionStrategy:'',
+        customerLevel: '',
+        gift: '',
+        discount: '',
+        coupon: '',
+        beginData:'',
+        endData:'',
+      },
+      // 修改薪酬规定时的表单
+      salaryRuleEditForm:{
+        id: '',
+        name: '',
+        baseWage: '',
+        salaryCalculationMethod: '',
+        salaryPaymentMethod: '',
+        postWage: '',
+      },
+      salaryRulesList:[],
+      addDialogVisible:false,
+      editDialogVisible: false
     }
   },
-  async mounted() {
-    this.getAllSalesMan()
+  async mounted(){
+    getAllDepartmentSalaryRules({}).then(_res=>{
+      this.salaryRulesList=_res.result
+    })
   },
-  computed: {
-    beginDate: function () {
-      return this.date === '' ? '' : formatDate(this.date[0])
+  methods:{
+    addDepartmentSalaryRule(){
+      this.addDialogVisible=true
     },
-    endDate: function () {
-      return this.date === '' ? '' : formatDate(this.date[1])
+    handleAdd(type){
+      if(type===false){
+        this.addDialogVisible=false;
+        this.salaryRuleForm={}
+      }else {
+        createDepartmentSalaryRule(this.salaryRuleForm).then(_res=>{
+          if (_res.code === "B0001" || _res.code === "B0002") {
+            this.$message({
+              type: 'error',
+              message: _res.msg
+            });
+          } else {
+            this.$message({
+              type: 'success',
+              message: '新增成功!'
+            });
+            this.salaryRuleForm = {};
+            this.addDialogVisible = false;
+            getAllDepartmentSalaryRules({}).then(_res=>{
+              this.salaryRulesList=_res.result
+            })
+          }
+        })
+      }
+    },
+    //根据id修改信息
+    editInfo(id){
+      this.salaryRuleEditForm=this.salaryRulesList.filter(x=>x.id===id)[0];
+      this.editDialogVisible=true;
+    },
+    handleEdit(type){
+      if(type===false){
+        this.editDialogVisible=false;
+        this.salaryRuleEditForm={};
+      }else {
+        updateDepartmentSalaryRule(this.salaryRuleEditForm).then(_res=>{
+          if (_res.code === 'B0003') {
+            this.$message({
+              type: 'error',
+              message: _res.msg
+            })
+          } else {
+            this.$message({
+              type: 'success',
+              message: '修改成功！'
+            })
+            this.salaryRuleEditForm = {};
+            this.editDialogVisible = false;
+            getAllDepartmentSalaryRules({}).then(_res=>{
+              this.salaryRulesList=_res.result
+            })
+          }
+        })
+      }
     }
   },
-  methods: {
-    getAllSalesMan() {
-      findAllSalesMan().then(_res => {
-        for (let i = 0; i < _res.result.length; i++) {
-          this.allSalesMan.push({value: i, label: _res.result[i]})
-        }
-      });
-    },
-    getData() {
-      this.customerInfo = []
-      this.totalFinalAmount = ''
-      if (this.salesman === '' || this.beginDate === '' || this.endDate === '') {
-        this.$message.error('缺少查询条件！')
-        return
-      }
-      const config = {
-        params: {
-          salesman: this.salesman,
-          beginDateStr: this.beginDate,
-          endDateStr: this.endDate
-        }
-      }
-      getMaxAmountCustomerOfSalesmanByTime(config).then(_res => {
-        this.getContent = _res.result;
-        console.log(_res)
-        console.log(_res.result)
-        if (this.getContent === null) {
-          this.$message.error('该时间段内销售人员无销售记录！')
-        } else {
-          this.$message.success('查询成功!')
-          this.totalFinalAmount = this.getContent.totalFinalAmount
-          this.customerInfo = this.customerInfo.concat(this.getContent.customerVO)
-          console.log(this.customerInfo)
-        }
-      })
-
-    },
-    filterTag(value, row) {
-      return row.type === value;
-    },
-
-    formatDate
-  }
-};
+}
 </script>
 
-<style scoped lang="scss">
-.select-sale-man, .select-time-range, .search, .customer-table, .max-amount {
-  margin: 1rem 1rem 1rem 1rem;
+<style scoped>
+.el-card {
+  border: 1px solid #ebeef5;
+  margin: 1rem 0 1rem 0;
 }
+
 </style>
