@@ -16,6 +16,7 @@
 <script>
 import {warehouseInputSheetApprove} from "@/network/warehouse";
 import Sheet from "@/views/common/Sheet";
+import {ROLE} from "@/common/const";
 
 export default {
   name: "WarehouseInputList",
@@ -26,7 +27,7 @@ export default {
   },
   data() {
     return {
-      role: ["GM", "ADMIN", "INVENTORY_MANAGER"],
+      role: [ROLE.GM, ROLE.ADMIN, ROLE.INVENTORY_MANAGER],
       description: [
         {
           id: "入库单编号",
@@ -87,6 +88,7 @@ export default {
 <style lang="scss" scoped>
 .card {
   margin: 0 auto;
+
   .button {
     float: right;
   }

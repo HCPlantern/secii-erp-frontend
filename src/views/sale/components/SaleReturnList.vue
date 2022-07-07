@@ -88,7 +88,7 @@ export default {
     deny(id) {
       let config = {
         params: {
-          saleSheetId: id,
+          saleReturnsSheetId: id,
           state: 'FAILURE'
         }
       }
