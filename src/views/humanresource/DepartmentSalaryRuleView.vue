@@ -72,7 +72,6 @@
         title="修改部门薪资规则"
         :visible.sync="editDialogVisible"
         width="30%"
-        @close="close()"
       >
         <el-form :model="salaryRuleEditForm" :label-width="'100px'" size="mini">
           <el-form-item label="部门名称">
@@ -88,6 +87,7 @@
           </el-form-item>
           <el-form-item label="基本工资">
             <el-input
+              class="numrule"
               v-model="salaryRuleEditForm.baseWage"
               :rows="2"
               placeholder="请输入基本工资"
@@ -122,6 +122,7 @@
               :rows="2"
               placeholder="请输入岗位工资"
               type="number"
+              class="numrule"
             ></el-input>
           </el-form-item>
           <el-form-item label="提成率">
@@ -130,6 +131,7 @@
               :rows="1"
               placeholder="请输入提成率"
               type="number"
+              class="numrule"
             ></el-input>
           </el-form-item>
           <el-form-item label="岗位级别加薪率">
@@ -138,6 +140,7 @@
               :rows="1"
               placeholder="请输入岗位级别加薪率"
               type="number"
+              class="numrule"
             ></el-input>
           </el-form-item>
           <el-form-item label="失业保险金">
@@ -146,6 +149,7 @@
               :rows="2"
               placeholder="请输入失业保险金"
               type="number"
+              class="numrule"
             ></el-input>
           </el-form-item>
           <el-form-item label="住房公积金">
@@ -154,6 +158,7 @@
               :rows="2"
               placeholder="请输入住房公积金"
               type="number"
+              class="numrule"
             ></el-input>
           </el-form-item>
           <el-form-item label="年终奖">
@@ -163,12 +168,13 @@
               :rows="2"
               placeholder="年终奖由总经理制定"
               type="number"
+              class="numrule"
             ></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="handleEdit(false)">取 消</el-button>
-          <el-button type="primary" @click="handleEdit(true)">确 定</el-button>
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handleEdit()">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -181,8 +187,7 @@ import Title from "@/components/content/Title";
 import {
   getAllDepartmentSalaryRules,
   updateDepartmentSalaryRule,
-} from "@/network/finance";
-import { getAllCustomer } from "@/network/purchase";
+} from "@/network/humanresource";
 export default {
   name: "DepartmentSalaryRule",
   components: { Title, Layout },
@@ -236,35 +241,39 @@ export default {
       ); //深拷贝
       this.editDialogVisible = true;
     },
-    handleEdit(type) {
-      if (type) {
-        console.log("提交更改", this.salaryRuleEditForm);
-        updateDepartmentSalaryRule(this.salaryRuleEditForm).then((_res) => {
-          if (_res.code === "B0003") {
-            this.$message({
-              type: "error",
-              message: _res.msg,
-            });
-          } else {
-            this.$message({
-              type: "success",
-              message: "修改成功！",
-            });
-            getAllDepartmentSalaryRules({}).then((_res) => {
-              this.salaryRulesList = _res.result;
-            });
-          }
-        });
-      }
-      this.editDialogVisible = false;
+    handleEdit() {
+      updateDepartmentSalaryRule(this.salaryRuleEditForm).then((_res) => {
+        if (_res.code === "B0003") {
+          this.$message({
+            type: "error",
+            message: _res.msg,
+          });
+        } else {
+          this.$message({
+            type: "success",
+            message: "修改成功！",
+          });
+          getAllDepartmentSalaryRules({}).then((_res) => {
+            this.salaryRulesList = _res.result;
+          });
+          this.editDialogVisible = false;
+        }
+      });
     },
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .el-card {
   border: 1px solid #ebeef5;
   margin: 1rem 0 1rem 0;
+}
+::v-deep .numrule input::-webkit-outer-spin-button,
+::v-deep .numrule input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+::v-deep .numrule input[type="number"] {
+  -moz-appearance: textfield !important;
 }
 </style>

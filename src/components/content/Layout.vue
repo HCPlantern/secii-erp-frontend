@@ -5,31 +5,33 @@
         <div class="title-inner">ERP</div>
       </header>
       <el-menu
-          :default-active="getActivePath"
-          class="el-menu-vertical-demo"
-          background-color="#fff"
-          text-color="#000000DE"
-          @open="handleOpen"
-          @close="handleClose"
-          active-text-color="#7e57c2"
-          router
+        :default-active="getActivePath"
+        class="el-menu-vertical-demo"
+        background-color="#fff"
+        text-color="#000000DE"
+        @open="handleOpen"
+        @close="handleClose"
+        active-text-color="#7e57c2"
+        router
       >
-        <el-submenu index="1"
-                    v-if="permit(PATH.COMMODITY_CLASSIFICATION.requiresAuth)">
+        <el-submenu
+          index="1"
+          v-if="permit(PATH.COMMODITY_CLASSIFICATION.requiresAuth)"
+        >
           <template slot="title">
             <i class="el-icon-receiving"></i>
             <span slot="title">商品管理</span>
           </template>
           <el-menu-item
-              :index="PATH.COMMODITY_CLASSIFICATION.path"
-              v-if="permit(PATH.COMMODITY_CLASSIFICATION.requiresAuth)"
+            :index="PATH.COMMODITY_CLASSIFICATION.path"
+            v-if="permit(PATH.COMMODITY_CLASSIFICATION.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">商品分类管理</span>
           </el-menu-item>
           <el-menu-item
-              :index="PATH.COMMODITY_MANAGEMENT.path"
-              v-if="permit(PATH.COMMODITY_MANAGEMENT.requiresAuth)"
+            :index="PATH.COMMODITY_MANAGEMENT.path"
+            v-if="permit(PATH.COMMODITY_MANAGEMENT.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">商品管理</span>
@@ -45,8 +47,8 @@
             <span slot="title">库存管理</span>
           </template>
           <el-menu-item
-              :index="PATH.INVENTORY_MANAGEMENT.path"
-              v-if="permit(PATH.INVENTORY_MANAGEMENT.requiresAuth)"
+            :index="PATH.INVENTORY_MANAGEMENT.path"
+            v-if="permit(PATH.INVENTORY_MANAGEMENT.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">库存管理</span>
@@ -59,45 +61,43 @@
           <!--            <span slot="title">库存操作</span>-->
           <!--          </el-menu-item>-->
           <el-menu-item
-              :index="PATH.INVENTORY_VIEW.path"
-              v-if="permit(PATH.INVENTORY_VIEW.requiresAuth)"
+            :index="PATH.INVENTORY_VIEW.path"
+            v-if="permit(PATH.INVENTORY_VIEW.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">库存查看</span>
           </el-menu-item>
           <el-menu-item
-              :index="PATH.INVENTORY_CHECK.path"
-              v-if="permit(PATH.INVENTORY_CHECK.requiresAuth)"
+            :index="PATH.INVENTORY_CHECK.path"
+            v-if="permit(PATH.INVENTORY_CHECK.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">库存盘点</span>
           </el-menu-item>
         </el-submenu>
 
-
-        <el-submenu index="3"
-                    v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)">
+        <el-submenu index="3" v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)">
           <template slot="title">
             <i class="el-icon-sell"></i>
             <span slot="title">销售管理</span>
           </template>
           <el-menu-item
-              :index="PATH.PURCHASE_VIEW.path"
-              v-if="permit(PATH.PURCHASE_VIEW.requiresAuth)"
+            :index="PATH.PURCHASE_VIEW.path"
+            v-if="permit(PATH.PURCHASE_VIEW.requiresAuth)"
           >
             <i class="el-icon-shopping-cart-full"></i>
             <span slot="title">进货管理</span>
           </el-menu-item>
           <el-menu-item
-              :index="PATH.PURCHASE_RETURN_VIEW.path"
-              v-if="permit(PATH.PURCHASE_RETURN_VIEW.requiresAuth)"
+            :index="PATH.PURCHASE_RETURN_VIEW.path"
+            v-if="permit(PATH.PURCHASE_RETURN_VIEW.requiresAuth)"
           >
             <i class="el-icon-shopping-cart-2"></i>
             <span slot="title">进货退货管理</span>
           </el-menu-item>
           <el-menu-item
-              :index="PATH.SALE_VIEW.path"
-              v-if="permit(PATH.SALE_VIEW.requiresAuth)"
+            :index="PATH.SALE_VIEW.path"
+            v-if="permit(PATH.SALE_VIEW.requiresAuth)"
           >
             <i class="el-icon-sell"></i>
             <span slot="title">销售管理</span>
@@ -120,8 +120,8 @@
           </el-menu-item>
 
           <el-menu-item
-              :index="PATH.CUSTOMER_VIEW.path"
-              v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)"
+            :index="PATH.CUSTOMER_VIEW.path"
+            v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)"
           >
             <i class="el-icon-user"></i>
             <span slot="title">客户管理</span>
@@ -134,38 +134,37 @@
             <i class="el-icon-user"></i>
             <span slot="title">消费最多客户查看</span>
           </el-menu-item>
-
-
         </el-submenu>
 
-        <el-submenu index="4"
-                    v-if="permit(PATH.COLLECTION_SHEET_APPROVAL_VIEW.requiresAuth)">
+        <el-submenu
+          index="4"
+          v-if="permit(PATH.COLLECTION_SHEET_APPROVAL_VIEW.requiresAuth)"
+        >
           <template slot="title">
             <i class="el-icon-receiving"></i>
             <span slot="title">审核管理</span>
           </template>
           <el-menu-item
-              :index="PATH.COLLECTION_SHEET_APPROVAL_VIEW.path"
-              v-if="permit(PATH.COLLECTION_SHEET_APPROVAL_VIEW.requiresAuth)"
+            :index="PATH.COLLECTION_SHEET_APPROVAL_VIEW.path"
+            v-if="permit(PATH.COLLECTION_SHEET_APPROVAL_VIEW.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">收款单审批</span>
           </el-menu-item>
           <el-menu-item
-              :index="PATH.PAYMENT_SHEET_APPROVAL_VIEW.path"
-              v-if="permit(PATH.PAYMENT_SHEET_APPROVAL_VIEW.requiresAuth)"
+            :index="PATH.PAYMENT_SHEET_APPROVAL_VIEW.path"
+            v-if="permit(PATH.PAYMENT_SHEET_APPROVAL_VIEW.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">付款单审批</span>
           </el-menu-item>
           <el-menu-item
-              :index="PATH.SALARY_SHEET_APPROVAL_VIEW.path"
-              v-if="permit(PATH.SALARY_SHEET_APPROVAL_VIEW.requiresAuth)"
+            :index="PATH.SALARY_SHEET_APPROVAL_VIEW.path"
+            v-if="permit(PATH.SALARY_SHEET_APPROVAL_VIEW.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">工资单审批</span>
           </el-menu-item>
-
         </el-submenu>
 
         <el-submenu index="5" v-if="permit(PATH.ACCOUNT_VIEW.requiresAuth)">
@@ -200,8 +199,9 @@
             <i class="el-icon-receiving"></i>
             <span slot="title">制定付款单</span>
           </el-menu-item>
-          <el-menu-item :index="PATH.INIT_ACCOUNT_VIEW.path"
-                        v-if="permit(PATH.INIT_ACCOUNT_VIEW.requiresAuth)"
+          <el-menu-item
+            :index="PATH.INIT_ACCOUNT_VIEW.path"
+            v-if="permit(PATH.INIT_ACCOUNT_VIEW.requiresAuth)"
           >
             <i class="el-icon-receiving"></i>
             <span slot="title">期初建账</span>
@@ -214,52 +214,83 @@
             <span slot="title">报表管理</span>
           </template>
 
-
           <el-menu-item
-              :index="PATH.SALE_DETAIL_VIEW.path"
-              v-if="permit(PATH.SALE_DETAIL_VIEW.requiresAuth)"
+            :index="PATH.SALE_DETAIL_VIEW.path"
+            v-if="permit(PATH.SALE_DETAIL_VIEW.requiresAuth)"
           >
             <i class="el-icon-sell"></i>
             <span slot="title">销售明细表</span>
           </el-menu-item>
 
-          <el-menu-item :index="PATH.HISTORY_SHEET_VIEW.path" v-if="permit(PATH.HISTORY_SHEET_VIEW.requiresAuth)">
+          <el-menu-item
+            :index="PATH.HISTORY_SHEET_VIEW.path"
+            v-if="permit(PATH.HISTORY_SHEET_VIEW.requiresAuth)"
+          >
             <i class="el-icon-setting"></i>
             <span slot="title">经营历程表</span>
           </el-menu-item>
 
-
-          <el-menu-item :index="PATH.BUSINESS_SITUATION_VIEW.path" v-if="permit(PATH.BUSINESS_SITUATION_VIEW.requiresAuth)">
+          <el-menu-item
+            :index="PATH.BUSINESS_SITUATION_VIEW.path"
+            v-if="permit(PATH.BUSINESS_SITUATION_VIEW.requiresAuth)"
+          >
             <i class="el-icon-setting"></i>
             <span slot="title">经营情况表</span>
           </el-menu-item>
-
         </el-submenu>
-        <el-submenu index="8" v-if="permit(PATH.DEPARTMENT_SALARY_RULE_VIEW.requiresAuth)">
+
+        <el-submenu
+          index="8"
+          v-if="permit(PATH.DEPARTMENT_SALARY_RULE_VIEW.requiresAuth)"
+        >
           <template slot="title">
             <i class="el-icon-setting"></i>
             <span slot="title">部门薪酬制度管理</span>
           </template>
-          <el-menu-item :index="PATH.DEPARTMENT_SALARY_RULE_VIEW.path" v-if="permit(PATH.DEPARTMENT_SALARY_RULE_VIEW.requiresAuth)">
+          <el-menu-item
+            :index="PATH.DEPARTMENT_SALARY_RULE_VIEW.path"
+            v-if="permit(PATH.DEPARTMENT_SALARY_RULE_VIEW.requiresAuth)"
+          >
             <i class="el-icon-setting"></i>
             <span slot="title">制定薪酬规则</span>
           </el-menu-item>
         </el-submenu>
 
-
-
+        <el-submenu
+          index="9"
+          v-if="permit(PATH.EMPLOYEE_MANAGEMENT_VIEW.requiresAuth)"
+        >
+          <template slot="title">
+            <i class="el-icon-setting"></i>
+            <span slot="title">员工管理</span>
+          </template>
+          <el-menu-item
+            :index="PATH.EMPLOYEE_MANAGEMENT_VIEW.path"
+            v-if="permit(PATH.EMPLOYEE_MANAGEMENT_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-setting"></i>
+            <span slot="title">管理员工信息</span>
+          </el-menu-item>
+        </el-submenu>
       </el-menu>
 
       <div class="logout-fix">
         <el-tooltip
-            class="item"
-            effect="light"
-            :content="getUserRole"
-            placement="right"
+          class="item"
+          effect="light"
+          :content="getUserRole"
+          placement="right"
         >
           <div class="logout-name">{{ getUsername() }}</div>
         </el-tooltip>
-        <el-button  round size="small" type="primary" class="attendance" @click="signIn()">打卡</el-button>
+        <el-button
+          round
+          size="small"
+          type="primary"
+          class="attendance"
+          @click="signIn()"
+          >打卡</el-button
+        >
         <div class="logout" @click="logout()">退出登录</div>
       </div>
     </el-aside>
@@ -274,7 +305,6 @@
 import { ROLE, PATH } from "@/common/const";
 import { signIn } from "@/network/user";
 
-
 export default {
   name: "Layout",
   props: {
@@ -286,8 +316,7 @@ export default {
       PATH: PATH,
     };
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     getActivePath() {
       if (this.activePath == null) {
@@ -331,14 +360,13 @@ export default {
         // console.log("打卡结果", res);
         if (res.result === 1) {
           this.$message({
-            message: '打卡成功',
-            type: 'success'
+            message: "打卡成功",
+            type: "success",
           });
-        }
-        else if (res.result === 0){
+        } else if (res.result === 0) {
           this.$message({
-            message: '今日已打卡',
-            type: 'warning'
+            message: "今日已打卡",
+            type: "warning",
           });
         }
       });
@@ -428,7 +456,7 @@ export default {
 .logout-fix .logout:hover {
   color: #000000;
 }
-.attendance{
+.attendance {
   margin-bottom: 10px;
   text-align: left;
 }

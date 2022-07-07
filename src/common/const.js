@@ -13,6 +13,15 @@ export const ROLE = {
     ADMIN: "ADMIN" // 最高权限
 };
 
+export const DEPT_NAME = [
+    { name: "库存管理部门", value: "INVENTORY_MANAGER" },
+    { name: "进货销售部门", value: "SALE_STAFF" },
+    { name: "财务部门", value: "FINANCIAL_STAFF" },
+    { name: "销售经理", value: "SALE_MANAGER" },
+    { name: "人力资源部门", value: "HR" },
+    { name: "总经理", value: "GM" },
+]; //ADMIN不算部门
+
 
 export const PATH = {
     // INVENTORY_MANAGER
@@ -140,12 +149,15 @@ export const PATH = {
         path: '/initAccountView',
         requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.ADMIN]
     },
+    //HR
     DEPARTMENT_SALARY_RULE_VIEW:{
         path: '/departmentSalaryRuleView',
         requiresAuth: [ROLE.HR,ROLE.ADMIN]
+    },
+    EMPLOYEE_MANAGEMENT_VIEW:{
+        path: '/employeeManagementView',
+        requiresAuth: [ROLE.HR,ROLE.ADMIN]
     }
-
-
 
 
 }

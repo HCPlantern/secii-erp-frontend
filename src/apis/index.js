@@ -95,6 +95,11 @@ const GET_FINANCIAL_REPORT = '/api/finance/getFinancialReport'
 // 薪酬规则制定
 const SALARY_RULE_SHOW='/api/salary/queryAllSalaryRules'
 const SALARY_RULE_UPDATE='/api/salary/updateDepartmentSalaryRule'
+//员工管理
+const EMPLOYEE_ADD='/api/employee/addEmployee'
+const EMPLOYEE_SHOW='/api/employee/queryAllEmployees'
+const EMPLOYEE_UPDATE='/api/employee/updateEmployeeInfo'
+const EMPLOYEE_DELETE_BY_ID='/api/employee/deleteEmployeeById'
 // 工资
 const GET_SALARY_SHEET_BY_TIME = '/api/salary/getSalarySheetByTime'
 const GET_SALARY_SHEET_BY_ID = '/api/salary/getSalarySheetById'
@@ -201,5 +206,9 @@ module.exports = {
     INIT_PRODUCT_CREATE,
     INIT_CUSTOMER_CREATE,
     SALARY_RULE_SHOW,
-    SALARY_RULE_UPDATE
+    SALARY_RULE_UPDATE,
+    EMPLOYEE_ADD,
+    EMPLOYEE_SHOW,
+    EMPLOYEE_UPDATE,
+    EMPLOYEE_DELETE_BY_ID
 };

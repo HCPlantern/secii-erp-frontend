@@ -23,18 +23,19 @@ const InventoryWarning = () => import("../views/inventory/InventoryWarning");
 const PurchaseView = () => import("../views/purchase/PurchaseView");
 const PurchaseReturnView = () => import("../views/purchase/PurchaseReturnView");
 const SaleView = () => import("../views/sale/SaleView");
-const PromotionView = () => import("../views/sale/PromotionView")
-const SaleReturnView = () => import("../views/sale/SaleReturnView")
+const PromotionView = () => import("../views/sale/PromotionView");
+const SaleReturnView = () => import("../views/sale/SaleReturnView");
 const CustomerView = () => import ("../views/purchase/CustomerView");
 const MaxAmountCustomerView = () => import("../views/purchase/MaxAmountCustomerView");
-const CollectionSheetApproval=()=>import("../views/approval/CollectionSheetApproval")
-const PaymentSheetApproval=()=>import("../views/approval/PaymentSheetApproval")
-const SalarySheetApproval=()=>import("../views/approval/SalarySheetApproval")
-const AccountView = () => import("../views/admin/AccountView")
-const CollectionView = () => import("../views/finance/CollectionView")
-const PaymentView = () => import("../views/finance/PaymentView")
-const InitCompanyAccountView=()=>import("../views/finance/InitAccountView")
-const DepartmentSalaryRuleView=()=>import("../views/humanresource/DepartmentSalaryRuleView")
+const CollectionSheetApproval=()=>import("../views/approval/CollectionSheetApproval");
+const PaymentSheetApproval=()=>import("../views/approval/PaymentSheetApproval");
+const SalarySheetApproval=()=>import("../views/approval/SalarySheetApproval");
+const AccountView = () => import("../views/admin/AccountView");
+const CollectionView = () => import("../views/finance/CollectionView");
+const PaymentView = () => import("../views/finance/PaymentView");
+const InitCompanyAccountView = () => import("../views/finance/InitAccountView");
+const DepartmentSalaryRuleView = () => import("../views/humanresource/DepartmentSalaryRuleView");
+const EmployeeManagementView = () => import("../views/humanresource/EmployeeManagementView");
 
 // 报表
 const SaleDetailView = () => import("../views/sheet/SaleDetailView");
@@ -237,10 +238,16 @@ const routes = [
         name: "InitCompanyAccountView",
         meta: {requiresAuth: PATH.INIT_ACCOUNT_VIEW.requiresAuth}
     },
+    //人力资源管理
     {
         path: PATH.DEPARTMENT_SALARY_RULE_VIEW.path,
         component: DepartmentSalaryRuleView,
         meta: {requiresAuth: PATH.DEPARTMENT_SALARY_RULE_VIEW.requiresAuth}
+    },
+    {
+        path: PATH.EMPLOYEE_MANAGEMENT_VIEW.path,
+        component: EmployeeManagementView,
+        meta: {requiresAuth: PATH.EMPLOYEE_MANAGEMENT_VIEW.requiresAuth}
     },
     // -----------------------未找到页面-----------------------------
     {

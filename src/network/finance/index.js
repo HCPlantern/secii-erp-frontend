@@ -16,6 +16,3 @@ export const getAllInitCompanyAccount = config => request._get(testAPI.INIT_COMP
 export const createInitCustomer = config => request._post(testAPI.INIT_CUSTOMER_CREATE,config)
 export const createInitProduct = config => request._post(testAPI.INIT_PRODUCT_CREATE,config)
 export const createInitCompanyAccount = config => request._post(testAPI.INIT_COMPANY_ACCOUNT_CREATE,config)
-export const getAllDepartmentSalaryRules=config=>request._get(testAPI.SALARY_RULE_SHOW,config)
-export const createDepartmentSalaryRule=config=>request._post(testAPI.SALARY_RULE_CREATE,config)
-export const updateDepartmentSalaryRule=config=>request._post(testAPI.SALARY_RULE_UPDATE,config)
