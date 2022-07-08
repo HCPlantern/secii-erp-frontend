@@ -27,11 +27,17 @@ export default {
         {
           id: "工资单编号",
           employeeId: "职员编号",
+          employeeName:"职员姓名",
           createTime: "单据创建时间",
+          job:"岗位",
           baseWage: "基本工资",
           postWage: "岗位工资",
           totalSalary: "总工资",
+          tax:"税款",
+          insurance:"失业保险金",
+          housingFund:"住房公积金",
           taxedSalary: "税后工资",
+          salaryAccount:"工资卡银行账户",
           state: "单据状态",
         }
       ],
