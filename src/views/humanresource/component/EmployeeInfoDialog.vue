@@ -6,7 +6,7 @@
     :destroy-on-close="true"
     @close="handleClose()"
   >
-    <el-form :model="myform" :label-width="'100px'" size="mini" :rules="rules">
+    <el-form :model="myform" :label-width="'100px'" size="mini">
       <el-form-item label="姓名" :required="true">
         <el-input
           v-model="myform.name"
@@ -16,7 +16,7 @@
         >
         </el-input>
       </el-form-item>
-      <el-form-item label="所在部门">
+      <el-form-item label="所在部门" :required="true">
         <el-select v-model="myform.job">
           <el-option
             v-for="item in deptName"
@@ -42,7 +42,7 @@
           type="number"
         ></el-input>
       </el-form-item>
-      <el-form-item label="岗位级别">
+      <el-form-item label="岗位级别" :required="true">
         <el-input
           class="numrule"
           v-model="myform.jobGrade"
@@ -85,17 +85,6 @@ export default {
   name: "EmployeeInfoDialog",
   props: { visible: Boolean, form: {}, type: String },
   data() {
-    let validateName = (rule, value, callback) => {
-      console.log("校验");
-      if (this.employeeEditForm.name === "") {
-        callback(new Error("请输入姓名"));
-      } else {
-        callback();
-      }
-    };
-    let rules = {
-      name: [{ validator: validateName }],
-    };
     let mytitle = this.type === "edit" ? "修改员工信息" : "添加员工";
     return {
       deptName: DEPT_NAME,
@@ -107,9 +96,8 @@ export default {
         phone: "",
         jobGrade: "",
         salaryAccount: "",
-        birthday: "",
+        birthday: null,
       },
-      rules,
     };
   },
   created() {
@@ -157,6 +145,17 @@ export default {
       });
     },
     handleConfirm() {
+      if (
+        this.myform.name === "" ||
+        this.myform.job === "" ||
+        this.myform.jobGrade === ""
+      ) {
+        this.$message({
+          type: "error",
+          message: "请填写带 * 必填项!",
+        });
+        return;
+      } //先字段校验
       this.type === "edit" ? this.handleEdit() : this.handleAdd();
     },
   },

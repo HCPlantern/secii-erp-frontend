@@ -36,6 +36,7 @@ const PaymentView = () => import("../views/finance/PaymentView");
 const InitCompanyAccountView = () => import("../views/finance/InitAccountView");
 const DepartmentSalaryRuleView = () => import("../views/humanresource/DepartmentSalaryRuleView");
 const EmployeeManagementView = () => import("../views/humanresource/EmployeeManagementView");
+const SalarySheetGenerationView = () => import("../views/humanresource/SalarySheetGenerationView");
 
 // 报表
 const SaleDetailView = () => import("../views/sheet/SaleDetailView");
@@ -248,6 +249,11 @@ const routes = [
         path: PATH.EMPLOYEE_MANAGEMENT_VIEW.path,
         component: EmployeeManagementView,
         meta: {requiresAuth: PATH.EMPLOYEE_MANAGEMENT_VIEW.requiresAuth}
+    },
+    {
+        path: PATH.SALARY_SHEET_GENERATION_VIEW.path,
+        component: SalarySheetGenerationView,
+        meta: {requiresAuth: PATH.SALARY_SHEET_GENERATION_VIEW.requiresAuth}
     },
     // -----------------------未找到页面-----------------------------
     {

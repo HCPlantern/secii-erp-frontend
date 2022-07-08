@@ -157,7 +157,10 @@ export const PATH = {
     EMPLOYEE_MANAGEMENT_VIEW:{
         path: '/employeeManagementView',
         requiresAuth: [ROLE.HR,ROLE.ADMIN]
+    },
+    SALARY_SHEET_GENERATION_VIEW:{
+        path: '/salarySheetGenerationView',
+        requiresAuth: [ROLE.HR,ROLE.ADMIN]
     }
-
 
 }

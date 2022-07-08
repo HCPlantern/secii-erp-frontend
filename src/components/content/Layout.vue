@@ -245,7 +245,7 @@
         >
           <template slot="title">
             <i class="el-icon-setting"></i>
-            <span slot="title">部门薪酬制度管理</span>
+            <span slot="title">薪资管理</span>
           </template>
           <el-menu-item
             :index="PATH.DEPARTMENT_SALARY_RULE_VIEW.path"
@@ -253,6 +253,13 @@
           >
             <i class="el-icon-setting"></i>
             <span slot="title">制定薪酬规则</span>
+          </el-menu-item>
+          <el-menu-item
+            :index="PATH.SALARY_SHEET_GENERATION_VIEW.path"
+            v-if="permit(PATH.SALARY_SHEET_GENERATION_VIEW.requiresAuth)"
+          >
+            <i class="el-icon-setting"></i>
+            <span slot="title">生成工资单</span>
           </el-menu-item>
         </el-submenu>
 

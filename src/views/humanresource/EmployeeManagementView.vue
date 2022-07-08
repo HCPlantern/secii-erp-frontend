@@ -29,7 +29,8 @@
         </el-table-column>
         <el-table-column prop="sex" label="性别" fit> </el-table-column>
         <el-table-column prop="phone" label="电话号码" fit> </el-table-column>
-        <el-table-column prop="jobGrade" label="岗位级别" fit> </el-table-column>
+        <el-table-column prop="jobGrade" label="岗位级别" fit>
+        </el-table-column>
         <el-table-column prop="salaryAccount" label="工资卡银行账户" fit>
         </el-table-column>
         <el-table-column prop="birthday" label="出生日期" fit>
@@ -72,10 +73,7 @@ import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
 import { DEPT_NAME } from "@/common/const.js";
 import EmployeeInfoDialog from "./component/EmployeeInfoDialog.vue";
-import {
-  deleteEmployeeById,
-  getAllEmployee,
-} from "@/network/humanresource";
+import { deleteEmployeeById, getAllEmployee } from "@/network/humanresource";
 export default {
   name: "EmployeeManagement",
   components: { Title, Layout, EmployeeInfoDialog },
@@ -89,7 +87,7 @@ export default {
         phone: "",
         jobGrade: "",
         salaryAccount: "",
-        birthday: "",
+        birthday: null,
       }, // 修改员工信息时的表单
       employeeList: [],
       editDialogVisible: false,
@@ -114,6 +112,16 @@ export default {
         if (!news) {
           this.showAllEmployees();
           this.employeeEditForm = {};
+        } else {
+          this.employeeEditForm = {
+            name: "",
+            job: "",
+            sex: "",
+            phone: "",
+            jobGrade: "",
+            salaryAccount: "",
+            birthday: null,
+          };
         }
       },
     },
@@ -135,16 +143,20 @@ export default {
           id: id,
         },
       };
-      deleteEmployeeById(config).then((_res) => {
-        if (_res.msg === "Success") {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
-          getAllEmployee({}).then((_res) => {
-            this.employeeList = _res.result;
-          });
-        }
+      this.$confirm("是否要删除该员工？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        deleteEmployeeById(config).then((_res) => {
+          if (_res.msg === "Success") {
+            this.$message({
+              type: "success",
+              message: "删除成功!",
+            });
+            this.showAllEmployees();
+          }
+        });
       });
     },
   },
