@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Title title="消费最多客户查看"></Title>
+    <Title title="成交金额最大客户"></Title>
     <div class="maxAmountCustomer">
       <div class="select-sale-man">
         <span>

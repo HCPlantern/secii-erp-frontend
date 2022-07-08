@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      role: [ROLE.GM, ROLE.ADMIN, ROLE.INVENTORY_MANAGER],
+      role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
           id: "入库单编号",

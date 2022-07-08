@@ -17,6 +17,7 @@
 <script>
 import {paymentSheetApproval} from "@/network/finance";
 import Sheet from "@/views/common/Sheet";
+import {ROLE} from "@/common/const";
 
 export default {
   name: "PaymentList",
@@ -27,7 +28,7 @@ export default {
   },
   data() {
     return {
-      role: ["GM", "ADMIN"],
+      role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
           id: "付款单编号",

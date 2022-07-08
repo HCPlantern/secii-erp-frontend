@@ -19,6 +19,7 @@
 <script>
 import {returnFirstApproval, returnSecondApproval} from '@/network/sale'
 import Sheet from "@/views/common/Sheet";
+import {ROLE} from "@/common/const";
 
 export default {
   name: 'SaleReturnList',
@@ -30,7 +31,7 @@ export default {
   data() {
     return {
       showAll: [],
-      role: ['GM', 'SALE_MANAGER', 'ADMIN'],
+      role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
           id: "单据编号",

@@ -32,7 +32,7 @@
           <div v-else>
             <salary-list
               :list="pendingLevel1List"
-              :type="0"
+              :type="1"
               @refresh="getSalarySheet()"
             />
           </div>
@@ -44,7 +44,7 @@
           <div v-else>
             <salary-list
               :list="pendingLevel2List"
-              :type="0"
+              :type="2"
               @refresh="getSalarySheet()"
             />
           </div>
@@ -54,7 +54,7 @@
             <el-empty description="暂无数据"></el-empty>
           </div>
           <div v-else>
-            <salary-list :list="successList" :type="0" />
+            <salary-list :list="successList" :type="3" />
           </div>
         </el-tab-pane>
         <el-tab-pane label="审批失败" name="FAILURE">
@@ -62,7 +62,7 @@
             <el-empty description="暂无数据"></el-empty>
           </div>
           <div v-else>
-            <salary-list :list="failureList" :type="0" />
+            <salary-list :list="failureList" :type="4" />
           </div>
         </el-tab-pane>
       </el-tabs>

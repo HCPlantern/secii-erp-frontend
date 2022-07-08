@@ -16,6 +16,7 @@
 <script>
 import {warehouseOutputSheetApprove} from "@/network/warehouse";
 import Sheet from "@/views/common/Sheet";
+import {ROLE} from "@/common/const";
 
 export default {
   name: "WarehouseOutputList",
@@ -26,7 +27,7 @@ export default {
   },
   data() {
     return {
-      role: ["GM", "ADMIN", "INVENTORY_MANAGER"],
+      role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
           id: "出库单编号",

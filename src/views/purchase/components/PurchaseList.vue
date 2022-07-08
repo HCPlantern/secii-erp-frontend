@@ -20,6 +20,7 @@
 import {firstApproval, secondApproval} from '@/network/purchase'
 import Sheet from "@/views/common/Sheet";
 import PurchaseForm from "@/views/purchase/components/PurchaseForm";
+import {ROLE} from "@/common/const";
 
 export default {
   name: 'PurchaseList',
@@ -30,7 +31,7 @@ export default {
   },
   data() {
     return {
-      role: ['GM', 'SALE_MANAGER', 'ADMIN'],
+      role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
           id: "进货单编号",

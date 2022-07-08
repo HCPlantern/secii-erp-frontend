@@ -16,6 +16,7 @@
 import Sheet from "@/views/common/Sheet";
 import {firstApproval, secondApproval} from "@/network/sale";
 import {salaryFirstApproval, salarySecondApproval} from "@/network/salary";
+import {ROLE} from "@/common/const";
 
 export default {
   name: "SalaryList",
@@ -26,23 +27,23 @@ export default {
   },
   data() {
     return {
-      role: ["GM", "ADMIN", "FINANCIAL_STAFF"],
+      role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
           id: "工资单编号",
           employeeId: "职员编号",
-          employeeName:"职员姓名",
+          employeeName: "职员姓名",
           createTime: "单据创建时间",
-          job:"岗位名称",
+          job: "岗位名称",
 
           baseWage: "基本工资",
           postWage: "岗位工资",
           totalSalary: "未税总工资",
-          tax:"税款",
-          insurance:"失业保险",
-          housingFund:"住房公积金",
+          tax: "税款",
+          insurance: "失业保险",
+          housingFund: "住房公积金",
           taxedSalary: "税后工资",
-          salaryAccount:"工资卡账户",
+          salaryAccount: "工资卡账户",
           state: "单据状态",
         }
       ],
@@ -51,9 +52,9 @@ export default {
   mounted() {
   },
   methods: {
-    approval(id){
-      let config={
-        params:{
+    approval(id) {
+      let config = {
+        params: {
           salarySheetId: id,
           state: this.type === 1 ? 'PENDING_LEVEL_2' : 'SUCCESS'
         }

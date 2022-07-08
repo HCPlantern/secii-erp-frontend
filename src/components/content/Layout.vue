@@ -132,7 +132,7 @@
             v-if="permit(PATH.CUSTOMER_VIEW.requiresAuth)"
           >
             <i class="el-icon-user"></i>
-            <span slot="title">消费最多客户查看</span>
+            <span slot="title">成交金额最大客户</span>
           </el-menu-item>
         </el-submenu>
 

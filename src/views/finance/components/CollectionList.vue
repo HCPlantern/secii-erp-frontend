@@ -17,6 +17,7 @@
 <script>
 import {collectionSheetApproval} from '@/network/finance'
 import Sheet from "@/views/common/Sheet";
+import {ROLE} from "@/common/const";
 
 export default {
   name: "CollectionList",
@@ -27,7 +28,7 @@ export default {
   },
   data() {
     return {
-      role: ["GM", "ADMIN"],
+      role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
           id: "收款单编号",

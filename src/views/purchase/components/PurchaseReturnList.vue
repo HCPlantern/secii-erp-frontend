@@ -18,6 +18,7 @@
 <script>
 import {returnFirstApproval, returnSecondApproval} from "@/network/purchase";
 import Sheet from "@/views/common/Sheet";
+import {ROLE} from "@/common/const";
 
 export default {
   name: 'purchaseReturnList',
@@ -28,7 +29,7 @@ export default {
   },
   data() {
     return {
-      role: ['GM', 'SALE_MANAGER', 'ADMIN'],
+      role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
           id: "进货单编号",
@@ -111,6 +112,7 @@ export default {
 <style lang="scss" scoped>
 .card {
   margin: auto;
+
   .button {
     float: right;
   }
