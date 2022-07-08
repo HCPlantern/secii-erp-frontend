@@ -105,6 +105,8 @@ const GET_SALARY_SHEET_BY_TIME = '/api/salary/getSalarySheetByTime'
 const GET_SALARY_SHEET_BY_ID = '/api/salary/getSalarySheetById'
 const GET_SALARY_SHEET_BY_STATE = '/api/salary/getSalarySheetByState'
 const SALARY_SHEET_GENERATION = '/api/salary/generateSalarySheet'
+const SALARY_FIRST_APPROVAL='/api/salary/salary-first-approval'
+const SALARY_SECOND_APPROVAL='/api/salary/salary-second-approval'
 // 期初建账
 const INIT_COMPANY_ACCOUNT_SHOW = '/api/initAccount/getAllInitCompanyAccount'
 const INIT_PRODUCT_SHOW = '/api/initAccount/getAllInitProduct'
@@ -212,5 +214,7 @@ module.exports = {
     EMPLOYEE_ADD,
     EMPLOYEE_SHOW,
     EMPLOYEE_UPDATE,
-    EMPLOYEE_DELETE_BY_ID
+    EMPLOYEE_DELETE_BY_ID,
+    SALARY_FIRST_APPROVAL,
+    SALARY_SECOND_APPROVAL
 };
