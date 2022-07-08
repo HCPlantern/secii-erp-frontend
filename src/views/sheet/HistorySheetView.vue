@@ -100,7 +100,6 @@
           <i class="el-icon-tickets"></i>
           <span>单据列表</span>
         </div>
-
       </el-card>
 
       <div class="el-table">

@@ -1,150 +1,155 @@
 <template>
   <Layout>
     <Title title="销售明细表"></Title>
+    <div class="page">
+      <el-card class="el-card" shadow="hover">
+        <div class="form-icon-text">
+        <i class="el-icon-search"></i>
+        <span>筛选搜索</span>
+        <div class="button">
+          <download-excel
+              :data="filteredData"
+              :fields="excelFields"
+              name="销售明细表.xls">
+            <el-button
+                icon="el-icon-download"
+                class="export-excel-wrapper"
+                type="success"
+                size="small"
+            >
+              导出
+            </el-button>
+          </download-excel>
+        </div>
+        <div class="button">
+          <el-button
+              class="search"
+              type="primary"
+              size="small"
+              icon="el-icon-search"
+              @click="getData()"
+          >
+            查询结果
+          </el-button>
+        </div>
 
-    <div class="select-time-range">
-      <span>请选择一个时间段： </span>
-    </div>
+        </div>
+        <div>
+          <el-date-picker
+              class="select-time-range"
+              v-model="date"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              unlink-panels
+              :picker-options="pickerOptions"
+              :default-time="['00:00:00', '00:00:00']">
+          </el-date-picker>
+        </div>
+        <div class="select-commodity">
+          <el-select v-model="commoditySelected" clearable filterable placeholder="请选择商品名" @change="filterData($event)"
+          >
+            <el-option
+                v-for="item in commodities"
+                :key="item.id"
+                :label="item.name"
+                :value="item.name"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="select-client">
+          <el-select v-model="clientSelected" clearable filterable placeholder="请选择客户" @change="filterData($event)"
+          >
+            <el-option
+                v-for="item in clients"
+                :key="item.id"
+                :label="item.name"
+                :value="item.name"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div class="select-commodity">
+          <el-select v-model="userSelected" clearable filterable placeholder="请选择业务员" @change="filterData($event)"
+          >
+            <el-option
+                v-for="item in user"
+                :key="item"
+                :label="item"
+                :value="item"
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </el-card>
 
-    <div>
-      <el-date-picker
-          class="select-time-range"
-          v-model="date"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          unlink-panels
-          :picker-options="pickerOptions"
-          :default-time="['00:00:00', '00:00:00']">
-      </el-date-picker>
-    </div>
+      <el-card class="el-card" shadow="hover">
+        <div class="form-icon-text">
+          <i class="el-icon-tickets"></i>
+          <span>单据列表</span>
+        </div>
+      </el-card>
 
-    <div class="select-commodity">
-      <el-select v-model="commoditySelected" clearable filterable placeholder="请选择商品名" @change="filterData($event)"
-      >
-        <el-option
-            v-for="item in commodities"
-            :key="item.id"
-            :label="item.name"
-            :value="item.name"
+      <div class="detail-table">
+        <el-table
+            :data="filteredData"
+            style="border-radius: 4px"
+            :header-cell-style="{'text-align':'center'}"
+            :cell-style="{'text-align':'center'}"
+            border
         >
-        </el-option>
-      </el-select>
-    </div>
+          <el-table-column
+              prop="date"
+              label="时间"
+          >
+          </el-table-column>
 
-    <div class="select-client">
-      <el-select v-model="clientSelected" clearable filterable placeholder="请选择客户" @change="filterData($event)"
-      >
-        <el-option
-            v-for="item in clients"
-            :key="item.id"
-            :label="item.name"
-            :value="item.name"
-        >
-        </el-option>
-      </el-select>
-    </div>
+          <el-table-column
+              prop="salesman"
+              label="业务员"
+          >
+          </el-table-column>
 
+          <el-table-column
+              prop="supplier"
+              label="客户"
+          >
+          </el-table-column>
 
-    <div class="select-commodity">
-      <el-select v-model="userSelected" clearable filterable placeholder="请选择业务员" @change="filterData($event)"
-      >
-        <el-option
-            v-for="item in user"
-            :key="item"
-            :label="item"
-            :value="item"
-        >
-        </el-option>
-      </el-select>
-    </div>
+          <el-table-column
+              prop="name"
+              label="商品名"
+          >
+          </el-table-column>
 
-    <div class="button">
-      <el-button
-          class="search"
-          type="primary"
-          size="small"
-          icon="el-icon-search"
-          @click="getData()"
-      >
-        查询结果
-      </el-button>
-    </div>
+          <el-table-column
+              prop="type"
+              label="型号"
+          >
+          </el-table-column>
 
-    <div class="button">
-      <download-excel
-          :data="filteredData"
-          :fields="excelFields"
-          name="销售明细表.xls">
-        <el-button
-            icon="el-icon-download"
-            class="export-excel-wrapper"
-            type="success"
-            size="small"
-        >
-          导出
-        </el-button>
-      </download-excel>
-    </div>
+          <el-table-column
+              prop="quantity"
+              label="数量"
+          >
+          </el-table-column>
 
-    <div class="detail-table">
-      <el-table
-          :data="filteredData"
-          style="width: 100%"
-          :header-cell-style="{'text-align':'center'}"
-          :cell-style="{'text-align':'center'}"
-          border
-      >
-        <el-table-column
-            prop="date"
-            label="时间"
-        >
-        </el-table-column>
+          <el-table-column
+              prop="unitPrice"
+              label="单价"
+          >
+          </el-table-column>
 
-        <el-table-column
-            prop="salesman"
-            label="业务员"
-        >
-        </el-table-column>
+          <el-table-column
+              prop="totalPrice"
+              label="总价"
+          >
+          </el-table-column>
 
-        <el-table-column
-            prop="supplier"
-            label="客户"
-        >
-        </el-table-column>
-
-        <el-table-column
-            prop="name"
-            label="商品名"
-        >
-        </el-table-column>
-
-        <el-table-column
-            prop="type"
-            label="型号"
-        >
-        </el-table-column>
-
-        <el-table-column
-            prop="quantity"
-            label="数量"
-        >
-        </el-table-column>
-
-        <el-table-column
-            prop="unitPrice"
-            label="单价"
-        >
-        </el-table-column>
-
-        <el-table-column
-            prop="totalPrice"
-            label="总价"
-        >
-        </el-table-column>
-
-      </el-table>
+        </el-table>
+      </div>
     </div>
 
   </Layout>
@@ -315,12 +320,23 @@ export default {
   margin: 1rem 1rem 1rem 1rem;
 }
 
-.detail-table {
-  margin: 1rem 1rem 1rem 1rem;
-  border-radius: 4px;
+.page {
+  margin-top: 4rem;
 }
 
+.form-icon-text {
+  margin: 1rem;
+}
+span {
+  margin: 1rem;
+}
 .button {
   display: inline-block;
+  float: right;
+}
+
+.el-card {
+  border: 1px solid #ebeef5;
+  margin: 1rem 0 1rem 0;
 }
 </style>
