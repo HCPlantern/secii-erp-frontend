@@ -1,96 +1,49 @@
 <template>
   <Layout>
     <Title title="制定促销策略"></Title>
-    <el-button type="primary" size="medium" @click="addDepartmentSalaryRule">制定促销策略</el-button>
+
+    <el-row>
+    <div class = "block">
+      <span class="demonstration">有效日期 ： </span>
+      <el-date-picker
+        class="select-time-range"
+        v-model="date"
+        type="daterange"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        unlink-panels
+        :picker-options="pickerOptions"
+        :default-time="['00:00:00', '00:00:00']">
+      </el-date-picker>
+    </div>
+    </el-row>
+
+    <br/>
+    <el-row>
+      <el-button type="primary" size = "large" @click="addDialogVisible1()">方案一 : 用户等级</el-button>
+      <el-button type="primary" size = "large" @click="addDialogVisible2()">方案二 : 特价包</el-button>
+      <el-button type="primary" size = "large" @click="addDialogVisible3()">方案三 : 总价</el-button>
+    </el-row>
+
     <el-card class="el-card" shadow="hover">
       <div class="form-icon-text">
         <i class="el-icon-tickets"></i>
         <span>促销策略列表</span>
       </div>
     </el-card>
+
     <div style="margin-top: 10px">
-      <el-table :data="salaryRulesList"
-                stripe
-                border
-                style="width: 100%"
-                :header-cell-style="{'text-align':'center'}"
-                :cell-style="{'text-align':'center'}"
-      >
-        <el-table-column
-          prop="id"
-          label="id"
-          fit>
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="部门名称"
-          fit>
-        </el-table-column>
-        <el-table-column
-          prop="baseWage"
-          label="基本工资"
-          fit>
-        </el-table-column>
-        <el-table-column
-          prop="salaryCalculationMethod"
-          label="薪资计算方法"
-          fit>
-        </el-table-column>
-        <el-table-column
-          prop="salaryPaymentMethod"
-          label="薪资发放方法"
-          fit>
-        </el-table-column>
-        <el-table-column
-          prop="postWage"
-          label="岗位工资"
-          fit>
-        </el-table-column>
-        <el-table-column
-          prop="annualBonus"
-          label="年终奖"
-          fit>
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          width="120"
-          label="操作">
-          <template slot-scope="scope">
-            <el-button
-              @click.native.prevent="editInfo(scope.row.id)"
-              type="text"
-              size="small">
-              <i class="el-icon-edit">编辑</i>
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
 
       <el-dialog
-        title="新增促销策略"
-        :visible.sync="addDialogVisible"
+        title="面向用户型促销"
+        :visible.sync="addDialogVisible_1"
         width="30%"
         @close="close()">
         <el-form :model="promotionStrategyForm" :label-width="'100px'" size="mini">
 
-          <el-form-item label="促销方案">
-            <el-select v-model="promotionStrategyForm.promotionStrategy">
-              <el-option v-for="item in promotionStrategy"
-                         :key="item.index"
-                         :label="item"
-                         :value="item">
-              </el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="客户级别">
-            <el-select v-model="promotionStrategyForm.customerLevel">
-              <el-option v-for="item in userLevel"
-                         :key="item.index"
-                         :label="item"
-                         :value="item">
-              </el-option>
-            </el-select>
+          <el-form-item label="用户级别">
+            <el-input v-model="promotionStrategyForm.customerLevel" placeholder="请输入用户级别"></el-input>
           </el-form-item>
 
           <el-form-item label="赠品">
@@ -117,19 +70,66 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label = "起止日期">
-            <el-date-picker
-              class="select-time-range"
-              v-model="date"
-              type="datetimerange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              unlink-panels
-              :picker-options="pickerOptions"
-              :default-time="['00:00:00', '00:00:00']">
-            </el-date-picker>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="handleAdd(false)">取 消</el-button>
+          <el-button type="primary" @click="handleAdd(true)">确 定</el-button>
+        </div>
+      </el-dialog>
+
+      <el-dialog
+        title="组合商品促销"
+        :visible.sync="addDialogVisible_2"
+        width="30%"
+        @close="close()">
+        <el-form :model="promotionStrategyForm" :label-width="'100px'" size="mini">
+
+          <el-form-item label="商品">
+            <el-input v-model="promotionStrategyForm.commodity" placeholder="请输入用户级别"></el-input>
           </el-form-item>
+
+          <el-form-item label="降价后的价格">
+            <el-input v-model="promotionStrategyForm.price" placeholder="价格"></el-input>
+          </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="handleAdd(false)">取 消</el-button>
+          <el-button type="primary" @click="handleAdd(true)">确 定</el-button>
+        </div>
+      </el-dialog>
+
+      <el-dialog
+        title="总价型促销"
+        :visible.sync="addDialogVisible_3"
+        width="30%"
+        @close="close()">
+        <el-form :model="promotionStrategyForm" :label-width="'100px'" size="mini">
+
+          <el-form-item label="总价">
+            <el-input v-model="promotionStrategyForm.price" placeholder="总价"></el-input>
+          </el-form-item>
+
+          <el-form-item label="赠品">
+            <el-select v-model="promotionStrategyForm.gift">
+              <el-option v-for="item in gift"
+                         :key="item.index"
+                         :label="item"
+                         :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="代金券">
+            <el-select v-model="promotionStrategyForm.coupon">
+              <el-option v-for="item in coupon"
+                         :key="item.index"
+                         :label="item"
+                         :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="handleAdd(false)">取 消</el-button>
@@ -144,16 +144,18 @@
 <script>
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
-import {createDepartmentSalaryRule, getAllDepartmentSalaryRules, updateDepartmentSalaryRule} from "@/network/finance";
+import {createPromotionStrategy, getAllDepartmentSalaryRules, updateDepartmentSalaryRule} from "@/network/sale";
 import {getAllCustomer} from "@/network/purchase";
+import { formatDate } from "@/common/utils";
 export default {
   name: "DepartmentSalaryRule",
   components: {Title, Layout},
   data(){
     return{
       date:'',
-      userLevel:["ALL","1","2","3","4","5","6"],
-      promotionStrategy:["CUSTOMIZATION", "LOWER_PACKET","ENOUGH_DISCOUNT"],
+      addDialogVisible_1:false,
+      addDialogVisible_2:false,
+      addDialogVisible_3:false,
       gift:["1","2","3","4"],
       coupon:["10", "20", "30"],
       pickerOptions: {
@@ -184,27 +186,19 @@ export default {
         }]
       },
       // 创建促销策略的表单
-      promotionStrategyForm:{
+      promotionStrategyForm :{
         promotionStrategy:'',
         customerLevel: '',
         gift: '',
         discount: '',
-        coupon: '',
-        beginData:'',
-        endData:'',
-      },
-      // 修改薪酬规定时的表单
-      salaryRuleEditForm:{
-        id: '',
-        name: '',
-        baseWage: '',
-        salaryCalculationMethod: '',
-        salaryPaymentMethod: '',
-        postWage: '',
+        coupon:'',
+        commodity:'',
+        price:'',
+        beginDate:'',
+        endDate:'',
       },
       salaryRulesList:[],
       addDialogVisible:false,
-      editDialogVisible: false
     }
   },
   async mounted(){
@@ -212,16 +206,37 @@ export default {
       this.salaryRulesList=_res.result
     })
   },
+  computed: {
+    beginDate: function () {
+      return this.date === '' ? '' : formatDate(this.date[0])
+    },
+    endDate: function () {
+      return this.date === '' ? '' : formatDate(this.date[1])
+    }
+  },
   methods:{
-    addDepartmentSalaryRule(){
-      this.addDialogVisible=true
+    addDialogVisible1(){
+      this.addDialogVisible_1 = true;
+      this.promotionStrategyForm.promotionStrategy = "CUSTOMER";
+    },
+    addDialogVisible2(){
+      this.addDialogVisible_2 = true;
+      this.promotionStrategyForm.promotionStrategy = "PACKET";
+    },
+    addDialogVisible3(){
+      this.addDialogVisible_3 = true;
+      this.promotionStrategyForm.promotionStrategy = "PRICE";
     },
     handleAdd(type){
       if(type===false){
-        this.addDialogVisible=false;
+        this.addDialogVisible_1 = false;
+        this.addDialogVisible_2 = false;
+        this.addDialogVisible_3 = false;
         this.salaryRuleForm={}
       }else {
-        createDepartmentSalaryRule(this.salaryRuleForm).then(_res=>{
+        this.promotionStrategyForm.beginDate = this.beginDate;
+        this.promotionStrategyForm.endDate = this.endDate;
+        createPromotionStrategy(this.promotionStrategyForm).then(_res=>{
           if (_res.code === "B0001" || _res.code === "B0002") {
             this.$message({
               type: 'error',
@@ -233,7 +248,9 @@ export default {
               message: '新增成功!'
             });
             this.salaryRuleForm = {};
-            this.addDialogVisible = false;
+            this.addDialogVisible_1 = false;
+            this.addDialogVisible_2 = false;
+            this.addDialogVisible_3 = false;
             getAllDepartmentSalaryRules({}).then(_res=>{
               this.salaryRulesList=_res.result
             })

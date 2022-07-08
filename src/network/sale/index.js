@@ -17,7 +17,7 @@ export const createSaleReturn = config => request._post(testAPI.SALE_RETURN_CREA
 export const returnFirstApproval = config => request._get(testAPI.SALE_RETURN_FIRST_APPROVAL, config)
 export const returnSecondApproval = config => request._get(testAPI.SALE_RETURN_SECOND_APPROVAL, config)
 export const getSaleReturnBySheetId = config => request._get(testAPI.SALE_RETURN_FIND_SHEET_BY_ID, config)
-
+export const createPromotionStrategy = config => request._post(testAPI.SALE_RETURN_FIND_SHEET_BY_ID, config)
 
 
 

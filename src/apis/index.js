@@ -46,6 +46,8 @@ const PURCHASE_FIND_SHEET_BY_ID = '/api/purchase/find-sheet';
 const PURCHASE_CREATE = '/api/purchase/sheet-make';
 const PURCHASE_FIRST_APPROVAL = '/api/purchase/first-approval';
 const PURCHASE_SECOND_APPROVAL = '/api/purchase/second-approval';
+//促销管理
+const PROMOTION_CREATE = '/api/purchase/second-approval';
 // 进货退货管理
 const PURCHASE_RETURN_ALL = '/api/purchase-returns/sheet-show';
 const PURCHASE_RETURN_CREATE = '/api/purchase-returns/sheet-make';
