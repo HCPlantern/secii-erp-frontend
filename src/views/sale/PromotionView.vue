@@ -1,6 +1,13 @@
 <template>
   <Layout>
     <Title title="制定促销策略"></Title>
+
+    <el-row>
+      <el-button type="primary" size="large" @click="addDialogVisible1()">方案一 : 用户等级</el-button>
+      <el-button type="primary" size="large" @click="addDialogVisible2()">方案二 : 特价包</el-button>
+      <el-button type="primary" size="large" @click="addDialogVisible3()">方案三 : 总价</el-button>
+    </el-row>
+
     <div style="margin-top: 4rem">
       <el-card shadow="hover">
         <el-row>
@@ -36,12 +43,6 @@
         </el-row>
       </el-card>
 
-
-      <el-row>
-        <el-button type="primary" size="large" @click="addDialogVisible1()">方案一 : 用户等级</el-button>
-        <el-button type="primary" size="large" @click="addDialogVisible2()">方案二 : 特价包</el-button>
-        <el-button type="primary" size="large" @click="addDialogVisible3()">方案三 : 总价</el-button>
-      </el-row>
 
       <el-card class="el-card" shadow="hover">
         <div class="form-icon-text">
@@ -350,9 +351,7 @@ export default {
       }
       findPromotionStrategyByTime(config).then(res => {
         if (res.msg === 'Success') {
-          console.log(res)
           this.promotionList = this.promotionList.concat(res.result)
-          console.log(this.promotionList)
           this.$message.success('查询成功')
         } else {
           this.$message.error('查询失败')
@@ -380,82 +379,13 @@ export default {
           this.addDialogVisible_1 = false;
           this.addDialogVisible_2 = false;
           this.addDialogVisible_3 = false;
-          this.promotionStrategyForm = {
-            promotionStrategy: '',
-            customerLevel: '',
-            gift: [{}],
-            discount: '',
-            coupon: '',
-            price: '',
-            beginTime: '',
-            endTime: '',
-          }
+          this.resetForm()
+          this.getAllPromotion()
         } else {
           this.$message.error('添加失败')
         }
       })
     },
-    // handleAdd(type) {
-    //   if (type === false) {
-    //     this.addDialogVisible_1 = false;
-    //     this.addDialogVisible_2 = false;
-    //     this.addDialogVisible_3 = false;
-    //     this.salaryRuleForm = {}
-    //   } else {
-    //     this.promotionStrategyForm.beginDate = this.beginDate;
-    //     this.promotionStrategyForm.endDate = this.endDate;
-    //     createPromotionStrategy(this.promotionStrategyForm).then(_res => {
-    //       if (_res.code === "B0001" || _res.code === "B0002") {
-    //         this.$message({
-    //           type: 'error',
-    //           message: _res.msg
-    //         });
-    //       } else {
-    //         this.$message({
-    //           type: 'success',
-    //           message: '新增成功!'
-    //         });
-    //         this.salaryRuleForm = {};
-    //         this.addDialogVisible_1 = false;
-    //         this.addDialogVisible_2 = false;
-    //         this.addDialogVisible_3 = false;
-    //         getAllDepartmentSalaryRules({}).then(_res => {
-    //           this.salaryRulesList = _res.result
-    //         })
-    //       }
-    //     })
-    //   }
-    // },
-    //根据id修改信息
-    // editInfo(id) {
-    //   this.salaryRuleEditForm = this.salaryRulesList.filter(x => x.id === id)[0];
-    //   this.editDialogVisible = true;
-    // },
-    // handleEdit(type) {
-    //   if (type === false) {
-    //     this.editDialogVisible = false;
-    //     this.salaryRuleEditForm = {};
-    //   } else {
-    //     updateDepartmentSalaryRule(this.salaryRuleEditForm).then(_res => {
-    //       if (_res.code === 'B0003') {
-    //         this.$message({
-    //           type: 'error',
-    //           message: _res.msg
-    //         })
-    //       } else {
-    //         this.$message({
-    //           type: 'success',
-    //           message: '修改成功！'
-    //         })
-    //         this.salaryRuleEditForm = {};
-    //         this.editDialogVisible = false;
-    //         getAllDepartmentSalaryRules({}).then(_res => {
-    //           this.salaryRulesList = _res.result
-    //         })
-    //       }
-    //     })
-    //   }
-    // },
 
   },
 }
