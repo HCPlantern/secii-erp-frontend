@@ -144,7 +144,7 @@
 <script>
 import Layout from "@/components/content/Layout";
 import Title from "@/components/content/Title";
-import {createPromotionStrategy, getAllDepartmentSalaryRules, updateDepartmentSalaryRule} from "@/network/sale";
+import {createPromotionStrategy} from "@/network/sale";
 import {getAllCustomer} from "@/network/purchase";
 import { formatDate } from "@/common/utils";
 export default {

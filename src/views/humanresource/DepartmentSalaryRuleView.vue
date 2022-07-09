@@ -242,6 +242,22 @@ export default {
       this.editDialogVisible = true;
     },
     handleEdit() {
+      //先字段校验，防御式编程
+      if (
+        this.salaryRuleEditForm.baseWage < 0 ||
+        this.salaryRuleEditForm.postWage < 0 ||
+        this.salaryRuleEditForm.deductRate < 0 ||
+        this.salaryRuleEditForm.annualBonus < 0 ||
+        this.salaryRuleEditForm.gradeRate < 0 ||
+        this.salaryRuleEditForm.insurance < 0 ||
+        this.salaryRuleEditForm.housingFund < 0
+      ) {
+        this.$message({
+          type: "error",
+          message: "金额、比率不能为负！",
+        });
+        return;
+      }
       updateDepartmentSalaryRule(this.salaryRuleEditForm).then((_res) => {
         if (_res.code === "B0003") {
           this.$message({

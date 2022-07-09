@@ -2,7 +2,7 @@
   <Layout>
     <Title title="生成工资单"></Title>
     <!-- 工资单生成部分 -->
-    <div>
+    <div style="margin-bottom: 10px">
       <span>请选择月份：</span>
       <el-date-picker
         class="select-month"
@@ -21,8 +21,13 @@
         >生成工资单</el-button
       >
     </div>
-
     <!-- 工资单展示部分 -->
+    <el-card class="el-card" shadow="hover">
+      <div class="form-icon-text">
+        <i class="el-icon-tickets"></i>
+        <span>工资单列表</span>
+      </div>
+    </el-card>
     <div class="body">
       <el-tabs v-model="activeName" :stretch="true">
         <el-tab-pane label="待一级审批" name="PENDING_LEVEL_1">

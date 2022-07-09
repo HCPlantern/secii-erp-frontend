@@ -138,13 +138,19 @@ export default {
         } else {
           this.$message({
             type: "success",
-            message: "添加成功！",
+            message:
+              "添加成功! 新员工ERP系统账号为: " +
+              _res.result.name +
+              ", 密码为: " +
+              _res.result.password,
+            duration: 6000,
           });
           this.handleClose();
         }
       });
     },
     handleConfirm() {
+      //先字段校验
       if (
         this.myform.name === "" ||
         this.myform.job === "" ||
@@ -155,7 +161,8 @@ export default {
           message: "请填写带 * 必填项!",
         });
         return;
-      } //先字段校验
+      }
+      //再根据类型调用提交方法
       this.type === "edit" ? this.handleEdit() : this.handleAdd();
     },
   },
