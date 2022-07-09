@@ -14,12 +14,12 @@ export const ROLE = {
 };
 
 export const DEPT_NAME = [
-    { name: "库存管理部门", value: "INVENTORY_MANAGER" },
-    { name: "进货销售部门", value: "SALE_STAFF" },
-    { name: "财务部门", value: "FINANCIAL_STAFF" },
-    { name: "销售经理", value: "SALE_MANAGER" },
-    { name: "人力资源部门", value: "HR" },
-    { name: "总经理", value: "GM" },
+    {name: "库存管理部门", value: "INVENTORY_MANAGER"},
+    {name: "进货销售部门", value: "SALE_STAFF"},
+    {name: "财务部门", value: "FINANCIAL_STAFF"},
+    {name: "销售经理", value: "SALE_MANAGER"},
+    {name: "人力资源部门", value: "HR"},
+    {name: "总经理", value: "GM"},
 ]; //ADMIN不算部门
 
 
@@ -105,30 +105,30 @@ export const PATH = {
     },
     SALE_DETAIL_VIEW: {
         path: '/saleDetailView',
-        requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
+        requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.GM, ROLE.ADMIN]
     },
     HISTORY_SHEET_VIEW: {
         path: '/historySheetView',
-        requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
+        requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.GM, ROLE.ADMIN]
     },
     BUSINESS_SITUATION_VIEW: {
         path: '/businessSituationView',
-        requiresAuth: [ROLE.SALE_STAFF, ROLE.SALE_MANAGER, ROLE.GM, ROLE.ADMIN]
+        requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.GM, ROLE.ADMIN]
     },
     // GM
     // 收款单审批
-    COLLECTION_SHEET_APPROVAL_VIEW:{
+    COLLECTION_SHEET_APPROVAL_VIEW: {
         path: '/collectionSheetApprovalView',
-        requiresAuth:[ROLE.GM,ROLE.ADMIN]
+        requiresAuth: [ROLE.GM, ROLE.ADMIN]
     },
     // 付款单审批
-    PAYMENT_SHEET_APPROVAL_VIEW:{
+    PAYMENT_SHEET_APPROVAL_VIEW: {
         path: '/paymentSheetApprovalView',
-        requiresAuth:[ROLE.GM,ROLE.ADMIN]
+        requiresAuth: [ROLE.GM, ROLE.ADMIN]
     },
-    SALARY_SHEET_APPROVAL_VIEW:{
+    SALARY_SHEET_APPROVAL_VIEW: {
         path: '/salarySheetApprovalView',
-        requiresAuth:[ROLE.GM,ROLE.ADMIN]
+        requiresAuth: [ROLE.GM, ROLE.ADMIN]
     },
 
     // ADMIN
@@ -145,22 +145,22 @@ export const PATH = {
         path: '/paymentView',
         requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.ADMIN]
     },
-    INIT_ACCOUNT_VIEW:{
+    INIT_ACCOUNT_VIEW: {
         path: '/initAccountView',
         requiresAuth: [ROLE.FINANCIAL_STAFF, ROLE.ADMIN]
     },
     //HR
-    DEPARTMENT_SALARY_RULE_VIEW:{
+    DEPARTMENT_SALARY_RULE_VIEW: {
         path: '/departmentSalaryRuleView',
-        requiresAuth: [ROLE.HR,ROLE.ADMIN]
+        requiresAuth: [ROLE.HR, ROLE.ADMIN]
     },
-    EMPLOYEE_MANAGEMENT_VIEW:{
+    EMPLOYEE_MANAGEMENT_VIEW: {
         path: '/employeeManagementView',
-        requiresAuth: [ROLE.HR,ROLE.ADMIN]
+        requiresAuth: [ROLE.HR, ROLE.ADMIN]
     },
-    SALARY_SHEET_GENERATION_VIEW:{
+    SALARY_SHEET_GENERATION_VIEW: {
         path: '/salarySheetGenerationView',
-        requiresAuth: [ROLE.HR,ROLE.ADMIN]
+        requiresAuth: [ROLE.HR, ROLE.ADMIN]
     }
 
 }

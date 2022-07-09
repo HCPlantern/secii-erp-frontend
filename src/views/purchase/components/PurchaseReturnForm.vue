@@ -131,6 +131,8 @@ export default {
               this.$parent.$emit('submit')
               this.resetForm()
               this.getPurchaseReturn()
+            } else {
+              this.$message.error(_res.msg)
             }
           })
         }

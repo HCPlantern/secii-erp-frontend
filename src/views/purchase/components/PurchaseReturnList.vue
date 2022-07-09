@@ -32,7 +32,7 @@ export default {
       role: [ROLE.GM, ROLE.ADMIN],
       description: [
         {
-          id: "进货单编号",
+          id: "进货退货单编号",
           purchaseSheetId: "关联的销售单ID",
           operator: "操作员",
           remark: "备注",
