@@ -85,7 +85,7 @@
             <el-form-item
                 v-for="(item, index) in promotionStrategyForm.gift"
                 :key="index"
-                :label="'商品' + index">
+                :label="'赠品' + index">
               <el-select class="commodityFormItem" v-model="item.pid" placeholder="请选择商品id">
                 <el-option
                     v-for="item1 in commodityList"
@@ -140,10 +140,27 @@
                   :default-time="['00:00:00', '00:00:00']">
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="商品">
-              <el-input v-model="promotionStrategyForm.commodity" placeholder="请输入用户级别"></el-input>
-            </el-form-item>
 
+            <el-form-item
+                v-for="(item, index) in promotionStrategyForm.gift"
+                :key="index"
+                :label="'组合商品' + index">
+              <el-select class="commodityFormItem" v-model="item.pid" placeholder="请选择商品id">
+                <el-option
+                    v-for="item1 in commodityList"
+                    :key="item1.id"
+                    :label="item1.id"
+                    :value="item1.id">
+                </el-option>
+              </el-select>
+              <div>
+                <el-input class="commodityFormItem" v-model="item.remark" placeholder="请填写备注"></el-input>
+              </div>
+              <el-button type="text" size="small" @click="addProduct"
+                         v-if="index === promotionStrategyForm.gift.length - 1">添加
+              </el-button>
+              <el-button type="text" size="small" @click.prevent="removeProduct(item)" v-if="index !== 0">删除</el-button>
+            </el-form-item>
             <el-form-item label="折扣">
               <el-input v-model="promotionStrategyForm.discount" placeholder="请输入折扣"></el-input>
             </el-form-item>
@@ -181,7 +198,7 @@
             <el-form-item
                 v-for="(item, index) in promotionStrategyForm.gift"
                 :key="index"
-                :label="'商品' + index">
+                :label="'赠品' + index">
               <el-select class="commodityFormItem" v-model="item.pid" placeholder="请选择商品id">
                 <el-option
                     v-for="item1 in commodityList"
@@ -201,10 +218,6 @@
                          v-if="index === promotionStrategyForm.gift.length - 1">添加
               </el-button>
               <el-button type="text" size="small" @click.prevent="removeProduct(item)" v-if="index !== 0">删除</el-button>
-            </el-form-item>
-
-            <el-form-item label="折扣">
-              <el-input v-model="promotionStrategyForm.discount" placeholder="请输入折扣"></el-input>
             </el-form-item>
 
             <el-form-item label="代金券">
