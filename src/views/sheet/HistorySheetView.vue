@@ -436,9 +436,7 @@ export default {
     },
   },
   methods: {
-    test() {
-      console.log(this.sheetDetail)
-    },
+
     // 查询
     queryData() {
       if (this.form.date === '' || this.beginDate === null || this.endDate === null) {
