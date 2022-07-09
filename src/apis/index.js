@@ -39,7 +39,6 @@ const WAREHOUSE_DAILY_COUNT_EXCEL = '/api/warehouse/warehouse/counting/exportexc
 const FIND_ALL_SALES_MAN = '/api/user/findAllSalesMan'
 const FIND_ALL_USERS = '/api/user/find-all-users'
 
-// 销售管理
 // 进货管理
 const PURCHASE_ALL = '/api/purchase/sheet-show';
 const PURCHASE_FIND_SHEET_BY_ID = '/api/purchase/find-sheet';
@@ -116,6 +115,10 @@ const INIT_CUSTOMER_SHOW = '/api/initAccount/getAllInitCustomer'
 const INIT_COMPANY_ACCOUNT_CREATE = '/api/initAccount/createCompanyAccount'
 const INIT_PRODUCT_CREATE = '/api/initAccount/createProduct'
 const INIT_CUSTOMER_CREATE = '/api/initAccount/createCustomer'
+// 促销
+const CREATE_PROMOTION_STRATEGY = '/api/promotion/createPromotionStrategy'
+const FIND_PROMOTION_STRATEGY_BY_TIME = '/api/promotion/findPromotionStrategyByTime'
+
 module.exports = {
     TEST_GET,
     TEST_POST,
@@ -218,5 +221,7 @@ module.exports = {
     EMPLOYEE_UPDATE,
     EMPLOYEE_DELETE_BY_ID,
     SALARY_FIRST_APPROVAL,
-    SALARY_SECOND_APPROVAL
+    SALARY_SECOND_APPROVAL,
+    CREATE_PROMOTION_STRATEGY,
+    FIND_PROMOTION_STRATEGY_BY_TIME,
 };
