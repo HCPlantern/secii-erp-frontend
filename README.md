@@ -1,4 +1,8 @@
-＃SEECII　DEMO
+＃SEECII-ERP-Frontend
+
+## Docs
+
+See `https://github.com/HCPlantern/secii-erp-backend`
 
 ## Project setup
 
